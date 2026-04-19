@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+pydantic
+langgraph
+langchain-groq
+web3
+python-dotenv
+supabase
+langgraph-checkpoint-sqlite
+sse-starlette
+aiosqlite
+google-generativeai
