@@ -1,0 +1,15 @@
+C:\Users\kirti\OneDrive\Desktop\FINAL-VERSION\SummerHacks\design.md
+C:\Users\kirti\OneDrive\Desktop\FINAL-VERSION\SummerHacks\prd.md
+C:\Users\kirti\OneDrive\Desktop\FINAL-VERSION\SummerHacks\backend\README.md
+C:\Users\kirti\OneDrive\Desktop\FINAL-VERSION\SummerHacks\backend\requirements.txt
+C:\Users\kirti\OneDrive\Desktop\FINAL-VERSION\SummerHacks\my-app\AGENTS.md
+C:\Users\kirti\OneDrive\Desktop\FINAL-VERSION\SummerHacks\my-app\CLAUDE.md
+C:\Users\kirti\OneDrive\Desktop\FINAL-VERSION\SummerHacks\my-app\README.md
+C:\Users\kirti\OneDrive\Desktop\FINAL-VERSION\SummerHacks\hdfclogo.png
+C:\Users\kirti\OneDrive\Desktop\FINAL-VERSION\SummerHacks\my-app\public\file.svg
+C:\Users\kirti\OneDrive\Desktop\FINAL-VERSION\SummerHacks\my-app\public\globe.svg
+C:\Users\kirti\OneDrive\Desktop\FINAL-VERSION\SummerHacks\my-app\public\next.svg
+C:\Users\kirti\OneDrive\Desktop\FINAL-VERSION\SummerHacks\my-app\public\vercel.svg
+C:\Users\kirti\OneDrive\Desktop\FINAL-VERSION\SummerHacks\my-app\public\window.svg
+C:\Users\kirti\OneDrive\Desktop\FINAL-VERSION\SummerHacks\my-app\public\logos\hdfc.png
+C:\Users\kirti\OneDrive\Desktop\FINAL-VERSION\SummerHacks\my-app\public\logos\icici.svg
