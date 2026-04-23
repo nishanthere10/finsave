@@ -84,12 +84,12 @@ export default function LoginCard() {
   };
 
   return (
-    <div className="bg-[#111111] py-10 px-6 sm:px-10 shadow-2xl rounded-2xl border border-[#1F1F1F] w-full max-w-md relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#22C55E] to-transparent opacity-50" />
+    <div className="bg-card py-10 px-6 sm:px-10 shadow-2xl rounded-2xl border border-border w-full max-w-md relative overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent to-transparent opacity-50" />
       
       <div className="mb-8 text-center">
-        <h2 className="text-2xl font-bold tracking-tight text-white mb-2">Access Terminal</h2>
-        <p className="text-xs font-bold text-[#A1A1AA] uppercase tracking-widest">
+        <h2 className="text-2xl font-serif font-bold tracking-tight text-foreground mb-2">Access Terminal</h2>
+        <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
           Secure identity verification required
         </p>
       </div>
@@ -98,7 +98,7 @@ export default function LoginCard() {
         <motion.div 
           initial={{ opacity: 0, y: -10 }} 
           animate={{ opacity: 1, y: 0 }}
-          className="mb-6 p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-500 text-xs font-bold text-center"
+          className="mb-6 p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-xs font-bold text-center"
         >
           {error}
         </motion.div>
@@ -122,7 +122,7 @@ export default function LoginCard() {
               whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={loading || phone.length < 10}
-              className="w-full flex justify-center items-center gap-2 py-4 px-4 border border-transparent rounded-xl shadow-sm text-sm font-bold tracking-[0.2em] uppercase text-[#000000] bg-white hover:bg-gray-200 focus:outline-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex justify-center items-center gap-2 py-4 px-4 border border-transparent rounded-xl shadow-sm text-sm font-bold tracking-[0.2em] uppercase text-background bg-foreground hover:bg-foreground/90 focus:outline-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? <Activity className="w-5 h-5 animate-spin" /> : "Generate Access Code"}
               {!loading && <ArrowRight className="w-4 h-4" />}
@@ -149,7 +149,7 @@ export default function LoginCard() {
               whileTap={{ scale: 0.98 }}
               onClick={() => handleVerifyOTP()}
               disabled={loading || otp.length < 6}
-              className="w-full flex justify-center items-center gap-2 py-4 px-4 border border-transparent rounded-xl shadow-sm text-sm font-bold tracking-[0.2em] uppercase text-[#000000] bg-[#22C55E] hover:bg-[#22C55E]/90 focus:outline-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex justify-center items-center gap-2 py-4 px-4 border border-transparent rounded-xl shadow-sm text-sm font-bold tracking-[0.2em] uppercase text-accent-foreground bg-accent hover:bg-accent/90 focus:outline-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? <Activity className="w-5 h-5 animate-spin" /> : "Establish Link"}
               {!loading && <ArrowRight className="w-4 h-4" />}
@@ -159,7 +159,7 @@ export default function LoginCard() {
                <button 
                  onClick={() => { setStep("phone"); setOtp(""); setError(null); }}
                  disabled={loading}
-                 className="text-[10px] uppercase tracking-widest font-bold text-[#A1A1AA] hover:text-white transition-colors"
+                 className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground hover:text-foreground transition-colors"
                >
                  Change Number
                </button>
@@ -171,17 +171,17 @@ export default function LoginCard() {
       <div className="mt-8">
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-[#1F1F1F]" />
+            <div className="w-full border-t border-border" />
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-4 bg-[#111111] text-[#A1A1AA] font-bold text-[10px] uppercase tracking-[0.2em]">
+            <span className="px-4 bg-card text-muted-foreground font-bold text-[10px] uppercase tracking-[0.2em]">
               or
             </span>
           </div>
         </div>
 
         <div className="mt-6">
-          <button className="w-full flex justify-center items-center gap-3 py-3 px-4 border border-[#1F1F1F] rounded-xl shadow-sm text-xs font-bold tracking-widest uppercase text-white bg-[#000000] hover:bg-[#1F1F1F] focus:outline-none transition-colors">
+          <button className="w-full flex justify-center items-center gap-3 py-3 px-4 border border-border rounded-xl shadow-sm text-xs font-bold tracking-widest uppercase text-foreground bg-background hover:bg-secondary focus:outline-none transition-colors">
             <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
               <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
               <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
@@ -194,8 +194,8 @@ export default function LoginCard() {
         </div>
 
         <div className="mt-8 flex justify-center">
-           <div className="inline-flex items-center gap-2 text-[10px] font-bold text-[#A1A1AA]/60 uppercase tracking-widest">
-             <Lock className="w-3 h-3 text-[#22C55E]" /> End-to-end encrypted protocol
+           <div className="inline-flex items-center gap-2 text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest">
+             <Lock className="w-3 h-3 text-accent" /> End-to-end encrypted protocol
            </div>
         </div>
       </div>

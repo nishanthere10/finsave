@@ -10,10 +10,10 @@ export default function StakePage() {
         <p className="text-gray-500 mt-1 font-medium">Manage protocol escrow and locked capital.</p>
       </div>
 
-      <div className="bg-white border border-gray-200 shadow-sm rounded-xl p-6">
+      <div className="bg-card border border-gray-200 shadow-sm rounded-xl p-6">
          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-100 mb-6">
             <div className="flex items-center gap-3">
-               <div className="w-10 h-10 rounded-lg bg-white border border-gray-200 flex items-center justify-center shadow-sm">
+               <div className="w-10 h-10 rounded-lg bg-card border border-gray-200 flex items-center justify-center shadow-sm">
                   <Wallet className="w-5 h-5 text-green-600" />
                </div>
                <div>
@@ -21,7 +21,7 @@ export default function StakePage() {
                   <div className="text-sm font-bold text-black font-mono">0x87A...3F9A</div>
                </div>
             </div>
-            <button className="px-4 py-2 bg-white border border-gray-200 text-gray-600 text-[10px] font-bold uppercase tracking-widest rounded-lg hover:bg-gray-50 transition-colors shadow-sm">
+            <button className="px-4 py-2 bg-card border border-gray-200 text-gray-600 text-[10px] font-bold uppercase tracking-widest rounded-lg hover:bg-gray-50 transition-colors shadow-sm">
               Disconnect
             </button>
          </div>

@@ -37,8 +37,8 @@ export default function StreaksPage() {
         animate={{ opacity: 1, y: 0 }}
         className="bg-[#0B0B0B] text-white rounded-2xl p-6 flex items-center justify-between overflow-hidden relative"
       >
-        <div className="absolute -right-4 -top-4 w-32 h-32 rounded-full bg-white/5" />
-        <div className="absolute -right-2 bottom-0 w-20 h-20 rounded-full bg-white/5" />
+        <div className="absolute -right-4 -top-4 w-32 h-32 rounded-full bg-card/5" />
+        <div className="absolute -right-2 bottom-0 w-20 h-20 rounded-full bg-card/5" />
         <div className="relative">
           <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest mb-1">Motivation</p>
           <p className="text-lg font-bold text-white leading-snug">
@@ -55,7 +55,7 @@ export default function StreaksPage() {
       <div className="flex flex-col md:flex-row items-stretch gap-4">
         <motion.div
           initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-          className="flex-1 bg-white border border-gray-200 shadow-sm rounded-2xl p-6 flex items-center justify-between border-l-4 border-l-orange-400 hover:-translate-y-0.5 transition-all"
+          className="flex-1 bg-card border border-gray-200 shadow-sm rounded-2xl p-6 flex items-center justify-between border-l-4 border-l-orange-400 hover:-translate-y-0.5 transition-all"
         >
           <div>
             <div className="text-[10px] uppercase font-bold tracking-widest text-gray-400 mb-1">Current Streak</div>
@@ -65,7 +65,7 @@ export default function StreaksPage() {
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-          className="flex-1 bg-white border border-gray-200 shadow-sm rounded-2xl p-6 flex items-center justify-between border-l-4 border-l-[#0E9F6E] hover:-translate-y-0.5 transition-all"
+          className="flex-1 bg-card border border-gray-200 shadow-sm rounded-2xl p-6 flex items-center justify-between border-l-4 border-l-[#0E9F6E] hover:-translate-y-0.5 transition-all"
         >
           <div>
             <div className="text-[10px] uppercase font-bold tracking-widest text-gray-400 mb-1">Longest Streak</div>
@@ -78,7 +78,7 @@ export default function StreaksPage() {
       {/* 30-Day Activity Grid */}
       <motion.div
         initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-        className="bg-white border border-gray-200 shadow-sm rounded-2xl p-8"
+        className="bg-card border border-gray-200 shadow-sm rounded-2xl p-8"
       >
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400">30-Day Activity — April 2026</h3>
@@ -133,7 +133,7 @@ export default function StreaksPage() {
       {/* Streak History Table */}
       <motion.div
         initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-        className="bg-white border border-gray-200 shadow-sm rounded-2xl p-8"
+        className="bg-card border border-gray-200 shadow-sm rounded-2xl p-8"
       >
         <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-6">Streak History</h3>
         <div className="space-y-3">

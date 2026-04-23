@@ -4,49 +4,134 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* ── Standardized Clean Tokens ────────────────────────────────────────── */
+/* ── Organic Luxury Dark Green Theme Tokens ────────────────────────────── */
 :root {
-  /* Common Values */
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  /* Shadcn standard variables (Light) */
+  --background: #f7faf7; /* Extremely subtle sage tint */
+  --foreground: #0c1c13; /* Deepest green-black */
+
+  --card: #ffffff;
+  --card-foreground: #0c1c13;
+
+  --popover: #ffffff;
+  --popover-foreground: #0c1c13;
+
+  --primary: #1b3b24; /* Forest green */
+  --primary-foreground: #ffffff;
+
+  --secondary: #e8f0eb; /* Soft sage */
+  --secondary-foreground: #1b3b24;
+
+  --muted: #e8f0eb;
+  --muted-foreground: #5a7062;
+
+  --accent: #2c5e3a; /* Vibrant forest accent */
+  --accent-foreground: #ffffff;
+
+  --destructive: #7f1d1d; /* Subtle brick red for luxury contrast */
+  --destructive-foreground: #ffffff;
+
+  --border: #d3dfd7;
+  --input: #d3dfd7;
+  --ring: #2c5e3a;
+
+  --radius: 0.5rem;
+
+  /* Legacy App Values */
+  --font-sans: 'Manrope', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-  --radius: 0.625rem;
-  --accent: #22C55E;
   
-  /* Light Theme (Default & Primary for Demo) */
-  --bg-base: #f6f7f9;
-  --bg-surface: #FFFFFF;
-  --bg-card: #FFFFFF;
-  --text-primary: #000000;
-  --text-secondary: #4b5563;
-  --text-muted: #6b7280;
-  --border-subtle: #e5e7eb;
-  --border-active: #d1d5db;
-  --glass-bg: rgba(255, 255, 255, 0.8);
-  --glass-border: rgba(0, 0, 0, 0.05);
-  --accent: #16A34A;
+  --bg-base: var(--background);
+  --bg-surface: var(--card);
+  --bg-card: var(--card);
+  --text-primary: var(--foreground);
+  --text-secondary: var(--muted-foreground);
+  --text-muted: #8a9c90;
+  --border-subtle: var(--border);
+  --border-active: #a8bcae;
+  --glass-bg: rgba(247, 250, 247, 0.85);
+  --glass-border: rgba(27, 59, 36, 0.1);
 }
 
 :root.dark {
-  /* Dark Theme */
-  --bg-base: #000000;
-  --bg-surface: #111111;
-  --bg-card: #0A0A0A;
-  --text-primary: #FFFFFF;
-  --text-secondary: #A1A1AA;
-  --text-muted: #52525B;
-  --border-subtle: rgba(255, 255, 255, 0.05);
-  --border-active: rgba(255, 255, 255, 0.1);
-  --glass-bg: rgba(10, 10, 10, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.05);
-  --accent: #22C55E;
+  /* Shadcn standard variables (Dark) */
+  --background: #040d07; /* Almost black green */
+  --foreground: #e6eee8; /* Soft mint-white */
+
+  --card: #08160c; /* Deep forest */
+  --card-foreground: #e6eee8;
+
+  --popover: #08160c;
+  --popover-foreground: #e6eee8;
+
+  --primary: #4ade80; /* Bright mint green for dark mode contrast */
+  --primary-foreground: #040d07;
+
+  --secondary: #122818; /* Rich dark green */
+  --secondary-foreground: #e6eee8;
+
+  --muted: #122818;
+  --muted-foreground: #8a9c90;
+
+  --accent: #4ade80;
+  --accent-foreground: #040d07;
+
+  --destructive: #991b1b;
+  --destructive-foreground: #ffffff;
+
+  --border: #1a3622;
+  --input: #1a3622;
+  --ring: #4ade80;
+
+  /* Legacy App Values */
+  --bg-base: var(--background);
+  --bg-surface: var(--card);
+  --bg-card: var(--card);
+  --text-primary: var(--foreground);
+  --text-secondary: var(--muted-foreground);
+  --text-muted: #5a7062;
+  --border-subtle: var(--border);
+  --border-active: #2c5e3a;
+  --glass-bg: rgba(4, 13, 7, 0.75);
+  --glass-border: rgba(74, 222, 128, 0.1);
 }
 
 @theme inline {
-  --color-background: var(--bg-base);
-  --color-foreground: var(--text-primary);
-  --color-border: var(--border-subtle);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
   --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
   --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
   --font-mono: var(--font-mono);
 }
 

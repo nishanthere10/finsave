@@ -37,13 +37,13 @@ export default function MoneyMirrorPage() {
       </div>
 
       <div className="grid md:grid-cols-4 gap-6 mb-6">
-        <div className="bg-white border border-gray-200 shadow-sm rounded-xl p-6 md:col-span-3">
+        <div className="bg-card border border-gray-200 shadow-sm rounded-xl p-6 md:col-span-3">
            <div className="flex items-center gap-2 mb-4 text-gray-500 text-[10px] uppercase font-bold tracking-widest">
               <TrendingUp className="w-4 h-4 text-green-600" /> 5-Year Financial Trajectory
            </div>
           <MoneyMirrorChart wasteBefore={wasteBefore} wasteAfter={wasteAfter} />
         </div>
-        <div className="bg-white border border-gray-200 shadow-sm rounded-xl p-6 flex flex-col justify-center space-y-8">
+        <div className="bg-card border border-gray-200 shadow-sm rounded-xl p-6 flex flex-col justify-center space-y-8">
             <div>
                <div className="text-[10px] uppercase text-gray-400 font-bold tracking-widest mb-2">Projected Value Loss</div>
                <div className="text-3xl font-bold text-red-600 font-sans">-₹{displayFiveYearLoss.toLocaleString()}</div>
@@ -63,7 +63,7 @@ export default function MoneyMirrorPage() {
       </div>
       
       <div className="grid md:grid-cols-2 gap-6">
-        <div className="bg-white border border-gray-200 shadow-sm rounded-xl p-6">
+        <div className="bg-card border border-gray-200 shadow-sm rounded-xl p-6">
            <div className="flex items-center gap-2 mb-6 text-gray-500 text-[10px] uppercase font-bold tracking-widest">
               <PieChartIcon className="w-4 h-4 text-green-600" /> Categorical Breakdown
            </div>
@@ -86,7 +86,7 @@ export default function MoneyMirrorPage() {
            </div>
         </div>
         
-        <div className="bg-white border border-gray-200 shadow-sm rounded-xl p-6 flex flex-col justify-center">
+        <div className="bg-card border border-gray-200 shadow-sm rounded-xl p-6 flex flex-col justify-center">
            <div className="flex items-center gap-2 mb-6 text-gray-500 text-[10px] uppercase font-bold tracking-widest">
               <Info className="w-4 h-4 text-green-600" /> Monthly Impact Analysis
            </div>
