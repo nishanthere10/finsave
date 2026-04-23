@@ -34,7 +34,7 @@ export default function InsightsPage() {
       </div>
 
       <div className="grid md:grid-cols-3 gap-6">
-        <div className="bg-white border border-gray-200 shadow-sm rounded-xl p-6 col-span-2">
+        <div className="bg-card border border-gray-200 shadow-sm rounded-xl p-6 col-span-2">
           <div className="flex items-center gap-2 mb-6 text-gray-400 text-[10px] uppercase font-bold tracking-widest">
             <BarChart3 className="w-4 h-4 text-green-600" /> Spending Breakdown
           </div>
@@ -58,7 +58,7 @@ export default function InsightsPage() {
           </div>
         </div>
 
-        <div className="bg-white border border-gray-200 shadow-sm rounded-xl p-6">
+        <div className="bg-card border border-gray-200 shadow-sm rounded-xl p-6">
           <div className="flex items-center gap-2 mb-6 text-gray-400 text-[10px] uppercase font-bold tracking-widest">
             <AlertCircle className="w-4 h-4 text-green-600" /> Highest Category
           </div>
@@ -78,7 +78,7 @@ export default function InsightsPage() {
         </div>
       </div>
       
-      <div className="bg-white border border-gray-200 shadow-sm rounded-xl p-6">
+      <div className="bg-card border border-gray-200 shadow-sm rounded-xl p-6">
          <div className="flex items-center gap-2 mb-6 text-gray-400 text-[10px] uppercase font-bold tracking-widest">
             <TrendingDown className="w-4 h-4 text-green-600" /> Trend Analysis
          </div>

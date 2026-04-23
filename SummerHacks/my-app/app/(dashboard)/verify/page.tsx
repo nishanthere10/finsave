@@ -136,7 +136,7 @@ export default function VerifyPage() {
               {MONTH_2_TRANSACTIONS.length} transactions detected • Total: ₹{MONTH_2_TRANSACTIONS.reduce((a, t) => a + t.amount, 0).toLocaleString()}
             </p>
 
-            <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden mb-8">
+            <div className="bg-card border border-gray-200 rounded-xl shadow-sm overflow-hidden mb-8">
               <div className="grid grid-cols-12 gap-4 px-6 py-3 bg-gray-50 border-b border-gray-100">
                 <div className="col-span-1 text-[10px] font-bold text-gray-400 uppercase tracking-widest">#</div>
                 <div className="col-span-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Merchant</div>
@@ -227,7 +227,7 @@ export default function VerifyPage() {
             </div>
 
             {/* Category Comparison */}
-            <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm mb-8">
+            <div className="bg-card border border-gray-200 rounded-xl p-6 shadow-sm mb-8">
               <h3 className="text-sm font-bold text-black uppercase tracking-widest mb-4 flex items-center gap-2">
                 <BarChart3 className="w-4 h-4 text-gray-400" /> Category-wise Comparison
               </h3>
@@ -272,14 +272,14 @@ export default function VerifyPage() {
 
             {/* AI Verdict + Insights */}
             <div className="grid md:grid-cols-2 gap-6 mb-8">
-              <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+              <div className="bg-card border border-gray-200 rounded-xl p-6 shadow-sm">
                 <h3 className="text-sm font-bold text-black uppercase tracking-widest mb-4 flex items-center gap-2">
                   <Brain className="w-4 h-4 text-purple-500" /> AI Verdict
                 </h3>
                 <p className="text-sm text-gray-600 leading-relaxed font-medium">{result.ai_verdict}</p>
               </div>
 
-              <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+              <div className="bg-card border border-gray-200 rounded-xl p-6 shadow-sm">
                 <h3 className="text-sm font-bold text-black uppercase tracking-widest mb-4 flex items-center gap-2">
                   <TrendingUp className="w-4 h-4 text-green-600" /> Behavioral Insights
                 </h3>
@@ -317,7 +317,7 @@ export default function VerifyPage() {
                   <div className="text-[10px] font-bold text-green-700/70 uppercase tracking-widest mb-3">On-Chain Verification Receipt</div>
                   
                   {/* What was anchored — human readable */}
-                  <div className="bg-white/60 border border-green-200/40 rounded-lg p-4 mb-4 space-y-1.5">
+                  <div className="bg-card/60 border border-green-200/40 rounded-lg p-4 mb-4 space-y-1.5">
                     <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 flex items-center gap-1.5">
                       <ShieldCheck className="w-3 h-3" /> Data Embedded In Transaction
                     </div>
@@ -371,7 +371,7 @@ export default function VerifyPage() {
 function MetricCard({ label, value, icon, color }: { label: string; value: string; icon: React.ReactNode; color: string }) {
   const borderColor = color === "green" ? "border-green-100" : color === "red" ? "border-red-100" : "border-gray-200";
   return (
-    <div className={`bg-white border ${borderColor} rounded-xl p-5 shadow-sm`}>
+    <div className={`bg-card border ${borderColor} rounded-xl p-5 shadow-sm`}>
       <div className="flex items-center justify-between mb-2">
         <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{label}</span>
         {icon}

@@ -234,7 +234,7 @@ export default function Dashboard() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            className="bg-white rounded-2xl border border-gray-200 shadow-sm mb-8 overflow-hidden"
+            className="bg-card rounded-2xl border border-gray-200 shadow-sm mb-8 overflow-hidden"
           >
             <div className="flex flex-col md:flex-row items-center justify-between gap-6 p-8">
               <div>
@@ -275,7 +275,7 @@ export default function Dashboard() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            className="flex items-center gap-4 bg-white p-8 rounded-2xl border border-gray-200 shadow-sm mb-8 relative overflow-hidden"
+            className="flex items-center gap-4 bg-card p-8 rounded-2xl border border-gray-200 shadow-sm mb-8 relative overflow-hidden"
           >
             <Loader2 className="w-6 h-6 text-green-600 animate-spin" />
             <div>
@@ -295,7 +295,7 @@ export default function Dashboard() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            className="flex items-center justify-between bg-white p-8 rounded-2xl border border-green-100 shadow-sm mb-8"
+            className="flex items-center justify-between bg-card p-8 rounded-2xl border border-green-100 shadow-sm mb-8"
           >
             <div className="flex items-center gap-4">
               <CheckCircle2 className="w-6 h-6 text-green-600" />
@@ -319,7 +319,7 @@ export default function Dashboard() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            className="flex items-center justify-between bg-white p-6 rounded-2xl border border-red-200 shadow-sm mb-8"
+            className="flex items-center justify-between bg-card p-6 rounded-2xl border border-red-200 shadow-sm mb-8"
           >
             <div className="flex items-center gap-4">
               <AlertCircle className="w-6 h-6 text-red-500" />
@@ -378,7 +378,7 @@ export default function Dashboard() {
 
       {/* SECTION 2: Graph + Insights Grid */}
       <div className="grid lg:grid-cols-3 gap-6">
-      <div className={`lg:col-span-2 bg-white rounded-2xl p-8 border border-gray-200 shadow-sm flex flex-col relative transition-all duration-200`}>
+      <div className={`lg:col-span-2 bg-card rounded-2xl p-8 border border-gray-200 shadow-sm flex flex-col relative transition-all duration-200`}>
           
           <div className="mb-6 relative z-10 flex justify-between items-start">
             <div>
@@ -415,7 +415,7 @@ export default function Dashboard() {
         <div className="space-y-6 flex flex-col">
           
           {/* EMOTIONAL INSIGHT CARD */}
-          <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 flex-1 flex flex-col justify-center relative overflow-hidden transition-all duration-200">
+          <div className="bg-card border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 flex-1 flex flex-col justify-center relative overflow-hidden transition-all duration-200">
             <AnimatePresence mode="wait">
               {isActive ? (
                 <motion.div
@@ -461,7 +461,7 @@ export default function Dashboard() {
           </div>
 
           {/* ACTION CTA CARD */}
-          <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+          <div className="bg-card border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
              <AnimatePresence mode="wait">
                {isActive ? (
                  <motion.div key="action-loaded" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
@@ -520,7 +520,7 @@ function MetricCard({
     "text-black";
 
   return (
-    <div className={`bg-white border border-gray-200 border-l-4 ${accentColor} shadow-sm hover:shadow-md rounded-2xl p-6 transition-all duration-200 relative overflow-hidden group hover:-translate-y-0.5`}>
+    <div className={`bg-card border border-gray-200 border-l-4 ${accentColor} shadow-sm hover:shadow-md rounded-2xl p-6 transition-all duration-200 relative overflow-hidden group hover:-translate-y-0.5`}>
       <div className="space-y-3">
         <div>
           <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">{title}</p>

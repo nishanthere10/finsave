@@ -88,7 +88,7 @@ export default function NetworkPage() {
         </div>
         
         <div className="flex gap-4">
-          <div className="bg-white border border-gray-200 px-5 py-3 rounded-2xl flex items-center gap-3 shadow-sm">
+          <div className="bg-card border border-gray-200 px-5 py-3 rounded-2xl flex items-center gap-3 shadow-sm">
             <div className="p-2 bg-green-50 rounded-lg border border-green-100">
               <Shield className="w-4 h-4 text-green-600" />
             </div>
@@ -115,15 +115,15 @@ export default function NetworkPage() {
       </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div className="bg-white border border-gray-200 border-l-4 border-l-[#0E9F6E] rounded-2xl p-5 shadow-sm hover:-translate-y-0.5 transition-all">
+        <div className="bg-card border border-gray-200 border-l-4 border-l-[#0E9F6E] rounded-2xl p-5 shadow-sm hover:-translate-y-0.5 transition-all">
           <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2 mb-2"><TrendingUp className="w-3.5 h-3.5 text-[#0E9F6E]" /> Avg Progress</p>
           <p className="text-3xl font-bold text-black font-mono">56<span className="text-lg text-gray-400 font-sans ml-0.5">%</span></p>
         </div>
-        <div className="bg-white border border-gray-200 border-l-4 border-l-orange-400 rounded-2xl p-5 shadow-sm hover:-translate-y-0.5 transition-all">
+        <div className="bg-card border border-gray-200 border-l-4 border-l-orange-400 rounded-2xl p-5 shadow-sm hover:-translate-y-0.5 transition-all">
           <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2 mb-2"><Trophy className="w-3.5 h-3.5 text-orange-400" /> Top Streak</p>
           <p className="text-3xl font-bold text-black font-mono">14<span className="text-lg text-gray-400 font-sans ml-1">Days</span></p>
         </div>
-        <div className="bg-white border border-gray-200 border-l-4 border-l-blue-400 rounded-2xl p-5 shadow-sm hover:-translate-y-0.5 transition-all">
+        <div className="bg-card border border-gray-200 border-l-4 border-l-blue-400 rounded-2xl p-5 shadow-sm hover:-translate-y-0.5 transition-all">
           <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2 mb-2"><Users className="w-3.5 h-3.5 text-blue-400" /> Active Users</p>
           <p className="text-3xl font-bold text-black font-mono">128</p>
         </div>
@@ -132,7 +132,7 @@ export default function NetworkPage() {
       <div className="grid lg:grid-cols-3 gap-8">
         {/* Leaderboard Column */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm overflow-hidden relative">
+          <div className="bg-card border border-gray-200 rounded-2xl p-8 shadow-sm overflow-hidden relative">
             <div className="absolute top-0 right-0 p-4 opacity-5">
               <Trophy className="w-32 h-32" />
             </div>
@@ -159,7 +159,7 @@ export default function NetworkPage() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.1 }}
                     className={`flex items-center justify-between p-4 rounded-xl transition-all duration-300 hover:scale-[1.005] group shadow-sm ${
-                      user.isCurrentUser ? "bg-green-50 border border-green-200 ring-2 ring-[#0E9F6E]/10" : "bg-white border border-gray-100 hover:border-green-100 hover:shadow-md"
+                      user.isCurrentUser ? "bg-green-50 border border-green-200 ring-2 ring-[#0E9F6E]/10" : "bg-card border border-gray-100 hover:border-green-100 hover:shadow-md"
                     }`}
                   >
                   <div className="flex items-center gap-3">
@@ -207,7 +207,7 @@ export default function NetworkPage() {
         {/* Sidebar Column */}
         <div className="space-y-6">
           {/* Notifications Feed */}
-          <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
+          <div className="bg-card border border-gray-200 rounded-2xl p-8 shadow-sm">
             <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6 flex items-center gap-2">
               <Zap className="w-4 h-4 text-green-600" /> Live Activity
             </h3>
@@ -230,7 +230,7 @@ export default function NetworkPage() {
           </div>
 
           {/* Your Rank Card */}
-          <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm text-center">
+          <div className="bg-card border border-gray-200 rounded-2xl p-8 shadow-sm text-center">
             <p className="text-sm font-bold text-gray-500 mb-3">Your Cohort Rank</p>
             <div className="text-5xl font-black text-black">#{leaderboard.findIndex(u => u.id === "me") + 1}</div>
             <p className="text-xs text-gray-400 mt-3 font-semibold uppercase tracking-widest">Out of 128 active users</p>
@@ -238,12 +238,12 @@ export default function NetworkPage() {
 
           {/* Weekly Challenge */}
           <div className="bg-[#0B0B0B] text-white rounded-2xl p-6 relative overflow-hidden">
-             <div className="absolute -right-4 -top-4 w-20 h-20 rounded-full bg-white/5" />
+             <div className="absolute -right-4 -top-4 w-20 h-20 rounded-full bg-card/5" />
              <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest mb-2">🔥 Weekly Challenge</p>
              <p className="text-sm font-bold text-white leading-relaxed">
                Maintain a 7-day no-Swiggy streak.
              </p>
-             <div className="mt-4 inline-flex items-center text-[10px] uppercase tracking-widest font-bold text-black bg-white px-3 py-1.5 rounded-full">
+             <div className="mt-4 inline-flex items-center text-[10px] uppercase tracking-widest font-bold text-black bg-card px-3 py-1.5 rounded-full">
                Reward: Epic NFT Badge
              </div>
           </div>

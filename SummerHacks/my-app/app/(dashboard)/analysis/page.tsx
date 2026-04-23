@@ -161,7 +161,7 @@ export default function AnalysisPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-black font-sans">
+    <div className="min-h-screen bg-card text-black font-sans">
       <div className="max-w-5xl mx-auto px-6 pt-6 pb-32">
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
@@ -184,7 +184,7 @@ export default function AnalysisPage() {
                   <div
                     onDragOver={(e) => e.preventDefault()}
                     onDrop={handleFileDrop}
-                    className="bg-white border-2 border-dashed border-gray-200 rounded-2xl p-10 text-center hover:border-green-400 transition-colors cursor-pointer group shadow-sm"
+                    className="bg-card border-2 border-dashed border-gray-200 rounded-2xl p-10 text-center hover:border-green-400 transition-colors cursor-pointer group shadow-sm"
                     onClick={() => document.getElementById("file-input")?.click()}
                   >
                     <input id="file-input" type="file" className="hidden" accept=".pdf,.csv,.png,.jpg,.jpeg" onChange={(e) => setFile(e.target.files?.[0] || null)} />
@@ -212,7 +212,7 @@ export default function AnalysisPage() {
                       value={rawText}
                       onChange={(e) => setRawText(e.target.value)}
                       rows={5}
-                      className="w-full p-4 bg-white border border-gray-200 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:border-black transition-colors text-sm font-mono resize-none shadow-sm"
+                      className="w-full p-4 bg-card border border-gray-200 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:border-black transition-colors text-sm font-mono resize-none shadow-sm"
                       placeholder={"Zomato - ₹350\nAmazon - ₹1200\nNetflix - ₹649\nSwiggy - ₹280\n..."}
                     />
                   </div>
@@ -226,7 +226,7 @@ export default function AnalysisPage() {
 
                 {/* Right: Goal + Stipend */}
                 <div className="lg:col-span-2 space-y-6">
-                  <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+                  <div className="bg-card border border-gray-200 rounded-xl p-6 shadow-sm">
                     <div className="flex items-center gap-2 text-[10px] font-bold text-secondary uppercase tracking-widest mb-4">
                       <Target className="w-3 h-3 text-accent" /> Analysis Parameters
                     </div>
@@ -325,7 +325,7 @@ export default function AnalysisPage() {
               {/* Bento Grid Results */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 {/* Savings Score */}
-                <div className="bg-white border border-gray-200 rounded-2xl p-8 flex flex-col items-center justify-center text-center shadow-sm">
+                <div className="bg-card border border-gray-200 rounded-2xl p-8 flex flex-col items-center justify-center text-center shadow-sm">
                   <div className="relative w-28 h-28 mb-6">
                     <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
                       <circle cx="50" cy="50" r="45" fill="none" stroke="var(--border)" strokeWidth="6" />
@@ -347,7 +347,7 @@ export default function AnalysisPage() {
                 </div>
 
                 {/* Money Mirror */}
-                <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
+                <div className="bg-card border border-gray-200 rounded-2xl p-8 shadow-sm">
                   <h3 className="text-xs font-bold text-secondary uppercase tracking-widest mb-6 flex items-center gap-2">
                     <BarChart3 className="w-3 h-3 text-accent" /> Money Mirror
                   </h3>
@@ -370,7 +370,7 @@ export default function AnalysisPage() {
                 </div>
 
                 {/* Spending Breakdown */}
-                <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
+                <div className="bg-card border border-gray-200 rounded-2xl p-8 shadow-sm">
                   <h3 className="text-xs font-bold text-secondary uppercase tracking-widest mb-6 flex items-center gap-2">
                     <PieChart className="w-3 h-3 text-accent" /> Breakdown
                   </h3>
@@ -405,7 +405,7 @@ export default function AnalysisPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="bg-white border border-green-100 rounded-2xl p-8 mb-8 shadow-sm"
+                className="bg-card border border-green-100 rounded-2xl p-8 mb-8 shadow-sm"
               >
                 <div className="flex items-center gap-2 text-[10px] font-bold text-accent uppercase tracking-widest mb-4">
                   <Brain className="w-3 h-3" /> AI Behavioral Coach

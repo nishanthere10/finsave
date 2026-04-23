@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { Cormorant_Garamond, Manrope, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/lib/context/ThemeContext";
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
+const manrope = Manrope({ subsets: ['latin'], variable: '--font-sans' });
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const cormorant = Cormorant_Garamond({
+  weight: ['300', '400', '500', '600', '700'],
+  subsets: ['latin'],
+  variable: '--font-serif',
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
 });
 
 export const metadata: Metadata = {
@@ -29,7 +30,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-sans", inter.variable)}
+      className={cn("h-full", "antialiased", manrope.variable, cormorant.variable, jetbrainsMono.variable, "font-sans")}
       suppressHydrationWarning
     >
       <head>

@@ -23,7 +23,7 @@ export default function ProtocolPage() {
 
       <div className="grid lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white border border-gray-200 shadow-sm rounded-2xl p-8">
+          <div className="bg-card border border-gray-200 shadow-sm rounded-2xl p-8">
             <h2 className="text-xl font-bold text-black mb-6 tracking-tight">Active Strategy</h2>
             <div className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
@@ -46,7 +46,7 @@ export default function ProtocolPage() {
             </div>
           </div>
 
-          <div className="bg-white border border-gray-200 shadow-sm rounded-2xl p-8">
+          <div className="bg-card border border-gray-200 shadow-sm rounded-2xl p-8">
              <h2 className="text-xl font-bold text-black mb-6 tracking-tight">System Compliance</h2>
              <div className="space-y-4">
                 <ComplianceItem icon={<Clock className="w-4 h-4 text-green-600" />} label="Telemetry Check: Every 24h" />
@@ -57,7 +57,7 @@ export default function ProtocolPage() {
         </div>
 
         <div className="space-y-6">
-          <div className="bg-white border border-green-600/20 rounded-2xl p-6 shadow-xl relative overflow-hidden">
+          <div className="bg-card border border-green-600/20 rounded-2xl p-6 shadow-xl relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-green-600" />
             <div className="text-center mb-6">
                <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-green-100">
@@ -108,7 +108,7 @@ export default function ProtocolPage() {
 function ComplianceItem({ icon, label }: any) {
   return (
     <div className="flex items-center gap-3 p-3 bg-gray-50 border border-gray-100 rounded-xl group transition-colors hover:border-green-600/30">
-       <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center border border-gray-100 shadow-sm group-hover:border-green-600/20">
+       <div className="w-8 h-8 rounded-lg bg-card flex items-center justify-center border border-gray-100 shadow-sm group-hover:border-green-600/20">
           {icon}
        </div>
        <span className="text-[10px] font-bold text-black uppercase tracking-widest">{label}</span>
