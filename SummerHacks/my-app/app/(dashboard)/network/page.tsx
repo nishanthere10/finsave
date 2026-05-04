@@ -42,7 +42,6 @@ export default function NetworkPage() {
         console.error("Failed to fetch network data", err);
       }
     };
-    
     fetchNetworkData();
   }, []);
 

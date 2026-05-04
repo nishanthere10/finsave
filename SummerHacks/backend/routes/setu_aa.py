@@ -5,7 +5,6 @@ Endpoints:
   POST /api/consent/create       -- Create a consent request, return redirect URL
   GET  /api/consent/status/{id}  -- Poll consent approval status
   POST /api/webhook/setu         -- Receive Setu callback on consent approval
-  POST /api/aa/mock-trigger      -- Dev/demo: skip real AA, inject mock ReBIT data
 """
 
 import uuid
@@ -43,11 +42,6 @@ class ConsentCreateRequest(BaseModel):
     goal: str
     stipend: float
     redirect_url: str = "http://localhost:3000/analysis"
-
-
-class MockTriggerRequest(BaseModel):
-    goal: str = "Bike"
-    stipend: float = 15000
 
 
 # ── Helper: run expense graph ────────────────────────────────────
@@ -139,14 +133,8 @@ async def create_consent(body: ConsentCreateRequest):
     }
 
     if not token:
-        # Sandbox fallback: return a mock consent URL
-        print("[SetuAA] No token available, returning mock consent flow")
-        return {
-            "consent_id": consent_id,
-            "payload_id": payload_id,
-            "redirect_url": f"{body.redirect_url}?consent_id={consent_id}&mock=true",
-            "status": "mock_consent",
-        }
+        print("[SetuAA] No token available")
+        raise HTTPException(status_code=500, detail="Setu AA Token not available. Ensure client ID and secret are correct.")
 
     # In production, we'd call Setu's Consent API here
     # For sandbox demo, we return a simulated Anumati URL
@@ -216,45 +204,3 @@ async def setu_webhook(body: dict[str, Any]):
     return {"status": "processing", "payload_id": payload_id}
 
 
-@router.post("/aa/mock-trigger")
-async def mock_trigger(body: MockTriggerRequest):
-    """Dev/demo shortcut: skip the real AA consent flow entirely.
-
-    Injects realistic mock ReBIT data and triggers the full
-    LangGraph pipeline as if the AA flow had completed.
-    """
-    payload_id = str(uuid.uuid4())
-
-    # Realistic mock ReBIT transactions
-    mock_transactions = [
-        {"type": "DEBIT", "mode": "UPI", "amount": "959.00", "narration": "UPI-ZOMATO-9876543210-HDFC0001234", "transactionTimestamp": "2026-04-01T12:30:00+05:30"},
-        {"type": "DEBIT", "mode": "UPI", "amount": "450.00", "narration": "UPI-SWIGGY-1234567890-SBIN0001234", "transactionTimestamp": "2026-04-02T19:45:00+05:30"},
-        {"type": "DEBIT", "mode": "UPI", "amount": "300.00", "narration": "UPI-STARBUCKS-5678901234-ICIC0006789", "transactionTimestamp": "2026-04-03T10:15:00+05:30"},
-        {"type": "DEBIT", "mode": "UPI", "amount": "150.00", "narration": "UPI-UBER-3456789012-UTIB0002345", "transactionTimestamp": "2026-04-04T08:00:00+05:30"},
-        {"type": "DEBIT", "mode": "UPI", "amount": "5000.00", "narration": "UPI-DECATHLON-7890123456-KKBK0000123", "transactionTimestamp": "2026-04-05T14:20:00+05:30"},
-        {"type": "DEBIT", "mode": "UPI", "amount": "2000.00", "narration": "UPI-RELIANCE-2345678901-BARB0DBTSRT", "transactionTimestamp": "2026-04-06T16:00:00+05:30"},
-        {"type": "DEBIT", "mode": "UPI", "amount": "500.00", "narration": "UPI-NETFLIX-6789012345-HDFC0009876", "transactionTimestamp": "2026-04-07T21:00:00+05:30"},
-        {"type": "DEBIT", "mode": "UPI", "amount": "799.00", "narration": "UPI-SPOTIFY-4567890123-SBIN0005678", "transactionTimestamp": "2026-04-08T09:30:00+05:30"},
-        {"type": "DEBIT", "mode": "UPI", "amount": "1200.00", "narration": "UPI-AMAZON-8901234567-ICIC0001234", "transactionTimestamp": "2026-04-09T11:45:00+05:30"},
-        {"type": "CREDIT", "mode": "UPI", "amount": "15000.00", "narration": "UPI-DAD-STIPEND-BARB0VJMIRA", "transactionTimestamp": "2026-04-01T09:00:00+05:30"},
-    ]
-
-    # Parse through the same pipeline as real AA data
-    cleaned = parse_rebit_transactions(mock_transactions)
-    raw_input = transactions_to_raw_input(cleaned)
-
-    _state_store[payload_id] = {
-        **SAFE_DEFAULTS,
-        "payload_id": payload_id,
-        "status": "running",
-    }
-
-    t = threading.Thread(
-        target=_run_expense_pipeline,
-        args=(payload_id, raw_input, body.goal, body.stipend),
-        daemon=True,
-    )
-    t.start()
-
-    print(f"[SetuAA] Mock trigger fired — payload_id: {payload_id}")
-    return {"payload_id": payload_id, "status": "started"}

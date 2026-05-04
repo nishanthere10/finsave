@@ -2,7 +2,7 @@ fastapi
 uvicorn
 pydantic
 langgraph
-langchain-groq
+langchain-community
 web3
 python-dotenv
 supabase
@@ -10,3 +10,6 @@ langgraph-checkpoint-sqlite
 sse-starlette
 aiosqlite
 google-generativeai
+rapidfuzz
+faster-whisper
+python-multipart

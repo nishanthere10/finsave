@@ -82,18 +82,10 @@ export default function AnalysisPage() {
       }
       
       if (!input && !file) {
-        try {
-          const mockRes = await fetch("/sample.json");
-          if (mockRes.ok) {
-            const mockData = await mockRes.json();
-            input = "Bank Statement Mock Data:\n" + JSON.stringify(mockData, null, 2);
-          } else {
-            input = "No data provided";
-          }
-        } catch (e) {
-          input = "No data provided";
-        }
+        throw new Error("Please provide your bank statement text or upload a file.");
       }
+
+      const userId = typeof window !== "undefined" ? localStorage.getItem("ea_user_id") : null;
 
       const res = await fetch("/api/analysis/submit", {
         method: "POST",
@@ -103,58 +95,43 @@ export default function AnalysisPage() {
           filename: filename,
           stipend: stipend ? parseFloat(stipend) : 15000,
           goal: goal || "Financial Freedom",
+          userId
         }),
       });
 
-      if (!res.ok) throw new Error("Submission failed");
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.error || "Submission failed");
+      }
+      
       const data = await res.json();
-      setPayloadId(data.payload_id);
-      setStatus("running");
+      
+      if (data.status === "completed" && data.agent_analysis) {
+        const analysis = data.agent_analysis;
+        setResult({
+          highest_spend_category: analysis.highest_spend_category || "None",
+          monthly_waste: analysis.monthly_waste ?? 0,
+          raw_5_year_loss: analysis.raw_5_year_loss ?? 0,
+          future_invested_value: analysis.future_invested_value ?? 0,
+          savings_score: analysis.savings_score ?? 0,
+          emotional_message: analysis.emotional_message || "Your daily habits are silently eroding your financial future.",
+          spending_breakdown: analysis.spending_breakdown || {},
+        });
+        setStatus("completed");
+        setPayloadId(data.payload_id);
+
+        if (typeof window !== "undefined") {
+          localStorage.setItem("ea_analysis", JSON.stringify(analysis));
+          if (data.payload_id) localStorage.setItem("ea_payload_id", data.payload_id);
+        }
+      } else {
+        throw new Error("Analysis failed to return expected data.");
+      }
     } catch (err: any) {
-      setError(err.message);
+      setError(err.message || "An unexpected error occurred");
       setStatus("error");
     }
   };
-
-  // Poll for results
-  useEffect(() => {
-    if (status !== "running" || !payloadId) return;
-
-    const interval = setInterval(async () => {
-      try {
-        const res = await fetch(`/api/analysis/status/${payloadId}`);
-        const data = await res.json();
-
-        if (data.status === "completed" && data.agent_analysis) {
-          const analysis = data.agent_analysis;
-          // Map the backend response to our result format
-          setResult({
-            highest_spend_category: analysis.highest_spend_category || "None",
-            monthly_waste: analysis.monthly_waste ?? 0,
-            raw_5_year_loss: analysis.raw_5_year_loss ?? 0,
-            future_invested_value: analysis.future_invested_value ?? 0,
-            savings_score: analysis.savings_score ?? 0,
-            emotional_message: analysis.emotional_message || "Your daily habits are silently eroding your financial future.",
-            spending_breakdown: analysis.spending_breakdown || {},
-          });
-          setStatus("completed");
-          clearInterval(interval);
-
-          // Save to localStorage for downstream pages
-          localStorage.setItem("ea_analysis", JSON.stringify(analysis));
-          localStorage.setItem("ea_payload_id", payloadId);
-        } else if (data.status === "error") {
-          setError("Analysis failed");
-          setStatus("error");
-          clearInterval(interval);
-        }
-      } catch {
-        // keep polling
-      }
-    }, 2000);
-
-    return () => clearInterval(interval);
-  }, [status, payloadId]);
 
   const handleCommit = () => {
     router.push("/commit");

@@ -22,8 +22,7 @@ if SUPABASE_AVAILABLE and URL and KEY:
     except Exception as e:
         print(f"[DB] Supabase failed to initialize: {e}")
 else:
-    print("[DB] Supabase missing config or package. Using Mock DB.")
-
+    raise Exception("[DB] Supabase missing config or package. Cannot initialize database.")
 
 def get_db_client():
     return supabase_client

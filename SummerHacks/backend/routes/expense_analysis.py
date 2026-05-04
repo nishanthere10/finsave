@@ -89,7 +89,7 @@ def _run_expense_graph(payload_id: str, initial_state: dict):
             state_update["blockchain_tx"] = tx_hash
         except Exception as web3_err:
             print(f"[web3] Anchor failed: {web3_err}")
-            state_update["blockchain_tx"] = f"0x_MOCK_{payload_id[:8]}"
+            state_update["blockchain_tx"] = ""
 
         _state_store[payload_id] = state_update
 
@@ -97,9 +97,12 @@ def _run_expense_graph(payload_id: str, initial_state: dict):
         db = get_db_client()
         if db:
             try:
-                dummy_user_id = '00000000-0000-0000-0000-000000000000'
+                user_id = initial_state.get("user_id")
+                if not user_id:
+                    raise Exception("Missing user_id for persistence")
+                
                 db.table("statements").insert({
-                    "user_id": dummy_user_id,
+                    "user_id": user_id,
                     "raw_text": initial_state.get("raw_input", ""),
                     "parsed_transactions": state_update.get("spending_breakdown", {})
                 }).execute()
@@ -129,6 +132,7 @@ async def submit_expense_analysis(body: ExpenseAnalysisRequest):
 
     initial_state = {
         "payload_id": payload_id,
+        "user_id": body.user_id,
         "status": "running",
         "goal": body.goal,
         "stipend": body.stipend,

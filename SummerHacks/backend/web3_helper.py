@@ -6,7 +6,7 @@ embedded in the `data` field. Chain is selected entirely via env vars
 so switching from Sepolia → Polygon is a one-line .env change.
 
 CRITICAL: If the broadcast fails for ANY reason (no Wi-Fi, bad RPC,
-insufficient gas) we return a mock hash so the live stage demo never crashes.
+insufficient gas) an exception will be raised.
 """
 
 import hashlib
@@ -62,5 +62,5 @@ def anchor_to_chain(data_dict: dict, stake_amount_eth: float = 0.0) -> str:
         return w3.to_hex(tx_hash)
 
     except Exception as exc:
-        print(f"[web3_helper] Broadcast failed ({exc}). Returning mock hash.")
-        return f"0x_MOCKED_{data_hash[:10]}"
+        print(f"[web3_helper] Broadcast failed ({exc}).")
+        raise Exception(f"Failed to anchor to chain: {str(exc)}")

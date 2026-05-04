@@ -8,7 +8,6 @@ import {
   ChevronRight, CheckCircle2, Activity, ShieldAlert, Clock, BadgeCheck, 
   Briefcase, Users, GraduationCap, ShieldCheck 
 } from "lucide-react";
-import { cn } from "@/lib/utils";
 import Navbar from "@/components/layout/Navbar";
 
 export default function PremiumProtocolLanding() {
@@ -18,7 +17,6 @@ export default function PremiumProtocolLanding() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans selection-emerald overflow-x-hidden transition-colors duration-300">
-      
       <Navbar />
 
       {/* 2. HERO SECTION */}

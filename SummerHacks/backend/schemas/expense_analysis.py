@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from typing import Optional, Dict, List, Any
 
 class ExpenseAnalysisRequest(BaseModel):
+    user_id: str
     goal: str
     stipend: float
     raw_input: str

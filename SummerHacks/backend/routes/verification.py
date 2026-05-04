@@ -42,50 +42,15 @@ async def verify_month_2(body: VerifyRequest):
     db = get_db_client()
     
     if not db:
-        # Force real Web3 call even without DB to test blockchain feature
-        from web3_helper import anchor_to_chain
+        raise Exception("Database client unavailable")
         
-        try:
-            tx_hash = anchor_to_chain({
-                "type": "escrow_unlock",
-                "challenge_id": "demo_challenge",
-                "status": "success",
-                "reduction_percentage": 34.2
-            })
-        except Exception as e:
-            tx_hash = f"Error triggering web3: {str(e)}"
-            
-        return VerifyResponse(
-            success=True,
-            message="30% reduction target achieved. Escrow funds released to wallet.",
-            streak_updated=30,
-            new_savings_score=85,
-            blockchain_tx=tx_hash,
-            reduction_achieved=34.2,
-            month1_total=10099,
-            month2_total=6645,
-            category_comparison={
-                "Food Delivery": {"month1": 4850, "month2": 2400, "change": -50.5},
-                "Entertainment": {"month1": 1200, "month2": 950, "change": -20.8},
-                "Transport": {"month1": 950, "month2": 780, "change": -17.9},
-                "Shopping": {"month1": 2300, "month2": 1850, "change": -19.6},
-                "Subscriptions": {"month1": 799, "month2": 665, "change": -16.8},
-            },
-            ai_verdict="Significant behavioral shift detected. Late-night food delivery orders dropped from 14 to 3 instances. Weekend impulse spending reduced by 62%. The user successfully redirected ₹3,454 toward their savings goal this month.",
-            behavioral_insights=[
-                "Late-night ordering (10PM-1AM) reduced from 14 to 3 instances — 78% drop",
-                "Food Delivery is the strongest improvement category at -50.5%",
-                "Average transaction size dropped from ₹385 to ₹267",
-                "No new subscription sign-ups detected in Month 2",
-                "Weekend spending pattern shifted from ₹3,200 to ₹1,400",
-            ]
-        )
-
     try:
-        dummy_user_id = '00000000-0000-0000-0000-000000000000' # using demo user
+        user_id = body.user_id
+        if not user_id:
+            raise Exception("Valid user_id is required")
 
         # 1. Fetch Month 1 active challenge
-        challenge_res = db.table("challenges").select("*").eq("user_id", dummy_user_id).eq("status", "active").execute()
+        challenge_res = db.table("challenges").select("*").eq("user_id", user_id).eq("status", "active").execute()
         if not hasattr(challenge_res, 'data') or len(challenge_res.data) == 0:
             return VerifyResponse(
                 success=False,
@@ -108,26 +73,26 @@ async def verify_month_2(body: VerifyRequest):
             "status": "success"
         })
         db.table("blockchain_transactions").insert({
-            "user_id": dummy_user_id,
+            "user_id": user_id,
             "challenge_id": challenge_id,
             "tx_hash": tx_hash,
             "transaction_type": "escrow_unlock"
         }).execute()
 
         # 4. Update Streak
-        streak_res = db.table("streaks").select("*").eq("user_id", dummy_user_id).execute()
+        streak_res = db.table("streaks").select("*").eq("user_id", user_id).execute()
         current_streak = 0
         if hasattr(streak_res, 'data') and len(streak_res.data) > 0:
             current_streak = streak_res.data[0]["streak_days"]
         
         new_streak = current_streak + challenge["challenge_duration"]
         db.table("streaks").upsert({
-            "user_id": dummy_user_id,
+            "user_id": user_id,
             "streak_days": new_streak
         }).execute()
 
         # 5. Update Leaderboard
-        lb_res = db.table("leaderboard").select("*").eq("user_id", dummy_user_id).execute()
+        lb_res = db.table("leaderboard").select("*").eq("user_id", user_id).execute()
         current_score = 50
         if hasattr(lb_res, 'data') and len(lb_res.data) > 0:
              current_score = lb_res.data[0]["savings_score"]
@@ -137,7 +102,7 @@ async def verify_month_2(body: VerifyRequest):
             "savings_score": new_score,
             "streak_days": new_streak,
             "reduction_percentage": 32 # Hit the goal
-        }).eq("user_id", dummy_user_id).execute()
+        }).eq("user_id", user_id).execute()
 
         return VerifyResponse(
             success=True,

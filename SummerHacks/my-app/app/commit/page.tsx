@@ -60,9 +60,7 @@ export default function CommitPage() {
   };
 
   const handleContinueDemo = () => {
-    setDemoMode(true);
-    setError("");
-    // Skip to escrow directly if user wants
+    // Demo mode removed
   };
 
   const handleCreateChallenge = async () => {
@@ -79,13 +77,8 @@ export default function CommitPage() {
     setStep("processing");
 
     try {
-      let mockTxHash = `0x${Math.random().toString(16).slice(2, 42)}`;
-
-      if (isDemoMode) {
-        // Simulated Stake
-        await new Promise(r => setTimeout(r, 2000));
-        mockTxHash = `demo_tx_${Math.random().toString(36).substring(7)}`;
-      } else if (typeof (window as any).ethereum !== 'undefined') {
+      let realTxHash = "";
+      if (typeof (window as any).ethereum !== 'undefined') {
         try {
           const provider = new ethers.BrowserProvider((window as Record<string, any>).ethereum);
           await provider.send("eth_requestAccounts", []);
@@ -102,14 +95,14 @@ export default function CommitPage() {
             value: ethers.parseEther(form.stakeAmount.toString())
           });
           
-          mockTxHash = tx.hash;
+          realTxHash = tx.hash;
           await tx.wait(1); // Wait for 1 confirmation
         } catch (web3Err: any) {
            console.error("Web3 Error:", web3Err);
            throw new Error(web3Err.info?.error?.message || web3Err.message || "Failed to process MetaMask transaction");
         }
       } else {
-         throw new Error("MetaMask is not installed. Please try Demo Mode.");
+         throw new Error("MetaMask is not installed.");
       }
 
       const challengeData = {
@@ -118,29 +111,15 @@ export default function CommitPage() {
         duration_days: form.duration,
         stake_amount: form.stakeAmount,
         target_reduction: form.targetReduction,
-        tx_hash: mockTxHash,
+        tx_hash: realTxHash,
       };
-      
+
       localStorage.setItem("ea_financial_goal", form.goal);
 
       try {
         await createChallenge(challengeData);
       } catch (err: any) {
-        // Did they skip onboarding entirely causing a Foreign Key error?
-        if (err.message && (err.message.includes("foreign") || err.code === "23503")) {
-          console.warn("Ghost profile generated to satisfy constraints.");
-          await createProfile({
-            id: userId,
-            name: "MVP Tester",
-            email: "ghost@autopsy.finance",
-            wallet_address: "0xMockWallet",
-            monthly_income: 100000,
-            financial_goal: form.goal
-          });
-          await createChallenge(challengeData);
-        } else {
-          throw err;
-        }
+        throw err;
       }
 
       setStep("success");
@@ -172,11 +151,6 @@ export default function CommitPage() {
                   <span className="w-1.5 h-1.5 bg-accent rounded-full mr-2 animate-pulse" />
                   Commitment Protocol
                 </div>
-                {isDemoMode && (
-                  <div className="inline-flex items-center px-3 py-1 bg-amber-500/10 text-amber-500 text-[10px] uppercase font-bold tracking-widest rounded-full border border-amber-500/20">
-                    <Sparkles className="w-3 h-3 mr-1" /> Demo Mode Active
-                  </div>
-                )}
               </div>
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-black mb-1">Lock in your commitment.</h1>
               <p className="text-lg text-gray-500 font-medium mb-10">
@@ -273,7 +247,7 @@ export default function CommitPage() {
                   onClick={handleCreateChallenge}
                   className="w-2/3 py-4 bg-foreground text-background rounded-xl text-sm font-bold tracking-widest uppercase hover:bg-foreground/80 transition-all flex items-center justify-center gap-2"
                 >
-                  {isDemoMode ? "Simulate Protocol" : "Create Protocol"} <ArrowRight size={16} />
+                  Create Protocol <ArrowRight size={16} />
                 </button>
               </div>
             </motion.div>
@@ -331,12 +305,12 @@ export default function CommitPage() {
               </p>
 
               <div className="flex flex-col gap-4">
-                {(!isDemoMode && walletState !== "connected") ? (
+                {walletState !== "connected" ? (
                   <div className="flex flex-col gap-3">
                     {walletState === "not_installed" ? (
                       <div className="p-4 bg-amber-500/10 border border-amber-500/20 rounded-xl mb-2">
                         <p className="text-xs text-amber-500 font-bold text-center">
-                          MetaMask is not detected. Switch to Demo Mode to continue the flow.
+                          MetaMask is not detected. Please install it to continue.
                         </p>
                       </div>
                     ) : (
@@ -347,12 +321,6 @@ export default function CommitPage() {
                         Connect MetaMask <ArrowRight size={16} />
                       </button>
                     )}
-                    <button
-                      onClick={handleContinueDemo}
-                      className="w-full py-4 border border-gray-200 rounded-xl text-sm font-bold tracking-widest uppercase hover:bg-gray-50 transition-all text-gray-500"
-                    >
-                      Continue in Demo Mode (Mock)
-                    </button>
                   </div>
                 ) : (
                   <div className="flex gap-4">
@@ -368,8 +336,8 @@ export default function CommitPage() {
                       disabled={loading}
                       className="w-2/3 py-4 bg-accent text-white rounded-xl text-sm font-bold tracking-widest uppercase hover:bg-accent/90 transition-all flex items-center justify-center gap-2 disabled:opacity-50 shadow-xl shadow-accent/20"
                     >
-                      {loading ? "Processing..." : isDemoMode ? "Simulate Staking" : "Sign & Lock Funds"} 
-                      {isDemoMode ? <Sparkles className="w-4 h-4" /> : <Key className="w-4 h-4" />}
+                      {loading ? "Processing..." : "Sign & Lock Funds"} 
+                      <Key className="w-4 h-4" />
                     </button>
                   </div>
                 )}
@@ -402,12 +370,10 @@ export default function CommitPage() {
                 <CheckCircle2 className="w-12 h-12 text-accent" />
               </div>
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-black">
-                {isDemoMode ? "Goal simulation active." : "You are locked in."}
+                You are locked in.
               </h1>
               <p className="text-lg text-secondary font-light mb-12 max-w-lg mx-auto">
-                {isDemoMode 
-                  ? "You are running in demo mode. Funds are simulated as locked." 
-                  : "Your funds are secured in the smart contract. Time to prove you can change."}
+                Your funds are secured in the smart contract. Time to prove you can change.
               </p>
 
               <div className="bg-white border border-gray-200 shadow-sm rounded-xl p-6 text-left max-w-sm mx-auto mb-10 space-y-4">
@@ -423,17 +389,7 @@ export default function CommitPage() {
                   <span className="font-bold text-gray-400 uppercase tracking-widest">Target</span>
                   <span className="font-bold text-black">-{form.targetReduction}% {analysis.highest_spend_category}</span>
                 </div>
-                {isDemoMode && (
-                  <div className="pt-4 mt-4 border-t border-gray-100 flex items-center gap-3">
-                    <div className="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center border border-green-100">
-                      <Trophy className="w-6 h-6 text-green-600" />
-                    </div>
-                    <div>
-                      <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Reward Reserved</div>
-                      <div className="text-xs font-bold text-black italic">"Early Adopter" NFT Badge</div>
-                    </div>
-                  </div>
-                )}
+
               </div>
 
               <button

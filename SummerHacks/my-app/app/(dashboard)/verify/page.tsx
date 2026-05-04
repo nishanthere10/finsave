@@ -11,25 +11,6 @@ import {
 import { useRouter } from "next/navigation";
 import CountUp from "react-countup";
 
-// Month 2 mock transactions (reduced spending compared to Month 1)
-const MONTH_2_TRANSACTIONS = [
-  { merchant: "Swiggy", amount: 320, date: "2025-02-03" },
-  { merchant: "Zomato", amount: 180, date: "2025-02-05" },
-  { merchant: "Uber", amount: 150, date: "2025-02-06" },
-  { merchant: "Amazon", amount: 450, date: "2025-02-08" },
-  { merchant: "Netflix", amount: 199, date: "2025-02-10" },
-  { merchant: "Swiggy", amount: 280, date: "2025-02-12" },
-  { merchant: "Myntra", amount: 650, date: "2025-02-14" },
-  { merchant: "Ola", amount: 180, date: "2025-02-16" },
-  { merchant: "Spotify", amount: 119, date: "2025-02-18" },
-  { merchant: "Zomato", amount: 220, date: "2025-02-20" },
-  { merchant: "DMart", amount: 1200, date: "2025-02-22" },
-  { merchant: "Uber", amount: 120, date: "2025-02-24" },
-  { merchant: "Swiggy", amount: 350, date: "2025-02-26" },
-  { merchant: "BigBasket", amount: 890, date: "2025-02-27" },
-  { merchant: "BookMyShow", amount: 400, date: "2025-02-28" },
-];
-
 interface VerifyResult {
   message: string;
   streak_updated: number;
@@ -43,34 +24,61 @@ interface VerifyResult {
   behavioral_insights: string[];
 }
 
+
 export default function VerifyPage() {
   const router = useRouter();
   const [status, setStatus] = useState<"idle" | "preview" | "uploading" | "analyzing" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [result, setResult] = useState<VerifyResult | null>(null);
 
+  const [file, setFile] = useState<File | null>(null);
+  const [rawText, setRawText] = useState("");
+
   const handleShowPreview = () => {
     setStatus("preview");
+  };
+
+  const handleFileDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    const f = e.dataTransfer.files[0];
+    if (f) setFile(f);
   };
 
   const handleSubmitVerification = async () => {
     setStatus("uploading");
     setErrorMsg("");
 
-    const rawText = MONTH_2_TRANSACTIONS
-      .map((tx) => `${tx.merchant} - Rs.${tx.amount} - ${tx.date}`)
-      .join("\n");
+    let input = rawText;
+    if (!input && file) {
+      input = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
 
-    setTimeout(async () => {
+    if (!input) {
+      setErrorMsg("Please provide Month 2 transaction data.");
+      setStatus("error");
+      return;
+    }
+
       setStatus("analyzing");
 
+      const userId = typeof window !== "undefined" ? localStorage.getItem("ea_user_id") || "" : "";
+      
       try {
+        if (!userId) {
+          throw new Error("Missing user_id. Please restart the flow.");
+        }
+        
         const res = await axios.post("http://127.0.0.1:8001/api/verify/submit", {
-          user_id: "00000000-0000-0000-0000-000000000000",
-          month_2_raw_text: rawText,
+          user_id: userId,
+          month_2_raw_text: input,
         });
 
-        if (res.data.success) {
+        if (res.data.success || res.data.message) {
           setResult(res.data);
           setStatus("success");
         } else {
@@ -81,11 +89,9 @@ export default function VerifyPage() {
         setErrorMsg(err.response?.data?.detail || err.message || "Backend unreachable");
         setStatus("error");
       }
-    }, 2000);
   };
 
-  const isRealHash = (hash: string) =>
-    hash.startsWith("0x") && !hash.includes("MOCK") && !hash.includes("FAILED") && hash.length >= 66;
+
 
   return (
     <div className="max-w-5xl mx-auto space-y-8 pb-20 font-sans mt-8 px-4">
@@ -103,18 +109,51 @@ export default function VerifyPage() {
               Upload your Month 2 bank statement to verify spending reduction and unlock your Escrow funds on-chain.
             </p>
 
-            <div
-              onClick={handleShowPreview}
-              className="bg-surface border-2 border-dashed border-border rounded-2xl p-16 flex flex-col items-center justify-center cursor-pointer hover:border-accent hover:bg-accent/5 transition-all group"
-            >
-              <div className="w-16 h-16 bg-background border border-border flex items-center justify-center rounded-2xl mb-6 shadow-sm group-hover:scale-110 transition-transform">
-                <UploadCloud className="w-8 h-8 text-secondary group-hover:text-accent transition-colors" />
+            <div className="grid lg:grid-cols-2 gap-8">
+              <div
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={handleFileDrop}
+                className="bg-surface border-2 border-dashed border-border rounded-2xl p-16 flex flex-col items-center justify-center cursor-pointer hover:border-accent hover:bg-accent/5 transition-all group"
+                onClick={() => document.getElementById("file-input-verify")?.click()}
+              >
+                <input id="file-input-verify" type="file" className="hidden" accept=".pdf,.csv,.png,.jpg,.jpeg" onChange={(e) => setFile(e.target.files?.[0] || null)} />
+                {file ? (
+                  <div className="flex items-center justify-center gap-3">
+                    <FileText className="w-6 h-6 text-accent" />
+                    <span className="font-bold text-foreground">{file.name}</span>
+                  </div>
+                ) : (
+                  <>
+                    <div className="w-16 h-16 bg-background border border-border flex items-center justify-center rounded-2xl mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                      <UploadCloud className="w-8 h-8 text-secondary group-hover:text-accent transition-colors" />
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground mb-2">Upload Month 2 Statement</h3>
+                    <p className="text-sm font-medium text-secondary text-center max-w-sm">
+                      Click or drag your new statement
+                    </p>
+                  </>
+                )}
               </div>
-              <h3 className="text-xl font-bold text-foreground mb-2">Upload Month 2 Statement</h3>
-              <p className="text-sm font-medium text-secondary text-center max-w-sm">
-                Click to load and preview your Month 2 transaction data before running verification
-              </p>
+
+              <div>
+                <label className="text-[10px] font-bold text-secondary uppercase tracking-widest mb-2 block">Or paste transaction text</label>
+                <textarea
+                  value={rawText}
+                  onChange={(e) => setRawText(e.target.value)}
+                  rows={8}
+                  className="w-full p-4 bg-white border border-gray-200 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:border-black transition-colors text-sm font-mono resize-none shadow-sm h-full min-h-[250px]"
+                  placeholder={"Zomato - ₹350\nAmazon - ₹1200\nNetflix - ₹649\nSwiggy - ₹280\n..."}
+                />
+              </div>
             </div>
+
+            <button
+              onClick={handleSubmitVerification}
+              disabled={(!file && !rawText)}
+              className="mt-8 w-full py-4 bg-accent text-white rounded-xl text-sm font-bold tracking-widest uppercase hover:bg-accent/90 transition-all flex items-center justify-center gap-2 disabled:opacity-20 disabled:cursor-not-allowed shadow-xl"
+            >
+              <Brain className="w-4 h-4" /> Run Verification Pipeline
+            </button>
 
             {errorMsg && (
               <div className="mt-8 flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-500 font-bold">
@@ -124,63 +163,7 @@ export default function VerifyPage() {
           </motion.div>
         )}
 
-        {/* PREVIEW STATE — Show Month 2 Transactions */}
-        {status === "preview" && (
-          <motion.div key="preview" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
-            <div className="mb-2 inline-flex items-center px-3 py-1 bg-blue-500/10 text-blue-600 text-[10px] uppercase font-bold tracking-widest rounded-full">
-              <FileText className="w-3 h-3 mr-1.5" />
-              Statement Preview
-            </div>
-            <h1 className="text-3xl font-bold tracking-tight mb-2">Month 2 Transaction Data</h1>
-            <p className="text-sm text-secondary font-medium mb-6">
-              {MONTH_2_TRANSACTIONS.length} transactions detected • Total: ₹{MONTH_2_TRANSACTIONS.reduce((a, t) => a + t.amount, 0).toLocaleString()}
-            </p>
-
-            <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden mb-8">
-              <div className="grid grid-cols-12 gap-4 px-6 py-3 bg-gray-50 border-b border-gray-100">
-                <div className="col-span-1 text-[10px] font-bold text-gray-400 uppercase tracking-widest">#</div>
-                <div className="col-span-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Merchant</div>
-                <div className="col-span-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Date</div>
-                <div className="col-span-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest text-right">Amount</div>
-              </div>
-              {MONTH_2_TRANSACTIONS.map((tx, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.04 }}
-                  className="grid grid-cols-12 gap-4 px-6 py-3 border-b border-gray-50 hover:bg-gray-50/50 transition-colors"
-                >
-                  <div className="col-span-1 text-xs text-gray-300 font-mono">{String(i + 1).padStart(2, "0")}</div>
-                  <div className="col-span-4 text-sm font-bold text-black">{tx.merchant}</div>
-                  <div className="col-span-4 text-sm text-gray-500 font-mono">{tx.date}</div>
-                  <div className="col-span-3 text-sm font-bold text-red-600 text-right font-mono">₹{tx.amount.toLocaleString()}</div>
-                </motion.div>
-              ))}
-              <div className="grid grid-cols-12 gap-4 px-6 py-4 bg-gray-50 border-t border-gray-200">
-                <div className="col-span-9 text-sm font-bold text-gray-900 uppercase tracking-widest">Total</div>
-                <div className="col-span-3 text-sm font-bold text-black text-right font-mono">
-                  ₹{MONTH_2_TRANSACTIONS.reduce((a, t) => a + t.amount, 0).toLocaleString()}
-                </div>
-              </div>
-            </div>
-
-            <div className="flex gap-4">
-              <button
-                onClick={() => setStatus("idle")}
-                className="w-1/3 py-4 border border-gray-200 rounded-xl text-sm font-bold tracking-widest uppercase hover:bg-gray-50 transition-all text-gray-500"
-              >
-                Back
-              </button>
-              <button
-                onClick={handleSubmitVerification}
-                className="w-2/3 py-4 bg-foreground text-background rounded-xl text-sm font-bold tracking-widest uppercase hover:bg-foreground/80 transition-all flex items-center justify-center gap-2 shadow-xl"
-              >
-                <Brain className="w-4 h-4" /> Run Verification Pipeline
-              </button>
-            </div>
-          </motion.div>
-        )}
+        {/* PREVIEW STATE — Removed for real data flow */}
 
         {/* PROCESSING STATE */}
         {(status === "uploading" || status === "analyzing") && (
@@ -313,7 +296,7 @@ export default function VerifyPage() {
               </div>
 
               {result.blockchain_tx && (
-                <div className={`${isRealHash(result.blockchain_tx) ? "bg-green-500/10 border-green-500/20" : "bg-amber-500/10 border-amber-500/20"} border rounded-xl p-6 text-left w-full md:w-2/3`}>
+                <div className={`bg-green-500/10 border-green-500/20 border rounded-xl p-6 text-left w-full md:w-2/3`}>
                   <div className="text-[10px] font-bold text-green-700/70 uppercase tracking-widest mb-3">On-Chain Verification Receipt</div>
                   
                   {/* What was anchored — human readable */}
@@ -327,9 +310,9 @@ export default function VerifyPage() {
                       <span className="text-gray-400 font-mono">status</span>
                       <span className="text-green-600 font-bold font-mono">success</span>
                       <span className="text-gray-400 font-mono">reduction</span>
-                      <span className="text-green-600 font-bold font-mono">34.2%</span>
+                      <span className="text-green-600 font-bold font-mono">{result.reduction_achieved}%</span>
                       <span className="text-gray-400 font-mono">challenge</span>
-                      <span className="text-gray-700 font-bold font-mono truncate">demo_challenge</span>
+                      <span className="text-gray-700 font-bold font-mono truncate">onchain_challenge</span>
                     </div>
                     <p className="text-[10px] text-gray-400 mt-2 pt-2 border-t border-gray-100">
                       ↑ This JSON was SHA-256 hashed and embedded in the tx <code className="text-gray-500">data</code> field. Click &quot;+ Show more&quot; on Etherscan to see the raw hex.
@@ -337,7 +320,7 @@ export default function VerifyPage() {
                   </div>
 
                   <div className="font-mono text-xs text-gray-600 break-all mb-3">{result.blockchain_tx}</div>
-                  {isRealHash(result.blockchain_tx) && (
+                  {result.blockchain_tx && (
                     <a
                       href={`https://sepolia.etherscan.io/tx/${result.blockchain_tx}`}
                       target="_blank"

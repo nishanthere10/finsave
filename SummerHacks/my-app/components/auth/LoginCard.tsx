@@ -41,16 +41,16 @@ export default function LoginCard() {
     try {
       const formattedPhone = getFormattedPhone(phone);
       
-      // We still attempt to fire it in case Supabase IS configured
-      await supabase.auth.signInWithOtp({
+      // We attempt to fire it
+      const { error } = await supabase.auth.signInWithOtp({
         phone: formattedPhone,
-      }).catch(() => {}); // Catch and silently ignore for the demo
+      });
 
-      // ALWAYS succeed for the demo
+      if (error) throw error;
+
       setStep("otp");
     } catch (err: any) {
-      // ALWAYS succeed for demo
-      setStep("otp");
+      setError(err.message || "Failed to send OTP");
     } finally {
       setLoading(false);
     }
@@ -66,18 +66,18 @@ export default function LoginCard() {
     try {
       const formattedPhone = getFormattedPhone(phone);
       
-      // Attempt verification if configured
-      await supabase.auth.verifyOtp({
+      // Attempt verification
+      const { error } = await supabase.auth.verifyOtp({
         phone: formattedPhone,
         token: finalOTP,
         type: "sms",
-      }).catch(() => {}); // Ignore error
+      });
 
-      // ALWAYS succeed for the demo
+      if (error) throw error;
+
       router.push("/dashboard");
     } catch (err: any) {
-      // Force redirect for hackathon demo
-      router.push("/dashboard");
+      setError(err.message || "Invalid or expired OTP");
     } finally {
       setLoading(false);
     }

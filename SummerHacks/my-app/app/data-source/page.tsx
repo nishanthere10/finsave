@@ -18,7 +18,8 @@ export default function DataSourcePage() {
       router.push("/analysis");
     } else if (selected === "bank") {
       localStorage.setItem("ea_data_source", "bank");
-      // For now, redirect to analysis with a mock AA flow
+      // TODO: Implement actual Setu AA integration to fetch real bank data.
+      // For now, redirects to analysis where manual upload acts as the fallback.
       router.push("/analysis");
     }
   };

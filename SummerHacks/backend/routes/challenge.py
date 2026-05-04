@@ -45,29 +45,35 @@ async def create_challenge(body: ChallengeCreateRequest):
         }, stake_amount_eth=0.0)
     except Exception as e:
         print(f"[Challenge] Web3 anchor failed: {e}")
-        tx_hash = f"0x_FAILED_{str(e)[:20]}"
+        raise Exception(f"Web3 anchor failed: {e}")
 
     db = get_db_client()
     if db:
         try:
-            dummy_user_id = '00000000-0000-0000-0000-000000000000'
+            user_id = body.user_id
+            if not user_id:
+                raise Exception("Valid user_id is required")
+                
             db.table("challenges").insert({
                 "id": challenge_id,
-                "user_id": dummy_user_id,
+                "user_id": user_id,
                 "challenge_duration": body.penalty_days,
                 "target_reduction_percentage": 30,
                 "status": "active"
             }).execute()
 
             db.table("blockchain_transactions").insert({
-                "user_id": dummy_user_id,
+                "user_id": user_id,
                 "challenge_id": challenge_id,
                 "tx_hash": tx_hash,
                 "transaction_type": "escrow_lock"
             }).execute()
             print(f"[Challenge] DB persistence successful for {challenge_id}")
         except Exception as dbe:
-            print(f"[Challenge] DB persistence failed (non-blocking): {dbe}")
+            print(f"[Challenge] DB persistence failed: {dbe}")
+            raise Exception("Database persistence failed")
+    else:
+        raise Exception("Database client unavailable")
 
     return ChallengeResponse(
         challenge_id=challenge_id,

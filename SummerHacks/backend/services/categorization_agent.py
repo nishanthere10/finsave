@@ -39,18 +39,11 @@ def llm_categorize_transactions(transactions: list[dict]) -> list[dict]:
 
     print("[ExpenseAnalysis] Starting LLM categorization pass...")
     try:
-        from langchain_groq import ChatGroq
+        from langchain_community.llms.ollama import Ollama
         
-        api_key = os.getenv("GROQ_API_KEY", "")
-        if not api_key:
-            raise ValueError("No GROQ_API_KEY found")
-
-        llm = ChatGroq(
-            model="llama-3.3-70b-versatile",
-            temperature=0.0,
-            api_key=api_key,
-            max_tokens=1000,
-            max_retries=0
+        llm = Ollama(
+            model="phi3",
+            temperature=0.0
         )
 
         # We construct a slim version of the transactions for the LLM to save tokens
@@ -58,9 +51,8 @@ def llm_categorize_transactions(transactions: list[dict]) -> list[dict]:
         
         prompt = CATEGORIZATION_PROMPT.format(transactions_json=json.dumps(tx_list_for_llm, indent=2))
         
-        time.sleep(2.5)
         response = llm.invoke(prompt)
-        content = response.content.strip()
+        content = str(response).strip()
 
         # Remove markdown ticks if the LLM leaked them despite prompt
         if content.startswith("```json"):

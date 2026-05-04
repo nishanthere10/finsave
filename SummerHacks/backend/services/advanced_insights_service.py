@@ -50,19 +50,11 @@ def generate_advanced_insights(
 ) -> dict:
     """Generate all specialized emotional and behavioral AI insights in a single LLM pass."""
     try:
-        from langchain_groq import ChatGroq
+        from langchain_community.llms.ollama import Ollama
 
-        api_key = os.getenv("GROQ_API_KEY", "")
-        if not api_key:
-            print("[ExpenseAnalysis] No GROQ_API_KEY found, using fallback insights")
-            return DEFAULT_INSIGHTS
-
-        # Using JSON mode format enforcement if available, or just strict templating
-        llm = ChatGroq(
-            model="llama-3.3-70b-versatile",
+        llm = Ollama(
+            model="phi3",
             temperature=0.7,
-            api_key=api_key,
-            max_tokens=300,
         )
 
         prompt = INSIGHTS_PROMPT_TEMPLATE.format(
@@ -74,7 +66,7 @@ def generate_advanced_insights(
         )
 
         response = llm.invoke(prompt)
-        content = response.content.strip()
+        content = str(response).strip()
 
         # Clean JSON markdown if the LLM leaked it despite instructions
         if content.startswith("```json"):

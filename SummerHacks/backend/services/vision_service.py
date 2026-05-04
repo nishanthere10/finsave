@@ -15,8 +15,8 @@ def extract_transactions_from_image(base64_image: str) -> str:
     Use Gemini 1.5 Flash to extract transaction text from a bank statement image.
     """
     if not api_key:
-        print("[VisionService] GEMINI_API_KEY missing. Returning mock data.")
-        return "Zomato - Rs.450\nSwiggy - Rs.320\nUber - Rs.150\nNetflix - Rs.649"
+        print("[VisionService] GEMINI_API_KEY missing.")
+        raise Exception("GEMINI_API_KEY is missing. Cannot use vision extraction.")
 
     try:
         model = genai.GenerativeModel('gemini-1.5-flash')
@@ -35,4 +35,4 @@ def extract_transactions_from_image(base64_image: str) -> str:
         return response.text
     except Exception as e:
         print(f"[VisionService] Gemini Vision failed: {e}")
-        return ""
+        raise Exception(f"Gemini Vision failed: {str(e)}")

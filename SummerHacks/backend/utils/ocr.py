@@ -28,8 +28,8 @@ def extract_text_from_base64(file_data_b64: str, filename: str) -> str:
                     text += pytesseract.image_to_string(img) + "\n"
                 return text
             except Exception as e:
-                print(f"[OCR] PDF extraction failed: {e}. Falling back to default.")
-                return _fallback_mock_text()
+                print(f"[OCR] PDF extraction failed: {e}.")
+                raise Exception(f"PDF extraction failed: {str(e)}")
                 
         else:
             # Probably an image
@@ -40,20 +40,12 @@ def extract_text_from_base64(file_data_b64: str, filename: str) -> str:
                 text = pytesseract.image_to_string(image)
                 return text
             except Exception as e:
-                print(f"[OCR] Image extraction failed: {e}. Falling back to default.")
-                return _fallback_mock_text()
+                print(f"[OCR] Image extraction failed: {e}.")
+                raise Exception(f"Image extraction failed: {str(e)}")
                 
     except Exception as e:
         print(f"[OCR] General error: {e}")
-        return _fallback_mock_text()
+        raise Exception(f"Failed to extract text from file: {str(e)}")
 
 
-def _fallback_mock_text():
-    """Fallback text simulating a successful OCR so pipeline doesn't break."""
-    return """
-    Swiggy - Rs. 400
-    Zomato - Rs. 600
-    Amazon - Rs. 1500
-    Uber - Rs. 900
-    Netflix - Rs. 649
-    """
+
