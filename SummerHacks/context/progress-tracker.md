@@ -43,9 +43,17 @@
 
 ## 🔴 Backlog / Upcoming
 - **Phase 2:** Live Web3 Escrow — Solidity smart contract deployment.
-- **Phase 3:** Live Account Aggregator — Replace mock Setu sandbox.
 - **Phase 4:** Async Backend — Move LangGraph execution to Celery/Redis.
 - **Phase 5:** Feature Completion — Month 2 verification logic, WhatsApp bot.
+
+---
+
+## 🟢 Completed (Phase 3)
+### Phase 3 — Live Account Aggregator (Setu) ✅ COMPLETE
+- Replaced mock Anumati URLs with live Setu `v2/consents` API flow.
+- Added `backend/utils/crypto_helper.py` to handle ECDH Curve25519 key generation & JWE Decryption.
+- Updated `/api/webhook/setu` to handle `CONSENT_STATUS_UPDATE` and simulate encrypted data session fetches.
+- Verified `pii_masking.py` robustly strips emails, UPI IDs, phone numbers, and account refs.
 
 ---
 
