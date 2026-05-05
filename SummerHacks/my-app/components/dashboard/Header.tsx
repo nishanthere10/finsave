@@ -3,9 +3,11 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Bell, Wallet, User } from "lucide-react";
+import { useUser } from "@clerk/nextjs";
 
 export default function Header() {
   const pathname = usePathname();
+  const { user } = useUser();
   
   const getPageTitle = () => {
     const routeMap: Record<string, string> = {
@@ -26,19 +28,16 @@ export default function Header() {
   const [dataSource, setDataSource] = useState<string>("Manual");
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== "undefined" && user) {
       import('@/lib/supabase').then(({ getProfile }) => {
-        const uId = localStorage.getItem("ea_user_id");
-        if (uId) {
-          getProfile(uId).then(p => {
-             if (p?.wallet_address) setWallet(p.wallet_address.substring(0,6) + "..." + p.wallet_address.substring(p.wallet_address.length - 4));
-          }).catch(console.error);
-        }
+        getProfile(user.id).then(p => {
+           if (p?.wallet_address) setWallet(p.wallet_address.substring(0,6) + "..." + p.wallet_address.substring(p.wallet_address.length - 4));
+        }).catch(console.error);
       });
       const d = localStorage.getItem("ea_data_source");
       if (d === "bank") setDataSource("Setu AA");
     }
-  }, []);
+  }, [user]);
 
   return (
     <header className="h-20 shrink-0 border-b border-[#1F1F1F] flex items-center justify-between px-6 lg:px-8 bg-[#000000] sticky top-0 z-50">

@@ -144,3 +144,52 @@ body {
     @apply border-border;
   }
 }
+
+/* ── Clerk Component Isolation ───────────────────────────────────────── */
+/* Clerk's internal elements inherit body { color: #000 } from light mode,
+   making text invisible on Clerk's dark-themed backgrounds.
+   These rules force correct text colors on ALL Clerk-rendered elements. */
+
+.cl-rootBox,
+.cl-card,
+.cl-signIn-root,
+.cl-signUp-root,
+.cl-userProfile-root,
+.cl-userButton-root,
+.cl-userButton-popover,
+.cl-organizationProfile-root,
+.cl-modalContent {
+  color: #ffffff !important;
+}
+
+/* Clerk secondary text (labels, descriptions) */
+.cl-formFieldLabel,
+.cl-headerSubtitle,
+.cl-footerActionText,
+.cl-socialButtonsBlockButtonText,
+.cl-dividerText,
+.cl-userPreviewSecondaryIdentifier,
+.cl-breadcrumbsItemDivider,
+.cl-profileSectionTitle,
+.cl-profileSectionContent,
+.cl-menuItem,
+.cl-navbarButton {
+  color: #d1d5db !important;
+}
+
+/* Clerk headings */
+.cl-headerTitle {
+  color: #ffffff !important;
+}
+
+/* Clerk menu/popover backgrounds */
+.cl-userButtonPopoverCard,
+.cl-menuList {
+  background-color: #1E2026 !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Prevent global border-color bleeding into Clerk inputs */
+.cl-formFieldInput {
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}

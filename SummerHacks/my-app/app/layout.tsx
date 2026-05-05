@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/lib/context/ThemeContext";
 import { ClerkProvider } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -30,13 +31,23 @@ export default function RootLayout({
   return (
     <ClerkProvider
       appearance={{
+        baseTheme: dark,
         variables: {
           colorPrimary: '#F0B90B',
           colorBackground: '#1E2026',
           colorText: 'white',
+          colorTextSecondary: '#A1A1AA',
           colorInputBackground: '#2B2F36',
           colorInputText: 'white',
         },
+        elements: {
+          userButtonPopoverCard: 'bg-[#1E2026] text-white',
+          userPreviewMainIdentifier: 'text-white',
+          userPreviewSecondaryIdentifier: 'text-gray-400',
+          userButtonPopoverActionButtonText: 'text-white',
+          userButtonPopoverActionButtonIcon: 'text-gray-400',
+          formButtonPrimary: 'text-black',
+        }
       }}
     >
       <html

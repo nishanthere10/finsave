@@ -11,7 +11,7 @@ except ImportError:
 
 # We map NEXT_PUBLIC_SUPABASE_URL because the same .env file convention is used for front/backend often
 URL = os.getenv("NEXT_PUBLIC_SUPABASE_URL", os.getenv("SUPABASE_URL", ""))
-KEY = os.getenv("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY", os.getenv("SUPABASE_KEY", ""))
+KEY = os.getenv("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY", os.getenv("NEXT_PUBLIC_SUPABASE_ANON_KEY", os.getenv("SUPABASE_KEY", "")))
 
 supabase_client = None
 

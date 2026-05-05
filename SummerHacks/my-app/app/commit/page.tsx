@@ -8,15 +8,16 @@ import { createChallenge, createProfile } from "@/lib/supabase";
 import { ethers } from "ethers";
 import { useAppStore } from "@/lib/store/useAppStore";
 import { Sparkles, Trophy } from "lucide-react";
+import { useUser } from "@clerk/nextjs";
 
 export default function CommitPage() {
   const router = useRouter();
+  const { user } = useUser();
   const [step, setStep] = useState<"setup" | "escrow" | "processing" | "success">("setup");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   
   const [analysis, setAnalysis] = useState<any>(null);
-  const [userId, setUserId] = useState<string>("");
   const [walletState, setWalletState] = useState<"idle" | "available" | "not_installed" | "connected">("idle");
   const { isDemoMode, setDemoMode, walletAddress, setWalletAddress } = useAppStore();
 
@@ -29,14 +30,7 @@ export default function CommitPage() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      let uId = localStorage.getItem("ea_user_id");
-      // Clean up previous broken mock IDs
-      if (!uId || uId.startsWith("mock-user-")) {
-        uId = crypto.randomUUID ? crypto.randomUUID() : '5fc1f019-1234-4dc6-8109-74de5160bb7a';
-        localStorage.setItem("ea_user_id", uId);
-      }
       const aData = localStorage.getItem("ea_analysis");
-      if (uId) setUserId(uId);
       if (aData) setAnalysis(JSON.parse(aData));
 
       // Wallet detection
@@ -64,7 +58,7 @@ export default function CommitPage() {
   };
 
   const handleCreateChallenge = async () => {
-    if (!userId || !analysis) {
+    if (!user || !analysis) {
       setError("Missing user or analysis data. Please restart the flow.");
       return;
     }
@@ -106,7 +100,7 @@ export default function CommitPage() {
       }
 
       const challengeData = {
-        user_id: userId,
+        user_id: user?.id || "",
         category: analysis.highest_spend_category || "Unknown",
         duration_days: form.duration,
         stake_amount: form.stakeAmount,

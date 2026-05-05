@@ -3,7 +3,7 @@ import { SignUp } from "@clerk/nextjs";
 export default function Page() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#1E2026]">
-      <SignUp />
+      <SignUp fallbackRedirectUrl="/onboarding" signInFallbackRedirectUrl="/dashboard" />
     </div>
   );
 }

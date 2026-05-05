@@ -65,16 +65,9 @@ export default function VerifyPage() {
     }
 
       setStatus("analyzing");
-
-      const userId = typeof window !== "undefined" ? localStorage.getItem("ea_user_id") || "" : "";
       
       try {
-        if (!userId) {
-          throw new Error("Missing user_id. Please restart the flow.");
-        }
-        
-        const res = await axios.post("http://127.0.0.1:8001/api/verify/submit", {
-          user_id: userId,
+        const res = await axios.post("/api/verify", {
           month_2_raw_text: input,
         });
 
@@ -86,7 +79,7 @@ export default function VerifyPage() {
           setStatus("error");
         }
       } catch (err: any) {
-        setErrorMsg(err.response?.data?.detail || err.message || "Backend unreachable");
+        setErrorMsg(err.response?.data?.error || err.message || "Backend unreachable");
         setStatus("error");
       }
   };
