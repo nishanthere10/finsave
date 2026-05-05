@@ -2,7 +2,8 @@
 challenge.py -- FastAPI router for Challenge + Web3 anchoring integration.
 """
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from utils.auth import verify_clerk_token
 from pydantic import BaseModel
 from utils.db import get_db_client
 import uuid
@@ -16,7 +17,6 @@ def set_stores(state_store: dict):
     _state_store = state_store
 
 class ChallengeCreateRequest(BaseModel):
-    user_id: str
     goal: str
     commitment: str
     penalty_days: int
@@ -29,7 +29,7 @@ class ChallengeResponse(BaseModel):
     status: str
 
 @router.post("/create", response_model=ChallengeResponse)
-async def create_challenge(body: ChallengeCreateRequest):
+async def create_challenge(body: ChallengeCreateRequest, user_id: str = Depends(verify_clerk_token)):
     """Create a new challenge and anchor the hash to the blockchain."""
     challenge_id = str(uuid.uuid4())
     
@@ -50,9 +50,7 @@ async def create_challenge(body: ChallengeCreateRequest):
     db = get_db_client()
     if db:
         try:
-            user_id = body.user_id
-            if not user_id:
-                raise Exception("Valid user_id is required")
+            # user_id is already verified from the Clerk JWT
                 
             db.table("challenges").insert({
                 "id": challenge_id,

@@ -4,22 +4,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Bell, Search, ChevronRight } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
+import { UserButton } from "@clerk/nextjs";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [searchOpen, setSearchOpen] = useState(false);
-  const [userName, setUserName] = useState("User");
-  const [userInitial, setUserInitial] = useState("U");
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const name = localStorage.getItem("ea_name") || 
-                   localStorage.getItem("user_name") || 
-                   localStorage.getItem("ea_user_name") || "User";
-      setUserName(name);
-      setUserInitial(name.charAt(0).toUpperCase());
-    }
-  }, []);
 
   // ⌘K shortcut handler
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -114,14 +103,8 @@ export default function Navbar() {
         <div className="w-px h-6 bg-gray-200 mx-1" />
 
         {/* User */}
-        <div className="flex items-center gap-2.5 px-2 py-1 rounded-lg hover:bg-gray-50 transition-colors cursor-default group">
-          <div className="w-7 h-7 bg-gradient-to-br from-[#0E9F6E] to-emerald-700 rounded-full flex items-center justify-center text-white text-[11px] font-bold shadow-sm ring-2 ring-white group-hover:ring-green-100 transition-all select-none">
-            {userInitial}
-          </div>
-          <div className="hidden md:flex flex-col items-start">
-            <span className="text-xs font-bold text-gray-800 leading-tight">{userName}</span>
-            <span className="text-[10px] text-gray-400 leading-tight font-mono">Sepolia Testnet</span>
-          </div>
+        <div className="flex items-center gap-2.5 px-2 py-1">
+          <UserButton afterSignOutUrl="/" />
         </div>
       </div>
     </header>

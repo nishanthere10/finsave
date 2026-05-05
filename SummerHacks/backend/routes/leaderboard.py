@@ -2,7 +2,8 @@
 leaderboard.py -- FastAPI router for fetching leaderboard data.
 """
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
+from utils.auth import verify_clerk_token
 from utils.db import get_db_client
 
 router = APIRouter(prefix="/api/leaderboard", tags=["Leaderboard"])
@@ -14,7 +15,7 @@ def set_stores(state_store: dict):
     _state_store = state_store
 
 @router.get("/")
-async def fetch_leaderboard(limit: int = 10, community: str = None):
+async def fetch_leaderboard(limit: int = 10, community: str = None, user_id: str = Depends(verify_clerk_token)):
     """
     Fetch the latest leaderboard data from Supabase.
     Falls back to mock data if DB is unavailable.
@@ -49,7 +50,7 @@ async def fetch_leaderboard(limit: int = 10, community: str = None):
     raise HTTPException(status_code=500, detail="Database client unavailable")
 
 @router.get("/activity")
-async def fetch_activities(limit: int = 5):
+async def fetch_activities(limit: int = 5, user_id: str = Depends(verify_clerk_token)):
     """
     Simulate a live feed of positive financial actions across the network.
     """

@@ -7,7 +7,8 @@ import threading
 import os
 from typing import Optional
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
+from utils.auth import verify_clerk_token
 
 from schemas.expense_analysis import ExpenseAnalysisRequest, ExpenseAnalysisResponse
 from schemas.graph_state import ExpenseGraphState
@@ -120,7 +121,7 @@ def _run_expense_graph(payload_id: str, initial_state: dict):
         }
 
 @router.post("/submit")
-async def submit_expense_analysis(body: ExpenseAnalysisRequest):
+async def submit_expense_analysis(body: ExpenseAnalysisRequest, user_id: str = Depends(verify_clerk_token)):
     payload_id = str(uuid.uuid4())
     _state_store[payload_id] = {**SAFE_DEFAULTS, "payload_id": payload_id, "status": "running"}
 
@@ -132,7 +133,7 @@ async def submit_expense_analysis(body: ExpenseAnalysisRequest):
 
     initial_state = {
         "payload_id": payload_id,
-        "user_id": body.user_id,
+        "user_id": user_id,
         "status": "running",
         "goal": body.goal,
         "stipend": body.stipend,
@@ -158,7 +159,7 @@ async def submit_expense_analysis(body: ExpenseAnalysisRequest):
     return {"payload_id": payload_id, "status": "started"}
 
 @router.get("/status/{payload_id}", response_model=ExpenseAnalysisResponse)
-async def get_expense_status(payload_id: str):
+async def get_expense_status(payload_id: str, user_id: str = Depends(verify_clerk_token)):
     state = _state_store.get(payload_id)
     if state is None:
         raise HTTPException(status_code=404, detail="Payload not found")

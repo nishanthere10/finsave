@@ -9,6 +9,7 @@ import {
   Briefcase, Users, GraduationCap, ShieldCheck 
 } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
+import { cn } from "@/lib/utils";
 
 export default function PremiumProtocolLanding() {
   const [mounted, setMounted] = useState(false);
@@ -53,7 +54,7 @@ export default function PremiumProtocolLanding() {
             </p>
 
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-              <Link href="/login" className="px-8 py-4 bg-foreground text-background rounded-full text-sm font-bold tracking-widest uppercase hover:bg-foreground/80 hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center gap-2">
+              <Link href="/sign-in" className="px-8 py-4 bg-foreground text-background rounded-full text-sm font-bold tracking-widest uppercase hover:bg-foreground/80 hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center gap-2">
                 Analyze Expense <ArrowRight size={16} />
               </Link>
               <Link href="#" className="px-8 py-4 border border-border text-foreground rounded-full text-sm font-bold tracking-widest uppercase hover:bg-foreground/[0.03] transition-colors flex items-center gap-2">
@@ -390,7 +391,7 @@ export default function PremiumProtocolLanding() {
         <ScrollReveal className="max-w-2xl mx-auto">
            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-black">Start seeing the real cost.</h2>
            <p className="text-xl text-secondary font-light mb-10">Clarity changes behavior.</p>
-           <Link href="/login" className="inline-flex items-center gap-2 px-10 py-5 bg-foreground text-background rounded-full text-sm font-bold tracking-widest uppercase hover:bg-accent hover:text-white transition-all shadow-xl shadow-black/10">
+           <Link href="/sign-in" className="inline-flex items-center gap-2 px-10 py-5 bg-foreground text-background rounded-full text-sm font-bold tracking-widest uppercase hover:bg-accent hover:text-white transition-all shadow-xl shadow-black/10">
              Analyze Expense <ArrowRight size={16} />
            </Link>
         </ScrollReveal>

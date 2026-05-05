@@ -46,6 +46,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from fastapi import Request
+import time
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    process_time = time.time() - start_time
+    print(f"[API Log] {request.method} {request.url.path} - Status: {response.status_code} - {process_time:.4f}s")
+    return response
+
 # ── Dependency Injection for Routers ────────────────────────────────────
 
 # Pass shared state to routers that need it

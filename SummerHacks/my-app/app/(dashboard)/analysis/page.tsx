@@ -85,8 +85,6 @@ export default function AnalysisPage() {
         throw new Error("Please provide your bank statement text or upload a file.");
       }
 
-      const userId = typeof window !== "undefined" ? localStorage.getItem("ea_user_id") : null;
-
       const res = await fetch("/api/analysis/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -95,7 +93,6 @@ export default function AnalysisPage() {
           filename: filename,
           stipend: stipend ? parseFloat(stipend) : 15000,
           goal: goal || "Financial Freedom",
-          userId
         }),
       });
 

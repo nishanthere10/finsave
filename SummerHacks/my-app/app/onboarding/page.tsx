@@ -4,7 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { ArrowRight, Wallet, Target, User, Mail, DollarSign } from "lucide-react";
-import { createProfile } from "@/lib/supabase";
+import { useUser } from "@clerk/nextjs";
+import { createClient } from "@supabase/supabase-js";
 
 const GOALS = [
   { value: "Bike", label: "Buy a Bike", emoji: "🏍️" },
@@ -17,6 +18,7 @@ const GOALS = [
 
 export default function OnboardingPage() {
   const router = useRouter();
+  const { user } = useUser();
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [form, setForm] = useState({
@@ -28,18 +30,29 @@ export default function OnboardingPage() {
   });
 
   const handleSubmit = async () => {
-    if (!form.name || !form.monthly_income || !form.financial_goal) return;
+    if (!form.name || !form.monthly_income || !form.financial_goal || !user) return;
     setLoading(true);
     try {
-      const profile = await createProfile({
-        name: form.name,
-        email: form.email,
-        wallet_address: form.wallet_address,
-        monthly_income: parseFloat(form.monthly_income),
-        financial_goal: form.financial_goal,
-      });
-      localStorage.setItem("ea_user_id", profile.id);
-      localStorage.setItem("ea_user_name", profile.name);
+      const supabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      );
+
+      // Upsert onboarding data into the Clerk-synced profile
+      const { error } = await supabase.from("profiles").upsert(
+        {
+          id: user.id,
+          name: form.name,
+          email: form.email || user.primaryEmailAddress?.emailAddress || "",
+          wallet_address: form.wallet_address,
+          monthly_income: parseFloat(form.monthly_income),
+          financial_goal: form.financial_goal,
+        },
+        { onConflict: "id" }
+      );
+
+      if (error) throw error;
+
       localStorage.setItem("ea_stipend", form.monthly_income);
       localStorage.setItem("ea_goal", form.financial_goal);
       router.push("/data-source");
