@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Groq from 'groq-sdk';
 import { supabase } from '@/lib/supabase';
+import { auth } from '@clerk/nextjs/server';
 
 const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY || "dummy",
@@ -8,8 +9,13 @@ const groq = new Groq({
 
 export async function POST(request: NextRequest) {
   try {
+    const { userId } = await auth();
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const body = await request.json();
-    const { raw_input, filename, stipend, goal, userId } = body;
+    const { raw_input, filename, stipend, goal } = body;
 
     if (!raw_input) {
       return NextResponse.json({ error: "Missing raw input" }, { status: 400 });

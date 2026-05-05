@@ -2,7 +2,8 @@
 verification.py -- FastAPI router for computing Month 2 success and escrow unlocking.
 """
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from utils.auth import verify_clerk_token
 from pydantic import BaseModel
 from utils.db import get_db_client
 import uuid
@@ -16,7 +17,6 @@ def set_stores(state_store: dict):
     _state_store = state_store
 
 class VerifyRequest(BaseModel):
-    user_id: str
     month_2_raw_text: str
 
 class VerifyResponse(BaseModel):
@@ -33,7 +33,7 @@ class VerifyResponse(BaseModel):
     behavioral_insights: list = []
 
 @router.post("/submit", response_model=VerifyResponse)
-async def verify_month_2(body: VerifyRequest):
+async def verify_month_2(body: VerifyRequest, user_id: str = Depends(verify_clerk_token)):
     """
     Hackathon Verification Pipeline.
     In a real scenario, this runs a full second LangGraph pass.
@@ -45,9 +45,7 @@ async def verify_month_2(body: VerifyRequest):
         raise Exception("Database client unavailable")
         
     try:
-        user_id = body.user_id
-        if not user_id:
-            raise Exception("Valid user_id is required")
+        # user_id is already verified from the Clerk JWT
 
         # 1. Fetch Month 1 active challenge
         challenge_res = db.table("challenges").select("*").eq("user_id", user_id).eq("status", "active").execute()

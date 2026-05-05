@@ -1,16 +1,27 @@
 import { NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs/server";
 
 const BACKEND_URL = process.env.BACKEND_URL || "http://127.0.0.1:8001";
 
 export async function GET(req: Request) {
   try {
+    const { getToken } = await auth();
+    const token = await getToken();
+
+    if (!token) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const { searchParams } = new URL(req.url);
     const limit = searchParams.get("limit") || "10";
     
-    // Forward the GET request to FastAPI backend
+    // Forward the GET request to FastAPI backend with the Clerk JWT
     const res = await fetch(`${BACKEND_URL}/api/leaderboard/?limit=${limit}`, {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
     });
 
     if (!res.ok) {
