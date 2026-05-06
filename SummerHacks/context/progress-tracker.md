@@ -42,9 +42,18 @@
 ---
 
 ## 🔴 Backlog / Upcoming
-- **Phase 2:** Live Web3 Escrow — Solidity smart contract deployment.
 - **Phase 4:** Async Backend — Move LangGraph execution to Celery/Redis.
 - **Phase 5:** Feature Completion — Month 2 verification logic, WhatsApp bot.
+
+---
+
+## 🟢 Completed (Phase 2 & Phase 3)
+
+### Phase 2 — Smart Contract Escrow (Live Web3) ✅ COMPLETE
+- Created `ExpenseEscrow.sol` with `lockStake`, `resolveSuccess`, and `resolveFailure` mechanisms.
+- Deployed contract successfully to Sepolia Testnet via Hardhat (`deploy.js`).
+- Updated `backend/web3_helper.py` to interact with real contract ABI and address.
+- Created `resolve_stake(success: bool)` admin function to release or burn funds dynamically.
 
 ---
 
