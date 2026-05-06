@@ -1,4 +1,5 @@
 "use client";
+import { Card, CardContent } from "@/components/ui/card";
 
 import { Flame, CalendarDays, TrendingUp, Award } from "lucide-react";
 import { motion } from "framer-motion";
@@ -24,9 +25,9 @@ export default function StreaksPage() {
 
       {/* Header */}
       <div className="mb-6">
-        <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Progress</div>
-        <h1 className="text-3xl font-bold tracking-tight text-black">Streaks</h1>
-        <p className="text-sm text-gray-500 font-medium mt-1">
+        <div className="text-[10px] font-bold text-[#848E9C] uppercase tracking-widest mb-2">Progress</div>
+        <h1 className="text-3xl font-bold tracking-tight text-[#EAECEF]">Streaks</h1>
+        <p className="text-sm text-[#848E9C] font-medium mt-1">
           Consistency is the only cheat code. Don't break the chain.
         </p>
       </div>
@@ -37,8 +38,8 @@ export default function StreaksPage() {
         animate={{ opacity: 1, y: 0 }}
         className="bg-[#0B0B0B] text-white rounded-2xl p-6 flex items-center justify-between overflow-hidden relative"
       >
-        <div className="absolute -right-4 -top-4 w-32 h-32 rounded-full bg-white/5" />
-        <div className="absolute -right-2 bottom-0 w-20 h-20 rounded-full bg-white/5" />
+        <div className="absolute -right-4 -top-4 w-32 h-32 rounded-full bg-[#1E2026] text-[#EAECEF]/5" />
+        <div className="absolute -right-2 bottom-0 w-20 h-20 rounded-full bg-[#1E2026] text-[#EAECEF]/5" />
         <div className="relative">
           <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest mb-1">Motivation</p>
           <p className="text-lg font-bold text-white leading-snug">
@@ -55,21 +56,21 @@ export default function StreaksPage() {
       <div className="flex flex-col md:flex-row items-stretch gap-4">
         <motion.div
           initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-          className="flex-1 bg-white border border-gray-200 shadow-sm rounded-2xl p-6 flex items-center justify-between border-l-4 border-l-orange-400 hover:-translate-y-0.5 transition-all"
+          className="flex-1 bg-[#1E2026] text-[#EAECEF] border border-[#3A3F45] shadow-xl rounded-2xl p-6 flex items-center justify-between border-l-4 border-l-orange-400 hover:-translate-y-0.5 transition-all"
         >
           <div>
-            <div className="text-[10px] uppercase font-bold tracking-widest text-gray-400 mb-1">Current Streak</div>
-            <div className="text-4xl font-bold text-black font-mono">{currentStreak} <span className="text-xl text-gray-400 font-sans">Days</span></div>
+            <div className="text-[10px] uppercase font-bold tracking-widest text-[#848E9C] mb-1">Current Streak</div>
+            <div className="text-4xl font-bold text-[#EAECEF] font-mono">{currentStreak} <span className="text-xl text-[#848E9C] font-sans">Days</span></div>
           </div>
           <Flame className="w-10 h-10 text-orange-400" />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-          className="flex-1 bg-white border border-gray-200 shadow-sm rounded-2xl p-6 flex items-center justify-between border-l-4 border-l-[#0E9F6E] hover:-translate-y-0.5 transition-all"
+          className="flex-1 bg-[#1E2026] text-[#EAECEF] border border-[#3A3F45] shadow-xl rounded-2xl p-6 flex items-center justify-between border-l-4 border-l-[#0E9F6E] hover:-translate-y-0.5 transition-all"
         >
           <div>
-            <div className="text-[10px] uppercase font-bold tracking-widest text-gray-400 mb-1">Longest Streak</div>
-            <div className="text-4xl font-bold text-black font-mono">{longestStreak} <span className="text-xl text-gray-400 font-sans">Days</span></div>
+            <div className="text-[10px] uppercase font-bold tracking-widest text-[#848E9C] mb-1">Longest Streak</div>
+            <div className="text-4xl font-bold text-[#EAECEF] font-mono">{longestStreak} <span className="text-xl text-[#848E9C] font-sans">Days</span></div>
           </div>
           <Award className="w-10 h-10 text-[#0E9F6E]" />
         </motion.div>
@@ -78,23 +79,23 @@ export default function StreaksPage() {
       {/* 30-Day Activity Grid */}
       <motion.div
         initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-        className="bg-white border border-gray-200 shadow-sm rounded-2xl p-8"
+        className="bg-[#1E2026] text-[#EAECEF] border border-[#3A3F45] shadow-xl rounded-2xl p-8"
       >
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400">30-Day Activity — April 2026</h3>
+          <h3 className="text-[10px] font-bold uppercase tracking-widest text-[#848E9C]">30-Day Activity — April 2026</h3>
           {/* Legend */}
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1.5">
               <div className="w-3 h-3 rounded-sm bg-[#0E9F6E]" />
-              <span className="text-[10px] text-gray-400 font-bold">Active</span>
+              <span className="text-[10px] text-[#848E9C] font-bold">Active</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <div className="w-3 h-3 rounded-sm bg-red-500" />
-              <span className="text-[10px] text-gray-400 font-bold">Missed</span>
+              <div className="w-3 h-3 rounded-sm bg-destructive/50" />
+              <span className="text-[10px] text-[#848E9C] font-bold">Missed</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <div className="w-3 h-3 rounded-sm bg-gray-100 border border-gray-200" />
-              <span className="text-[10px] text-gray-400 font-bold">Pending</span>
+              <div className="w-3 h-3 rounded-sm bg-gray-100 border border-[#3A3F45]" />
+              <span className="text-[10px] text-[#848E9C] font-bold">Pending</span>
             </div>
           </div>
         </div>
@@ -103,11 +104,11 @@ export default function StreaksPage() {
           {ACTIVITY.map(({ day, state }) => (
             <div key={day} className="relative group">
               <div
-                className={`w-10 h-10 rounded-lg hover:scale-110 transition-transform shadow-sm flex items-center justify-center text-[9px] font-bold cursor-default ${
+                className={`w-10 h-10 rounded-lg hover:scale-110 transition-transform shadow-xl flex items-center justify-center text-[9px] font-bold cursor-default ${
                   state === "active"
                     ? "bg-[#0E9F6E] border border-green-600 text-white"
                     : state === "missed"
-                    ? "bg-red-500 border border-red-600 text-white"
+                    ? "bg-destructive/50 border border-red-600 text-white"
                     : "bg-gray-50 border border-gray-100 text-gray-300"
                 }`}
               >
@@ -133,9 +134,9 @@ export default function StreaksPage() {
       {/* Streak History Table */}
       <motion.div
         initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-        className="bg-white border border-gray-200 shadow-sm rounded-2xl p-8"
+        className="bg-[#1E2026] text-[#EAECEF] border border-[#3A3F45] shadow-xl rounded-2xl p-8"
       >
-        <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-6">Streak History</h3>
+        <h3 className="text-[10px] font-bold uppercase tracking-widest text-[#848E9C] mb-6">Streak History</h3>
         <div className="space-y-3">
           {STREAK_HISTORY.map((row, i) => (
             <div key={i} className="flex items-center justify-between py-3 border-b border-gray-50 last:border-0">
@@ -150,7 +151,7 @@ export default function StreaksPage() {
                     style={{ width: `${(row.streak / longestStreak) * 100}%` }}
                   />
                 </div>
-                <span className="text-sm font-black font-mono text-black w-10 text-right">{row.streak}d</span>
+                <span className="text-sm font-black font-mono text-[#EAECEF] w-10 text-right">{row.streak}d</span>
               </div>
             </div>
           ))}

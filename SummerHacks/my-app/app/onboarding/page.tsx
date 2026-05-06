@@ -2,10 +2,14 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Wallet, Target, User, Mail, DollarSign } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
 import { createClient } from "@supabase/supabase-js";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const GOALS = [
   { value: "Bike", label: "Buy a Bike", emoji: "🏍️" },
@@ -38,7 +42,6 @@ export default function OnboardingPage() {
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
       );
 
-      // Upsert onboarding data into the Clerk-synced profile
       const { error } = await supabase.from("profiles").upsert(
         {
           id: user.id,
@@ -64,14 +67,29 @@ export default function OnboardingPage() {
     }
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, staggerChildren: 0.1 }
+    },
+    exit: { opacity: 0, y: -20, transition: { duration: 0.3 } }
+  };
+
   return (
-    <div className="min-h-screen bg-white text-black font-sans">
-      <div className="max-w-2xl mx-auto px-6 pt-6 pb-32">
+    <div className="min-h-screen bg-background text-foreground font-sans dark">
+      <div className="max-w-xl mx-auto px-6 pt-12 pb-32">
         {/* Progress */}
-        <div className="flex items-center gap-2 mb-12">
+        <div className="flex items-center gap-3 mb-16">
           {[1, 2, 3].map((s) => (
-            <div key={s} className="flex items-center gap-2 flex-1">
-              <div className={`h-1 flex-1 rounded-full transition-all duration-500 ${s <= step ? "bg-accent" : "bg-border"}`} />
+            <div key={s} className="flex-1 h-1.5 rounded-full bg-border overflow-hidden">
+              <motion.div
+                className="h-full bg-accent"
+                initial={{ width: 0 }}
+                animate={{ width: s <= step ? "100%" : "0%" }}
+                transition={{ duration: 0.5 }}
+              />
             </div>
           ))}
         </div>
@@ -80,150 +98,176 @@ export default function OnboardingPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
+          className="text-center mb-10"
         >
-          <div className="mb-2 inline-flex items-center px-3 py-1 bg-accent/10 text-accent text-[10px] uppercase font-bold tracking-widest rounded-full">
-            <span className="w-1.5 h-1.5 bg-accent rounded-full mr-2 animate-pulse" />
-            Onboarding Protocol
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-3 text-black">
-            {step === 1 && "Who are you?"}
-            {step === 2 && "Your financial baseline."}
-            {step === 3 && "Choose your target."}
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-foreground">
+            {step === 1 && "Let's get to know you"}
+            {step === 2 && "Your financial baseline"}
+            {step === 3 && "What are you aiming for?"}
           </h1>
-          <p className="text-lg text-gray-500 font-medium mb-12">
-            {step === 1 && "We need to know who we're building accountability for."}
-            {step === 2 && "Set your monthly income and connect your wallet."}
-            {step === 3 && "What are you saving towards? This drives your emotional coaching."}
+          <p className="text-lg text-muted-foreground font-medium">
+            {step === 1 && "Tell us a bit about yourself to get started."}
+            {step === 2 && "We need this to personalize your insights."}
+            {step === 3 && "Choose a goal to stay motivated on your journey."}
           </p>
         </motion.div>
 
-        {/* Step 1: Identity */}
-        {step === 1 && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-            <div className="bg-white border border-gray-200 shadow-sm rounded-xl p-6 space-y-5">
-              <div>
-                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 block">Full Name</label>
-                <div className="relative">
-                  <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <input
-                    type="text"
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-lg text-black placeholder-gray-400 focus:outline-none focus:border-black transition-colors font-bold"
-                    placeholder="Enter your name"
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="text-[10px] font-bold text-secondary uppercase tracking-widest mb-2 block">Email</label>
-                <div className="relative">
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
-                  <input
-                    type="email"
-                    value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="w-full pl-11 pr-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder-muted focus:outline-none focus:border-accent transition-colors font-medium"
-                    placeholder="you@email.com"
-                  />
-                </div>
-              </div>
-            </div>
-            <button
-              onClick={() => form.name ? setStep(2) : null}
-              disabled={!form.name}
-              className="w-full py-4 bg-foreground text-background rounded-xl text-sm font-bold tracking-widest uppercase hover:bg-foreground/80 transition-all flex items-center justify-center gap-2 disabled:opacity-30 disabled:cursor-not-allowed"
+        <AnimatePresence mode="wait">
+          {step === 1 && (
+            <motion.div
+              key="step1"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="space-y-6"
             >
-              Continue <ArrowRight size={16} />
-            </button>
-          </motion.div>
-        )}
-
-        {/* Step 2: Financial Baseline */}
-        {step === 2 && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-            <div className="bg-white border border-gray-200 shadow-sm rounded-xl p-6 space-y-5">
-              <div>
-                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 block">Monthly Income / Stipend (₹)</label>
-                <div className="relative">
-                  <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <input
-                    type="number"
-                    value={form.monthly_income}
-                    onChange={(e) => setForm({ ...form, monthly_income: e.target.value })}
-                    className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-lg text-black placeholder-gray-400 focus:outline-none focus:border-black transition-colors font-bold font-mono"
-                    placeholder="15000"
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="text-[10px] font-bold text-secondary uppercase tracking-widest mb-2 block">Wallet Address (Optional)</label>
-                <div className="relative">
-                  <Wallet className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
-                  <input
-                    type="text"
-                    value={form.wallet_address}
-                    onChange={(e) => setForm({ ...form, wallet_address: e.target.value })}
-                    className="w-full pl-11 pr-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder-muted focus:outline-none focus:border-accent transition-colors font-medium font-mono text-sm"
-                    placeholder="0x..."
-                  />
-                </div>
-                <p className="text-[10px] text-muted mt-2">Sepolia Testnet — required for commitment staking</p>
-              </div>
-            </div>
-            <div className="flex gap-3">
-              <button onClick={() => setStep(1)} className="flex-1 py-4 border border-border rounded-xl text-sm font-bold tracking-widest uppercase hover:bg-surface transition-all text-secondary">
-                Back
-              </button>
-              <button
-                onClick={() => form.monthly_income ? setStep(3) : null}
-                disabled={!form.monthly_income}
-                className="flex-1 py-4 bg-foreground text-background rounded-xl text-sm font-bold tracking-widest uppercase hover:bg-foreground/80 transition-all flex items-center justify-center gap-2 disabled:opacity-30 disabled:cursor-not-allowed"
-              >
-                Continue <ArrowRight size={16} />
-              </button>
-            </div>
-          </motion.div>
-        )}
-
-        {/* Step 3: Goal Selection */}
-        {step === 3 && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-            <div className="grid grid-cols-2 gap-3">
-              {GOALS.map((goal) => (
-                <button
-                  key={goal.value}
-                  onClick={() => setForm({ ...form, financial_goal: goal.value })}
-                  className={`p-5 rounded-xl border transition-all text-left group ${
-                    form.financial_goal === goal.value
-                      ? "border-green-500 bg-green-50 shadow-lg"
-                      : "border-gray-200 bg-white hover:border-green-400 shadow-sm"
-                  }`}
-                >
-                  <div className="text-2xl mb-2">{goal.emoji}</div>
-                  <div className="text-sm font-bold text-foreground">{goal.label}</div>
-                  {form.financial_goal === goal.value && (
-                    <div className="mt-2 flex items-center gap-1">
-                      <Target className="w-3 h-3 text-accent" />
-                      <span className="text-[10px] font-bold text-accent uppercase tracking-widest">Selected</span>
+              <Card className="premium-card bg-card/50 backdrop-blur-sm">
+                <CardContent className="p-6 space-y-6">
+                  <div className="space-y-3">
+                    <Label className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Full Name</Label>
+                    <div className="relative">
+                      <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                      <Input
+                        type="text"
+                        value={form.name}
+                        onChange={(e) => setForm({ ...form, name: e.target.value })}
+                        className="pl-11 bg-background/50"
+                        placeholder="Enter your name"
+                      />
                     </div>
-                  )}
-                </button>
-              ))}
-            </div>
-            <div className="flex gap-3">
-              <button onClick={() => setStep(2)} className="flex-1 py-4 border border-border rounded-xl text-sm font-bold tracking-widest uppercase hover:bg-surface transition-all text-secondary">
-                Back
-              </button>
-              <button
-                onClick={handleSubmit}
-                disabled={!form.financial_goal || loading}
-                className="flex-1 py-4 bg-accent text-white rounded-xl text-sm font-bold tracking-widest uppercase hover:bg-accent/90 transition-all flex items-center justify-center gap-2 disabled:opacity-30 disabled:cursor-not-allowed shadow-xl shadow-accent/20"
+                  </div>
+                  <div className="space-y-3">
+                    <Label className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Email</Label>
+                    <div className="relative">
+                      <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                      <Input
+                        type="email"
+                        value={form.email}
+                        onChange={(e) => setForm({ ...form, email: e.target.value })}
+                        className="pl-11 bg-background/50"
+                        placeholder="you@email.com"
+                      />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              <Button
+                onClick={() => form.name ? setStep(2) : null}
+                disabled={!form.name}
+                className="w-full h-14 text-base font-bold tracking-wide uppercase"
               >
-                {loading ? "Setting up..." : "Begin Autopsy"} <ArrowRight size={16} />
-              </button>
-            </div>
-          </motion.div>
-        )}
+                Continue <ArrowRight size={18} className="ml-2" />
+              </Button>
+            </motion.div>
+          )}
+
+          {step === 2 && (
+            <motion.div
+              key="step2"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="space-y-6"
+            >
+              <Card className="premium-card bg-card/50 backdrop-blur-sm">
+                <CardContent className="p-6 space-y-6">
+                  <div className="space-y-3">
+                    <Label className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Monthly Income / Stipend (₹)</Label>
+                    <div className="relative">
+                      <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                      <Input
+                        type="number"
+                        value={form.monthly_income}
+                        onChange={(e) => setForm({ ...form, monthly_income: e.target.value })}
+                        className="pl-11 font-mono bg-background/50"
+                        placeholder="15000"
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-3">
+                    <Label className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Wallet Address (Optional)</Label>
+                    <div className="relative">
+                      <Wallet className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                      <Input
+                        type="text"
+                        value={form.wallet_address}
+                        onChange={(e) => setForm({ ...form, wallet_address: e.target.value })}
+                        className="pl-11 font-mono text-sm bg-background/50"
+                        placeholder="0x..."
+                      />
+                    </div>
+                    <p className="text-[10px] text-muted-foreground">Sepolia Testnet — required for commitment staking</p>
+                  </div>
+                </CardContent>
+              </Card>
+              <div className="flex gap-3">
+                <Button variant="outline" onClick={() => setStep(1)} className="flex-1 h-14 text-sm font-bold tracking-widest uppercase">
+                  Back
+                </Button>
+                <Button
+                  onClick={() => form.monthly_income ? setStep(3) : null}
+                  disabled={!form.monthly_income}
+                  className="flex-1 h-14 text-sm font-bold tracking-widest uppercase"
+                >
+                  Continue <ArrowRight size={18} className="ml-2" />
+                </Button>
+              </div>
+            </motion.div>
+          )}
+
+          {step === 3 && (
+            <motion.div
+              key="step3"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="space-y-6"
+            >
+              <div className="grid grid-cols-2 gap-4">
+                {GOALS.map((goal) => (
+                  <motion.button
+                    key={goal.value}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => setForm({ ...form, financial_goal: goal.value })}
+                    className={`p-5 rounded-xl border transition-all text-left group relative overflow-hidden ${
+                      form.financial_goal === goal.value
+                        ? "border-accent bg-accent/10"
+                        : "border-border bg-card/50 hover:border-accent/50"
+                    }`}
+                  >
+                    <div className="text-3xl mb-3">{goal.emoji}</div>
+                    <div className="text-sm font-bold text-foreground">{goal.label}</div>
+                    {form.financial_goal === goal.value && (
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="absolute top-3 right-3"
+                      >
+                        <Target className="w-4 h-4 text-accent" />
+                      </motion.div>
+                    )}
+                  </motion.button>
+                ))}
+              </div>
+              <div className="flex gap-3 pt-4">
+                <Button variant="outline" onClick={() => setStep(2)} className="flex-1 h-14 text-sm font-bold tracking-widest uppercase">
+                  Back
+                </Button>
+                <Button
+                  onClick={handleSubmit}
+                  disabled={!form.financial_goal || loading}
+                  className="flex-[2] h-14 text-sm font-bold tracking-widest uppercase shadow-lg shadow-accent/20"
+                >
+                  {loading ? "Setting up..." : "Complete Setup"} <ArrowRight size={18} className="ml-2" />
+                </Button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

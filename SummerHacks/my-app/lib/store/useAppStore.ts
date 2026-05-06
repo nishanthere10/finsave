@@ -4,6 +4,8 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 interface AppState {
   walletAddress: string | null;
   setWalletAddress: (address: string | null) => void;
+  isDemoMode: boolean;
+  setDemoMode: (isDemoMode: boolean) => void;
 }
 
 export const useAppStore = create<AppState>()(
@@ -11,6 +13,8 @@ export const useAppStore = create<AppState>()(
     (set) => ({
       walletAddress: null,
       setWalletAddress: (walletAddress) => set({ walletAddress }),
+      isDemoMode: false,
+      setDemoMode: (isDemoMode) => set({ isDemoMode }),
     }),
     {
       name: 'expense-autopsy-app-state',

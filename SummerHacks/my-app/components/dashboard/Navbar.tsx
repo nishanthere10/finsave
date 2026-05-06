@@ -104,7 +104,7 @@ export default function Navbar() {
 
         {/* User */}
         <div className="flex items-center gap-2.5 px-2 py-1">
-          <UserButton afterSignOutUrl="/" />
+          <UserButton />
         </div>
       </div>
     </header>

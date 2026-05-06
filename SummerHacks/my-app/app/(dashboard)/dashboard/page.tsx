@@ -1,4 +1,6 @@
 "use client";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -234,34 +236,34 @@ export default function Dashboard() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            className="bg-white rounded-2xl border border-gray-200 shadow-sm mb-8 overflow-hidden"
+            className="bg-[#1E2026] text-[#EAECEF] rounded-2xl border border-[#3A3F45] shadow-xl mb-8 overflow-hidden"
           >
             <div className="flex flex-col md:flex-row items-center justify-between gap-6 p-8">
               <div>
-                <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Getting Started</div>
-                <h1 className="text-2xl font-bold tracking-tight text-black mb-1">Welcome to ExpenseAutopsy</h1>
-                <p className="text-sm font-medium text-gray-500">
+                <div className="text-[10px] font-bold text-[#848E9C] uppercase tracking-widest mb-2">Getting Started</div>
+                <h1 className="text-2xl font-bold tracking-tight text-[#EAECEF] mb-1">Welcome to ExpenseAutopsy</h1>
+                <p className="text-sm font-medium text-[#848E9C]">
                   Connect your bank to run your first AI-powered financial analysis.
                 </p>
               </div>
-              <button 
+              <Button
                 onClick={handleConnectBank}
                 className="shrink-0 flex items-center justify-center gap-2 py-3 px-8 rounded-full text-sm font-bold tracking-widest uppercase text-white bg-[#0B0B0B] hover:bg-gray-800 hover:-translate-y-0.5 transition-all shadow-md"
               >
                 <Landmark className="w-4 h-4" /> Connect Bank
-              </button>
+              </Button>
             </div>
             <div className="border-t border-gray-100 grid grid-cols-3 divide-x divide-gray-100">
               {[
                 { num: "01", label: "Connect Bank", desc: "Link via RBI Account Aggregator" },
-                { num: "02", label: "Run Autopsy", desc: "AI analyses every rupee" },
+                { num: "02", label: "Analyze My Spending", desc: "AI analyses every rupee" },
                 { num: "03", label: "Set a Goal", desc: "Lock in your commitment" },
               ].map((s) => (
                 <div key={s.num} className="px-6 py-4 flex items-start gap-3">
                   <span className="text-[10px] font-black text-gray-300 font-mono mt-0.5">{s.num}</span>
                   <div>
                     <div className="text-xs font-bold text-gray-800">{s.label}</div>
-                    <div className="text-[10px] text-gray-400 font-medium mt-0.5">{s.desc}</div>
+                    <div className="text-[10px] text-[#848E9C] font-medium mt-0.5">{s.desc}</div>
                   </div>
                 </div>
               ))}
@@ -275,14 +277,14 @@ export default function Dashboard() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            className="flex items-center gap-4 bg-white p-8 rounded-2xl border border-gray-200 shadow-sm mb-8 relative overflow-hidden"
+            className="flex items-center gap-4 bg-[#1E2026] text-[#EAECEF] p-8 rounded-2xl border border-[#3A3F45] shadow-xl mb-8 relative overflow-hidden"
           >
-            <Loader2 className="w-6 h-6 text-green-600 animate-spin" />
+            <Loader2 className="w-6 h-6 text-[#F0B90B] animate-spin" />
             <div>
-              <h1 className="text-lg font-bold tracking-tight text-black flex items-center gap-2">
+              <h1 className="text-lg font-bold tracking-tight text-[#EAECEF] flex items-center gap-2">
                 <Brain className="w-4 h-4 text-purple-600" /> Analyzing spending pipeline...
               </h1>
-              <p className="text-xs font-bold text-green-600 uppercase tracking-tight mt-1">
+              <p className="text-xs font-bold text-[#F0B90B] uppercase tracking-tight mt-1">
                 Executing 5-agent LangGraph protocol on source transactions.
               </p>
             </div>
@@ -295,21 +297,21 @@ export default function Dashboard() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            className="flex items-center justify-between bg-white p-8 rounded-2xl border border-green-100 shadow-sm mb-8"
+            className="flex items-center justify-between bg-[#1E2026] text-[#EAECEF] p-8 rounded-2xl border border-accent/20 shadow-xl mb-8"
           >
             <div className="flex items-center gap-4">
-              <CheckCircle2 className="w-6 h-6 text-green-600" />
+              <CheckCircle2 className="w-6 h-6 text-[#F0B90B]" />
               <div>
-                <h1 className="text-lg font-bold tracking-tight text-black">Live Analysis Results</h1>
-                <p className="text-xs font-bold text-green-600 uppercase tracking-tight mt-1">Snapshot of current financial behavior.</p>
+                <h1 className="text-lg font-bold tracking-tight text-[#EAECEF]">Live Analysis Results</h1>
+                <p className="text-xs font-bold text-[#F0B90B] uppercase tracking-tight mt-1">Snapshot of current financial behavior.</p>
               </div>
             </div>
-            <button 
+            <Button
               onClick={handleConnectBank}
-              className="flex items-center gap-2 py-2 px-4 text-xs font-bold text-gray-500 hover:text-black border border-gray-200 rounded-lg transition-colors"
+              className="flex items-center gap-2 py-2 px-4 text-xs font-bold text-[#848E9C] hover:text-[#EAECEF] border border-[#3A3F45] rounded-lg transition-colors"
             >
               <Sparkles className="w-3.5 h-3.5" /> Re-analyze
-            </button>
+            </Button>
           </motion.div>
         )}
 
@@ -319,21 +321,21 @@ export default function Dashboard() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            className="flex items-center justify-between bg-white p-6 rounded-2xl border border-red-200 shadow-sm mb-8"
+            className="flex items-center justify-between bg-[#1E2026] text-[#EAECEF] p-6 rounded-2xl border border-destructive/20 shadow-xl mb-8"
           >
             <div className="flex items-center gap-4">
-              <AlertCircle className="w-6 h-6 text-red-500" />
+              <AlertCircle className="w-6 h-6 text-[#F6465D]" />
               <div>
-                <h1 className="text-lg font-bold tracking-tight text-black">Analysis Failed</h1>
-                <p className="text-xs font-medium text-red-500">{analysisError}</p>
+                <h1 className="text-lg font-bold tracking-tight text-[#EAECEF]">Analysis Failed</h1>
+                <p className="text-xs font-medium text-[#F6465D]">{analysisError}</p>
               </div>
             </div>
-            <button 
+            <Button
               onClick={handleRetry}
-              className="py-2 px-4 text-xs font-bold uppercase tracking-widest text-white bg-red-500 hover:bg-red-600 rounded-lg transition-colors"
+              className="py-2 px-4 text-xs font-bold uppercase tracking-widest text-white bg-destructive/50 hover:bg-red-600 rounded-lg transition-colors"
             >
               Retry
-            </button>
+            </Button>
           </motion.div>
         )}
       </AnimatePresence>
@@ -345,24 +347,24 @@ export default function Dashboard() {
           title="Savings Score" 
           value={displayData.savingsScore} 
           subValue={!isActive ? (phase === "analyzing" ? "Computing..." : "Waiting for sync") : "AI Verified"} 
-          icon={<Activity className={`w-5 h-5 text-gray-500`} />} 
+          icon={<Activity className={`w-5 h-5 text-[#848E9C]`} />}
           prefix=""
           suffix="/100"
           highlight="neutral"
         />
         <MetricCard 
-          title="Monthly Waste" 
+          title="Potential Savings"
           value={displayData.monthlyWaste} 
           subValue={!isActive ? (phase === "analyzing" ? "Locating leaks..." : "Waiting for sync") : `${highestSpendCategory || "Identified"}`} 
-          icon={<TrendingDown className={`w-5 h-5 ${!isActive ? "text-gray-500" : "text-red-500"}`} />} 
+          icon={<TrendingDown className={`w-5 h-5 ${!isActive ? "text-[#848E9C]" : "text-[#F6465D]"}`} />}
           prefix="₹"
           highlight={!isActive ? "neutral" : "danger"}
         />
         <MetricCard 
-          title="5-Year Loss" 
+          title="5-Year Projection"
           value={displayData.fiveYearLoss} 
           subValue={!isActive ? (phase === "analyzing" ? "Projecting..." : "Waiting for sync") : "Compound Calculated"} 
-          icon={<TrendingDown className={`w-5 h-5 ${!isActive ? "text-gray-500" : "text-red-500"}`} />} 
+          icon={<TrendingDown className={`w-5 h-5 ${!isActive ? "text-[#848E9C]" : "text-[#F6465D]"}`} />}
           prefix="₹"
           highlight={!isActive ? "neutral" : "danger"}
         />
@@ -370,7 +372,7 @@ export default function Dashboard() {
           title="Potential Value" 
           value={displayData.potentialValue} 
           subValue={!isActive ? (phase === "analyzing" ? "Modeling..." : "Waiting for sync") : "If Invested @ 8% PA"} 
-          icon={<TrendingUp className={`w-5 h-5 ${!isActive ? "text-gray-500" : "text-green-500"}`} />} 
+          icon={<TrendingUp className={`w-5 h-5 ${!isActive ? "text-[#848E9C]" : "text-[#F0B90B]"}`} />}
           prefix="₹"
           highlight={!isActive ? "neutral" : "success"}
         />
@@ -378,12 +380,12 @@ export default function Dashboard() {
 
       {/* SECTION 2: Graph + Insights Grid */}
       <div className="grid lg:grid-cols-3 gap-6">
-      <div className={`lg:col-span-2 bg-white rounded-2xl p-8 border border-gray-200 shadow-sm flex flex-col relative transition-all duration-200`}>
+      <div className={`lg:col-span-2 bg-[#1E2026] text-[#EAECEF] rounded-2xl p-8 border border-[#3A3F45] shadow-xl flex flex-col relative transition-all duration-200`}>
           
           <div className="mb-6 relative z-10 flex justify-between items-start">
             <div>
-              <h2 className="text-xl font-bold tracking-tight text-black mb-1">Trajectory Graph</h2>
-              <p className="text-xs font-medium text-gray-500">
+              <h2 className="text-xl font-bold tracking-tight text-[#EAECEF] mb-1">Trajectory Graph</h2>
+              <p className="text-xs font-medium text-[#848E9C]">
                 {!isActive ? "No data detected" : "Projected balance over time"}
               </p>
             </div>
@@ -399,8 +401,8 @@ export default function Dashboard() {
                </div>
             ) : phase === "analyzing" ? (
                <div className="flex flex-col items-center gap-3">
-                 <Loader2 className="w-8 h-8 text-green-500 animate-spin" />
-                 <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Projecting trajectory...</p>
+                 <Loader2 className="w-8 h-8 text-[#F0B90B] animate-spin" />
+                 <p className="text-xs font-bold text-[#848E9C] uppercase tracking-widest">Projecting trajectory...</p>
                </div>
             ) : (
                // Flat Line For Empty State
@@ -415,7 +417,7 @@ export default function Dashboard() {
         <div className="space-y-6 flex flex-col">
           
           {/* EMOTIONAL INSIGHT CARD */}
-          <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 flex-1 flex flex-col justify-center relative overflow-hidden transition-all duration-200">
+          <div className="bg-[#1E2026] text-[#EAECEF] border border-[#3A3F45] rounded-2xl p-6 shadow-xl hover:shadow-md hover:-translate-y-0.5 flex-1 flex flex-col justify-center relative overflow-hidden transition-all duration-200">
             <AnimatePresence mode="wait">
               {isActive ? (
                 <motion.div
@@ -424,19 +426,19 @@ export default function Dashboard() {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.2 }}
                 >
-                  <div className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">
+                  <div className="flex items-center gap-2 text-[10px] font-bold text-[#848E9C] uppercase tracking-widest mb-4">
                     <Zap className="w-4 h-4 text-amber-500" /> AI Coaching
                   </div>
-                  <p className="text-xl font-bold text-black leading-tight tracking-tight">
+                  <p className="text-xl font-bold text-[#EAECEF] leading-tight tracking-tight">
                     {insight || mirrorPrediction || "Waiting for pipeline..."}
                   </p>
                   {goodHabits.length > 0 && (
                     <div className="mt-4 pt-4 border-t border-gray-100">
-                      <div className="text-[10px] font-bold text-green-600 uppercase tracking-widest mb-2">
+                      <div className="text-[10px] font-bold text-[#F0B90B] uppercase tracking-widest mb-2">
                         ✓ Positive Signals
                       </div>
                       {goodHabits.map((habit, i) => (
-                        <p key={i} className="text-xs text-gray-500">• {habit}</p>
+                        <p key={i} className="text-xs text-[#848E9C]">• {habit}</p>
                       ))}
                     </div>
                   )}
@@ -444,13 +446,13 @@ export default function Dashboard() {
               ) : phase === "analyzing" ? (
                 <motion.div key="insight-analyzing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center justify-center py-4">
                   <Brain className="w-8 h-8 text-purple-500 mb-3 animate-pulse" />
-                  <p className="text-xs font-bold text-gray-400 uppercase tracking-widest text-center">
+                  <p className="text-xs font-bold text-[#848E9C] uppercase tracking-widest text-center">
                     AI agents crafting insight...
                   </p>
                 </motion.div>
               ) : (
                 <motion.div key="insight-empty" className="opacity-30">
-                  <div className="flex items-center gap-2 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-4">
+                  <div className="flex items-center gap-2 text-[10px] font-bold text-[#848E9C] uppercase tracking-widest mb-4">
                     <Zap className="w-4 h-4" /> Insight
                   </div>
                   <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
@@ -461,23 +463,23 @@ export default function Dashboard() {
           </div>
 
           {/* ACTION CTA CARD */}
-          <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+          <div className="bg-[#1E2026] text-[#EAECEF] border border-[#3A3F45] rounded-2xl p-6 shadow-xl hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
              <AnimatePresence mode="wait">
                {isActive ? (
                  <motion.div key="action-loaded" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                     <div className="mb-5">
-                      <h3 className="text-sm font-bold text-black mb-1">Ready to commit?</h3>
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500">Set a savings goal backed by a crypto stake to stay accountable.</p>
+                      <h3 className="text-sm font-bold text-[#EAECEF] mb-1">Ready to commit?</h3>
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-[#848E9C]">Set a savings goal backed by a crypto stake to stay accountable.</p>
                     </div>
-                    <Link href="/commit" className="w-full py-4 bg-[#0B0B0B] text-white hover:bg-gray-800 hover:-translate-y-0.5 rounded-full text-xs font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 shadow-sm">
+                    <Link href="/commit" className="w-full py-4 bg-[#0B0B0B] text-white hover:bg-gray-800 hover:-translate-y-0.5 rounded-full text-xs font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 shadow-xl">
                       <Lock className="w-4 h-4" /> Create a Savings Goal
                     </Link>
                  </motion.div>
                ) : (
                  <motion.div key="action-empty" className="opacity-40 pointer-events-none">
                     <div className="mb-5">
-                       <h3 className="text-sm font-bold text-black mb-1">Create a Savings Goal</h3>
-                       <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500">Complete analysis first to unlock this step.</p>
+                       <h3 className="text-sm font-bold text-[#EAECEF] mb-1">Create a Savings Goal</h3>
+                       <p className="text-[10px] font-bold uppercase tracking-widest text-[#848E9C]">Complete analysis first to unlock this step.</p>
                     </div>
                     <div className="w-full h-12 bg-gray-100 rounded-full flex items-center justify-center gap-2">
                       <Lock className="w-4 h-4 text-gray-300" />
@@ -515,15 +517,15 @@ function MetricCard({
 }) {
   
   const valueColor = 
-    highlight === "danger" ? "text-red-600" : 
+    highlight === "danger" ? "text-[#F6465D]" :
     highlight === "success" ? "text-[#0E9F6E]" : 
-    "text-black";
+    "text-[#EAECEF]";
 
   return (
-    <div className={`bg-white border border-gray-200 border-l-4 ${accentColor} shadow-sm hover:shadow-md rounded-2xl p-6 transition-all duration-200 relative overflow-hidden group hover:-translate-y-0.5`}>
+    <div className={`bg-[#1E2026] text-[#EAECEF] border border-[#3A3F45] border-l-4 ${accentColor} shadow-xl hover:shadow-md rounded-2xl p-6 transition-all duration-200 relative overflow-hidden group hover:-translate-y-0.5`}>
       <div className="space-y-3">
         <div>
-          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">{title}</p>
+          <p className="text-[10px] font-bold text-[#848E9C] uppercase tracking-widest mb-2">{title}</p>
           <div className={`text-3xl font-bold tracking-tight font-mono ${valueColor}`}>
             {prefix && <span className="text-lg mr-0.5 opacity-60 font-sans font-medium">{prefix}</span>}
             <CountUp
@@ -536,7 +538,7 @@ function MetricCard({
           </div>
         </div>
         <div className="pt-3 border-t border-gray-50 flex items-center justify-between">
-          <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+          <div className="text-[10px] font-bold text-[#848E9C] uppercase tracking-widest">
             {subValue}
           </div>
           <div className="opacity-30 group-hover:opacity-100 transition-opacity">

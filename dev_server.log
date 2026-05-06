@@ -1,0 +1,42 @@
+
+> my-app@0.1.0 dev
+> next dev -p 3003
+
+▲ Next.js 16.2.4 (Turbopack)
+- Local:         http://localhost:3003
+- Network:       http://192.168.0.2:3003
+- Environments: .env.local
+✓ Ready in 593ms
+
+○ Compiling /onboarding ...
+
+[35m
+[Clerk]:[0m You are running in keyless mode.
+You can [35mclaim your keys[0m by visiting https://dashboard.clerk.com/apps/claim?framework=nextjs&token=8zozapha16f8y6w5c60egqhhm2pskhqokm1aeb79&return_url=http%3A%2F%2Flocalhost%3A3003%2F
+
+ GET /onboarding 200 in 7.1s (next.js: 5.6s, proxy.ts: 352ms, application-code: 1126ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://casual-marlin-77.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:12:3216)
+ POST /onboarding 303 in 393ms (next.js: 13ms, proxy.ts: 14ms, application-code: 366ms)
+  └─ ƒ syncKeylessConfigAction({"apiKeysUrl":"https://dashboard.clerk.com/apps/app_3DMaLXojYY4HfpemCnYLCc2g2Rs/instances/ins_3DMaLWJYiPvQtU4lsydFtUckpy8/api-keys","claimUrl":"https://dashboard.clerk.com/apps/claim?framework=nextjs&token=8zozapha16f8y6w5c60egqhhm2pskhqokm1aeb79","...":"3 items not stringified"}) in 7ms node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js
+[browser] Failed to fetch RSC payload for http://localhost:3003/clerk-sync-keyless?returnUrl=http://localhost:3003/onboarding. Falling back to browser navigation. TypeError: Failed to fetch
+ GET /onboarding 200 in 113ms (next.js: 6ms, proxy.ts: 7ms, application-code: 100ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://casual-marlin-77.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:12:3216)
+ POST /onboarding 303 in 302ms (next.js: 7ms, proxy.ts: 8ms, application-code: 287ms)
+  └─ ƒ syncKeylessConfigAction({"apiKeysUrl":"https://dashboard.clerk.com/apps/app_3DMaLXojYY4HfpemCnYLCc2g2Rs/instances/ins_3DMaLWJYiPvQtU4lsydFtUckpy8/api-keys","claimUrl":"https://dashboard.clerk.com/apps/claim?framework=nextjs&token=8zozapha16f8y6w5c60egqhhm2pskhqokm1aeb79","...":"3 items not stringified"}) in 5ms node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js
+ GET / 200 in 1668ms (next.js: 1507ms, proxy.ts: 8ms, application-code: 153ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://casual-marlin-77.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:12:3216)
+ GET / 200 in 144ms (next.js: 17ms, proxy.ts: 32ms, application-code: 96ms)
+ POST / 303 in 230ms (next.js: 7ms, proxy.ts: 14ms, application-code: 209ms)
+  └─ ƒ syncKeylessConfigAction({"apiKeysUrl":"https://dashboard.clerk.com/apps/app_3DMaLXojYY4HfpemCnYLCc2g2Rs/instances/ins_3DMaLWJYiPvQtU4lsydFtUckpy8/api-keys","claimUrl":"https://dashboard.clerk.com/apps/claim?framework=nextjs&token=8zozapha16f8y6w5c60egqhhm2pskhqokm1aeb79","...":"3 items not stringified"}) in 18ms node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js
+ GET / 200 in 67ms (next.js: 18ms, proxy.ts: 27ms, application-code: 22ms)
+ GET / 200 in 147ms (next.js: 13ms, proxy.ts: 41ms, application-code: 93ms)
+○ Compiling /dashboard ...
+
+[35m
+[Clerk]:[0m You are running in keyless mode.
+You can [35mclaim your keys[0m by visiting https://dashboard.clerk.com/apps/claim?framework=nextjs&token=8zozapha16f8y6w5c60egqhhm2pskhqokm1aeb79&return_url=http%3A%2F%2Flocalhost%3A3003%2F
+
+ GET /dashboard 200 in 4.1s (next.js: 3.7s, proxy.ts: 10ms, application-code: 360ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://casual-marlin-77.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:12:3216)
+ POST /dashboard 303 in 463ms (next.js: 5ms, proxy.ts: 9ms, application-code: 449ms)
+  └─ ƒ syncKeylessConfigAction({"apiKeysUrl":"https://dashboard.clerk.com/apps/app_3DMaLXojYY4HfpemCnYLCc2g2Rs/instances/ins_3DMaLWJYiPvQtU4lsydFtUckpy8/api-keys","claimUrl":"https://dashboard.clerk.com/apps/claim?framework=nextjs&token=8zozapha16f8y6w5c60egqhhm2pskhqokm1aeb79","...":"3 items not stringified"}) in 6ms node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js

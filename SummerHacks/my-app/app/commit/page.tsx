@@ -19,7 +19,9 @@ export default function CommitPage() {
   
   const [analysis, setAnalysis] = useState<any>(null);
   const [walletState, setWalletState] = useState<"idle" | "available" | "not_installed" | "connected">("idle");
-  const { isDemoMode, setDemoMode, walletAddress, setWalletAddress } = useAppStore();
+  const { walletAddress, setWalletAddress } = useAppStore();
+  const isDemoMode = false;
+  const setDemoMode = (val: boolean) => {};
 
   const [form, setForm] = useState({
     duration: 30,
