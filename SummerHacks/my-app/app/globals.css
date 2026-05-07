@@ -8,11 +8,11 @@
 /* ── Standardized Clean Tokens ────────────────────────────────────────── */
 :root {
   /* Common Values */
-  --font-sans: 'Geist', 'Inter', system-ui, -apple-system, sans-serif;
-  --font-mono: 'Geist Mono', 'JetBrains Mono', 'Fira Code', monospace;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
   --radius: 0.75rem; /* rounded-xl */
-  --accent: #F0B90B; /* Binance Yellow */
-  --destructive: #F6465D; /* Binance Red */
+  --accent: #3B82F6; /* SaaS Blue */
+  --destructive: #EF4444; /* Standard Red */
   
   /* Light Theme (Override to be darker or default light) */
   --bg-base: #FFFFFF;
@@ -39,8 +39,8 @@
   --border-active: rgba(255, 255, 255, 0.2);
   --glass-bg: rgba(30, 32, 38, 0.7);
   --glass-border: rgba(255, 255, 255, 0.1);
-  --accent: #F0B90B;
-  --destructive: #F6465D;
+  --accent: #3B82F6;
+  --destructive: #EF4444;
 }
 
 @theme inline {
@@ -51,6 +51,16 @@
   --color-destructive: var(--destructive);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
+
+  /* Extended semantic tokens */
+  --color-surface: var(--bg-surface);
+  --color-card: var(--bg-card);
+  --color-secondary: var(--text-secondary);
+  --color-muted: var(--text-muted);
+  --color-border-active: var(--border-active);
+  --color-success: #10B981;
+  --color-danger: #EF4444;
+  --color-glass: var(--glass-bg);
 }
 
 /* ── Premium Interactions ────────────────────────────────────────────── */
@@ -66,7 +76,7 @@
 }
 
 :root.dark .premium-card:hover {
-  box-shadow: 0 20px 40px -12px rgba(240, 185, 11, 0.15);
+  box-shadow: 0 20px 40px -12px rgba(59, 130, 246, 0.15);
   background: var(--bg-surface);
 }
 
@@ -99,11 +109,6 @@ body {
   min-height: 100dvh;
 }
 
-/* Force dark mode for dashboard */
-body.dashboard-layout {
-  background: #1E2026;
-  color: #EAECEF;
-}
 
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
@@ -146,7 +151,7 @@ body.dashboard-layout {
 
 /* Selection */
 .selection-yellow::selection {
-  background: rgba(240, 185, 11, 0.2);
+  background: rgba(59, 130, 246, 0.2);
 }
 
 @layer base {

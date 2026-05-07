@@ -83,20 +83,20 @@ export default function NetworkPage() {
           <div className="mb-2 inline-flex items-center px-3 py-1 bg-accent/5 text-green-600 text-[10px] uppercase font-bold tracking-widest rounded-full border border-green-100">
             <Users className="w-3 h-3 mr-2" /> Global Discipline Network
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-[#EAECEF]">Community Leaderboard</h1>
-          <p className="text-[#848E9C] mt-1 text-sm font-medium">See how disciplined you are compared to your peers in the <strong>{userGoal}</strong> cohort.</p>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">Community Leaderboard</h1>
+          <p className="text-muted mt-1 text-sm font-medium">See how disciplined you are compared to your peers in the <strong>{userGoal}</strong> cohort.</p>
         </div>
         
         <div className="flex gap-4">
-          <div className="bg-[#1E2026] text-[#EAECEF] border border-[#3A3F45] px-5 py-3 rounded-2xl flex items-center gap-3 shadow-xl">
+          <div className="bg-card text-foreground border border-border px-5 py-3 rounded-2xl flex items-center gap-3 shadow-xl">
             <div className="p-2 bg-accent/5 rounded-lg border border-green-100">
               <Shield className="w-4 h-4 text-green-600" />
             </div>
             <div>
-              <div className="text-[10px] font-bold text-[#848E9C] uppercase tracking-widest">
+              <div className="text-[10px] font-bold text-muted uppercase tracking-widest">
                 {isDemoMode ? "Simulation Status" : "Your Status"}
               </div>
-              <div className="text-sm font-bold text-[#EAECEF]">
+              <div className="text-sm font-bold text-foreground">
                 {isDemoMode ? "Mock Escrow Active" : "Locked in Escrow"}
               </div>
               {txHash && (
@@ -115,39 +115,39 @@ export default function NetworkPage() {
       </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div className="bg-[#1E2026] text-[#EAECEF] border border-[#3A3F45] border-l-4 border-l-[#0E9F6E] rounded-2xl p-5 shadow-xl hover:-translate-y-0.5 transition-all">
-          <p className="text-[10px] font-bold text-[#848E9C] uppercase tracking-widest flex items-center gap-2 mb-2"><TrendingUp className="w-3.5 h-3.5 text-[#0E9F6E]" /> Avg Progress</p>
-          <p className="text-3xl font-bold text-[#EAECEF] font-mono">56<span className="text-lg text-[#848E9C] font-sans ml-0.5">%</span></p>
+        <div className="bg-card text-foreground border border-border border-l-4 border-l-[#0E9F6E] rounded-2xl p-5 shadow-xl hover:-translate-y-0.5 transition-all">
+          <p className="text-[10px] font-bold text-muted uppercase tracking-widest flex items-center gap-2 mb-2"><TrendingUp className="w-3.5 h-3.5 text-[#0E9F6E]" /> Avg Progress</p>
+          <p className="text-3xl font-bold text-foreground font-mono">56<span className="text-lg text-muted font-sans ml-0.5">%</span></p>
         </div>
-        <div className="bg-[#1E2026] text-[#EAECEF] border border-[#3A3F45] border-l-4 border-l-orange-400 rounded-2xl p-5 shadow-xl hover:-translate-y-0.5 transition-all">
-          <p className="text-[10px] font-bold text-[#848E9C] uppercase tracking-widest flex items-center gap-2 mb-2"><Trophy className="w-3.5 h-3.5 text-orange-400" /> Top Streak</p>
-          <p className="text-3xl font-bold text-[#EAECEF] font-mono">14<span className="text-lg text-[#848E9C] font-sans ml-1">Days</span></p>
+        <div className="bg-card text-foreground border border-border border-l-4 border-l-orange-400 rounded-2xl p-5 shadow-xl hover:-translate-y-0.5 transition-all">
+          <p className="text-[10px] font-bold text-muted uppercase tracking-widest flex items-center gap-2 mb-2"><Trophy className="w-3.5 h-3.5 text-orange-400" /> Top Streak</p>
+          <p className="text-3xl font-bold text-foreground font-mono">14<span className="text-lg text-muted font-sans ml-1">Days</span></p>
         </div>
-        <div className="bg-[#1E2026] text-[#EAECEF] border border-[#3A3F45] border-l-4 border-l-blue-400 rounded-2xl p-5 shadow-xl hover:-translate-y-0.5 transition-all">
-          <p className="text-[10px] font-bold text-[#848E9C] uppercase tracking-widest flex items-center gap-2 mb-2"><Users className="w-3.5 h-3.5 text-blue-400" /> Active Users</p>
-          <p className="text-3xl font-bold text-[#EAECEF] font-mono">128</p>
+        <div className="bg-card text-foreground border border-border border-l-4 border-l-blue-400 rounded-2xl p-5 shadow-xl hover:-translate-y-0.5 transition-all">
+          <p className="text-[10px] font-bold text-muted uppercase tracking-widest flex items-center gap-2 mb-2"><Users className="w-3.5 h-3.5 text-blue-400" /> Active Users</p>
+          <p className="text-3xl font-bold text-foreground font-mono">128</p>
         </div>
       </div>
 
       <div className="grid lg:grid-cols-3 gap-8">
         {/* Leaderboard Column */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-[#1E2026] text-[#EAECEF] border border-[#3A3F45] rounded-2xl p-8 shadow-xl overflow-hidden relative">
+          <div className="bg-card text-foreground border border-border rounded-2xl p-8 shadow-xl overflow-hidden relative">
             <div className="absolute top-0 right-0 p-4 opacity-5">
               <Trophy className="w-32 h-32" />
             </div>
             
-            <h3 className="text-[10px] font-bold text-[#848E9C] uppercase tracking-widest mb-8 flex items-center gap-2">
+            <h3 className="text-[10px] font-bold text-muted uppercase tracking-widest mb-8 flex items-center gap-2">
               <Trophy className="w-4 h-4 text-green-600" /> Goal Leaderboard: {userGoal}
             </h3>
 
             {leaderboard.length > 0 && savingsScore > 0 && leaderboard[0].id !== "me" && (
-              <div className="mb-6 p-4 bg-orange-50 border border-orange-100 rounded-xl flex items-center justify-between shadow-xl">
+              <div className="mb-6 p-4 bg-accent/10 border border-accent/20 rounded-xl flex items-center justify-between shadow-xl">
                 <div>
-                  <div className="text-sm font-bold text-orange-900">Psychology Trigger</div>
-                  <div className="text-[10px] text-orange-700 uppercase tracking-widest font-bold mt-1">You are {leaderboard[0].progress_to_goal - savingsScore}% behind the top performer in this cohort.</div>
+                  <div className="text-sm font-bold text-accent">Psychology Trigger</div>
+                  <div className="text-[10px] text-accent/80 uppercase tracking-widest font-bold mt-1">You are {leaderboard[0].progress_to_goal - savingsScore}% behind the top performer in this cohort.</div>
                 </div>
-                <TrendingUp className="text-orange-400 w-6 h-6" />
+                <TrendingUp className="text-accent w-6 h-6" />
               </div>
             )}
 
@@ -159,41 +159,41 @@ export default function NetworkPage() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.1 }}
                     className={`flex items-center justify-between p-4 rounded-xl transition-all duration-300 hover:scale-[1.005] group shadow-xl ${
-                      user.isCurrentUser ? "bg-accent/5 border border-green-200 ring-2 ring-[#0E9F6E]/10" : "bg-[#1E2026] text-[#EAECEF] border border-gray-100 hover:border-green-100 hover:shadow-md"
+                      user.isCurrentUser ? "bg-accent/5 border border-green-200 ring-2 ring-[#0E9F6E]/10" : "bg-card text-foreground border border-border hover:border-success/50 hover:shadow-md"
                     }`}
                   >
                   <div className="flex items-center gap-3">
                     {/* Rank number */}
                     <div className={`w-6 text-center text-[11px] font-black font-mono ${
-                      i === 0 ? "text-amber-500" : i === 1 ? "text-[#848E9C]" : i === 2 ? "text-orange-400" : "text-gray-300"
+                      i === 0 ? "text-amber-500" : i === 1 ? "text-muted" : i === 2 ? "text-orange-400" : "text-gray-300"
                     }`}>
                       #{i + 1}
                     </div>
                     <div className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${
-                      user.isCurrentUser ? "bg-[#0E9F6E] text-white ring-4 ring-green-100" : "bg-gray-100 text-gray-600 border border-[#3A3F45]"
+                      user.isCurrentUser ? "bg-[#0E9F6E] text-foreground ring-4 ring-green-100" : "bg-white/10 text-foreground border border-border"
                     }`}>
                       {user.name.charAt(0)}
                     </div>
                     <div>
-                      <div className={`font-bold text-sm ${user.isCurrentUser ? "text-green-800" : "text-gray-900"}`}>
+                      <div className={`font-bold text-sm ${user.isCurrentUser ? "text-green-800" : "text-foreground/80"}`}>
                         {user.name} 
                         {user.isCurrentUser && <span className="text-[10px] bg-accent/10 text-green-700 px-1.5 py-0.5 rounded ml-2 border border-green-200 font-black">YOU</span>}
                       </div>
-                      <div className="text-[10px] font-bold text-[#848E9C] uppercase tracking-widest mt-0.5">
+                      <div className="text-[10px] font-bold text-muted uppercase tracking-widest mt-0.5">
                         {user.isCurrentUser && savingsScore === 0 ? user.status : getLabel(user.progress_to_goal)}
                       </div>
                     </div>
                   </div>
                   
                   <div className="flex items-center gap-4">
-                    <div className="hidden md:block w-28 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                    <div className="hidden md:block w-28 h-1.5 bg-white/10 rounded-full overflow-hidden">
                       <div 
                         style={{ width: `${user.progress_to_goal}%` }}
                         className="h-full bg-[#0E9F6E] rounded-full transition-all duration-1000 ease-out"
                       />
                     </div>
                     <div className={`text-sm font-black font-mono w-10 text-right ${
-                      user.isCurrentUser ? "text-[#0E9F6E]" : "text-[#EAECEF]"
+                      user.isCurrentUser ? "text-[#0E9F6E]" : "text-foreground"
                     }`}>
                       {user.progress_to_goal}%
                     </div>
@@ -207,8 +207,8 @@ export default function NetworkPage() {
         {/* Sidebar Column */}
         <div className="space-y-6">
           {/* Notifications Feed */}
-          <div className="bg-[#1E2026] text-[#EAECEF] border border-[#3A3F45] rounded-2xl p-8 shadow-xl">
-            <h3 className="text-[10px] font-bold text-[#848E9C] uppercase tracking-widest mb-6 flex items-center gap-2">
+          <div className="bg-card text-foreground border border-border rounded-2xl p-8 shadow-xl">
+            <h3 className="text-[10px] font-bold text-muted uppercase tracking-widest mb-6 flex items-center gap-2">
               <Zap className="w-4 h-4 text-green-600" /> Live Activity
             </h3>
             
@@ -217,33 +217,33 @@ export default function NetworkPage() {
                 activities.map((act, i) => (
                   <div key={i} className="flex flex-col gap-1 border-l-2 border-green-600/20 pl-4 py-1 relative">
                     <div className="absolute w-2 h-2 rounded-full bg-accent/50 -left-[5px] top-1.5" />
-                    <div className="text-xs text-[#EAECEF] font-medium">
+                    <div className="text-xs text-foreground font-medium">
                       <span className="font-bold">{act.user}</span> {act.action}
                     </div>
                     <span className="text-[10px] font-bold text-muted uppercase tracking-widest">{act.time}</span>
                   </div>
                 ))
               ) : (
-                <div className="text-[#848E9C] text-xs font-medium italic">No recent activity — system initializing...</div>
+                <div className="text-muted text-xs font-medium italic">No recent activity — system initializing...</div>
               )}
             </div>
           </div>
 
           {/* Your Rank Card */}
-          <div className="bg-[#1E2026] text-[#EAECEF] border border-[#3A3F45] rounded-2xl p-8 shadow-xl text-center">
-            <p className="text-sm font-bold text-[#848E9C] mb-3">Your Cohort Rank</p>
-            <div className="text-5xl font-black text-[#EAECEF]">#{leaderboard.findIndex(u => u.id === "me") + 1}</div>
-            <p className="text-xs text-[#848E9C] mt-3 font-semibold uppercase tracking-widest">Out of 128 active users</p>
+          <div className="bg-card text-foreground border border-border rounded-2xl p-8 shadow-xl text-center">
+            <p className="text-sm font-bold text-muted mb-3">Your Cohort Rank</p>
+            <div className="text-5xl font-black text-foreground">#{leaderboard.findIndex(u => u.id === "me") + 1}</div>
+            <p className="text-xs text-muted mt-3 font-semibold uppercase tracking-widest">Out of 128 active users</p>
           </div>
 
           {/* Weekly Challenge */}
-          <div className="bg-[#0B0B0B] text-white rounded-2xl p-6 relative overflow-hidden">
-             <div className="absolute -right-4 -top-4 w-20 h-20 rounded-full bg-[#1E2026] text-[#EAECEF]/5" />
-             <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest mb-2">🔥 Weekly Challenge</p>
-             <p className="text-sm font-bold text-white leading-relaxed">
+          <div className="bg-[#0B0B0B] text-foreground rounded-2xl p-6 relative overflow-hidden">
+             <div className="absolute -right-4 -top-4 w-20 h-20 rounded-full bg-card text-foreground/5" />
+             <p className="text-[10px] font-bold text-foreground/50 uppercase tracking-widest mb-2">🔥 Weekly Challenge</p>
+             <p className="text-sm font-bold text-foreground leading-relaxed">
                Maintain a 7-day no-Swiggy streak.
              </p>
-             <div className="mt-4 inline-flex items-center text-[10px] uppercase tracking-widest font-bold text-[#EAECEF] bg-[#1E2026] text-[#EAECEF] px-3 py-1.5 rounded-full">
+             <div className="mt-4 inline-flex items-center text-[10px] uppercase tracking-widest font-bold text-foreground bg-card text-foreground px-3 py-1.5 rounded-full">
                Reward: Epic NFT Badge
              </div>
           </div>

@@ -108,7 +108,7 @@ export default function OTPInput({ value, onChange, onComplete, disabled }: OTPI
             value={digitArr[i] || ""}
             onChange={(e) => handleChange(e, i)}
             onKeyDown={(e) => handleKeyDown(e, i)}
-            className="w-10 h-12 sm:w-12 sm:h-14 text-center bg-[#000000] border border-[#1F1F1F] rounded-xl text-white font-bold text-xl focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E] caret-[#22C55E] transition-colors disabled:opacity-50"
+            className="w-10 h-12 sm:w-12 sm:h-14 text-center bg-[#000000] border border-[#1F1F1F] rounded-xl text-foreground font-bold text-xl focus:outline-none focus:border-[#22C55E] focus:ring-1 focus:ring-[#22C55E] caret-[#22C55E] transition-colors disabled:opacity-50"
           />
         ))}
       </div>

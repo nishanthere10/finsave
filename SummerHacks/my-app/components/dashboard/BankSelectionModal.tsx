@@ -20,7 +20,7 @@ export default function BankSelectionModal({
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/40 backdrop-blur-sm">
+      <div className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-background/40 backdrop-blur-sm">
         <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -33,7 +33,7 @@ export default function BankSelectionModal({
                 <Landmark className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-bold text-gray-900 dark:text-white leading-tight">Secure Connection</h3>
+                <h3 className="font-bold text-gray-900 dark:text-foreground leading-tight">Secure Connection</h3>
                 <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400 mt-0.5">
                   <ShieldCheck className="w-3.5 h-3.5 text-green-500" />
                   <span>RBI Account Aggregator</span>
@@ -59,11 +59,11 @@ export default function BankSelectionModal({
                 className="w-full relative overflow-hidden group flex items-center justify-between p-4 rounded-xl border-2 border-gray-100 dark:border-[#222222] hover:border-blue-500 hover:bg-blue-50/30 dark:hover:bg-blue-900/10 transition-all text-left"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-[#004C8F] rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-sm overflow-hidden">
+                  <div className="w-12 h-12 bg-[#004C8F] rounded-lg flex items-center justify-center text-foreground font-bold text-lg shadow-sm overflow-hidden">
                     <Image src="/logos/hdfc.png" alt="HDFC" width={48} height={48} className="object-contain w-full h-full p-2 bg-white" />
                   </div>
                   <div>
-                    <div className="font-bold text-gray-900 dark:text-white">HDFC Bank</div>
+                    <div className="font-bold text-gray-900 dark:text-foreground">HDFC Bank</div>
                     <div className="text-xs text-gray-500 font-medium">Savings Account</div>
                   </div>
                 </div>
@@ -74,7 +74,7 @@ export default function BankSelectionModal({
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-gray-200 dark:bg-[#333333] rounded-lg" />
                   <div>
-                    <div className="font-bold text-gray-900 dark:text-white">Other Banks</div>
+                    <div className="font-bold text-gray-900 dark:text-foreground">Other Banks</div>
                     <div className="text-xs text-gray-500 font-medium">Coming Soon</div>
                   </div>
                 </div>

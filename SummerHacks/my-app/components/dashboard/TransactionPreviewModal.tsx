@@ -77,7 +77,7 @@ export default function TransactionPreviewModal({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-background/60 backdrop-blur-sm z-50"
           />
 
           {/* Modal */}
@@ -98,7 +98,7 @@ export default function TransactionPreviewModal({
                       RBI Account Aggregator
                     </span>
                   </div>
-                  <h2 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  <h2 className="text-xl font-bold tracking-tight text-gray-900 dark:text-foreground">
                     Transactions Retrieved
                   </h2>
                   <p className="text-xs text-gray-500 dark:text-[#A1A1AA] mt-1">
@@ -127,7 +127,7 @@ export default function TransactionPreviewModal({
                   <div className="text-xs text-gray-500 dark:text-[#A1A1AA] font-bold uppercase tracking-widest mb-1">
                     Merchants
                   </div>
-                  <div className="text-lg font-bold font-mono text-gray-900 dark:text-white">
+                  <div className="text-lg font-bold font-mono text-gray-900 dark:text-foreground">
                     {uniqueMerchants}
                   </div>
                 </div>
@@ -135,7 +135,7 @@ export default function TransactionPreviewModal({
                   <div className="text-xs text-gray-500 dark:text-[#A1A1AA] font-bold uppercase tracking-widest mb-1">
                     Period
                   </div>
-                  <div className="text-lg font-bold font-mono text-gray-900 dark:text-white">
+                  <div className="text-lg font-bold font-mono text-gray-900 dark:text-foreground">
                     {dateRange}
                   </div>
                 </div>
@@ -162,7 +162,7 @@ export default function TransactionPreviewModal({
                             {CATEGORY_ICONS[tx.merchant] || "💳"}
                           </span>
                           <div>
-                            <div className="text-sm font-semibold text-gray-900 dark:text-white">
+                            <div className="text-sm font-semibold text-gray-900 dark:text-foreground">
                               {tx.merchant}
                             </div>
                             <div className="text-[10px] font-mono text-gray-400 dark:text-[#555]">
@@ -184,7 +184,7 @@ export default function TransactionPreviewModal({
                 <button
                   onClick={() => onConfirm(transactions)}
                   disabled={loading || transactions.length === 0}
-                  className="w-full py-4 bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200 rounded-xl text-xs font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 shadow-lg disabled:opacity-30 disabled:cursor-not-allowed"
+                  className="w-full py-4 bg-background text-foreground hover:bg-gray-800 dark:bg-white dark:text-foreground dark:hover:bg-gray-200 rounded-xl text-xs font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 shadow-lg disabled:opacity-30 disabled:cursor-not-allowed"
                 >
                   <TrendingDown className="w-4 h-4" />
                   Run Full Autopsy

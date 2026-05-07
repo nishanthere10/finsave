@@ -137,16 +137,16 @@ export default function AnalysisPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-[#EAECEF] font-sans">
+    <div className="min-h-screen bg-background text-foreground font-sans">
       <div className="max-w-5xl mx-auto px-6 pt-6 pb-32">
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <div className="mb-2 inline-flex items-center px-3 py-1 bg-black/5 text-[#EAECEF] text-[10px] uppercase font-bold tracking-widest rounded-full">
-            <span className="w-1.5 h-1.5 bg-black rounded-full mr-2 animate-pulse" />
+          <div className="mb-2 inline-flex items-center px-3 py-1 bg-surface border border-border text-foreground text-[10px] uppercase font-bold tracking-widest rounded-full">
+            <span className="w-1.5 h-1.5 bg-accent rounded-full mr-2 animate-pulse" />
             {dataSource === "bank" ? "Bank Connected" : "Manual Upload"} • AI Autopsy Engine
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-[#EAECEF] mb-1">Financial Autopsy</h1>
-          <p className="text-lg font-medium text-[#848E9C] mb-10">Upload your spending data. Our AI dissects every rupee.</p>
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-1">Financial Autopsy</h1>
+          <p className="text-lg font-medium text-muted mb-10">Upload your spending data. Our AI dissects every rupee.</p>
         </motion.div>
 
         <AnimatePresence mode="wait">
@@ -160,22 +160,22 @@ export default function AnalysisPage() {
                   <div
                     onDragOver={(e) => e.preventDefault()}
                     onDrop={handleFileDrop}
-                    className="bg-[#1E2026] text-[#EAECEF] border-2 border-dashed border-[#3A3F45] rounded-2xl p-10 text-center hover:border-accent/50 transition-colors cursor-pointer group shadow-xl"
+                    className="bg-card text-foreground border-2 border-dashed border-border rounded-2xl p-10 text-center hover:border-accent/50 transition-colors cursor-pointer group shadow-xl"
                     onClick={() => document.getElementById("file-input")?.click()}
                   >
                     <input id="file-input" type="file" className="hidden" accept=".pdf,.csv,.png,.jpg,.jpeg" onChange={(e) => setFile(e.target.files?.[0] || null)} />
                     {file ? (
                       <div className="flex items-center justify-center gap-3">
-                        <FileText className="w-6 h-6 text-[#F0B90B]" />
-                        <span className="font-bold text-[#EAECEF]">{file.name}</span>
+                        <FileText className="w-6 h-6 text-accent" />
+                        <span className="font-bold text-foreground">{file.name}</span>
                         <Button onClick={(e) => { e.stopPropagation(); setFile(null); }} className="p-1 hover:bg-background rounded">
                           <X className="w-4 h-4 text-muted" />
                         </Button>
                       </div>
                     ) : (
                       <>
-                        <Upload className="w-10 h-10 text-muted mx-auto mb-4 group-hover:text-[#F0B90B] transition-colors" />
-                        <p className="text-sm font-bold text-[#EAECEF] mb-1">Drop your statement here</p>
+                        <Upload className="w-10 h-10 text-muted mx-auto mb-4 group-hover:text-accent transition-colors" />
+                        <p className="text-sm font-bold text-foreground mb-1">Drop your statement here</p>
                         <p className="text-[10px] text-muted uppercase tracking-widest font-bold">PDF • CSV • Image — or click to browse</p>
                       </>
                     )}
@@ -188,13 +188,13 @@ export default function AnalysisPage() {
                       value={rawText}
                       onChange={(e) => setRawText(e.target.value)}
                       rows={5}
-                      className="w-full p-4 bg-[#1E2026] text-[#EAECEF] border border-[#3A3F45] rounded-xl text-[#EAECEF] placeholder-gray-400 focus:outline-none focus:border-accent transition-colors text-sm font-mono resize-none shadow-xl"
+                      className="w-full p-4 bg-card text-foreground border border-border rounded-xl placeholder-gray-400 focus:outline-none focus:border-accent transition-colors text-sm font-mono resize-none shadow-xl"
                       placeholder={"Zomato - ₹350\nAmazon - ₹1200\nNetflix - ₹649\nSwiggy - ₹280\n..."}
                     />
                   </div>
 
                   {error && (
-                    <div className="flex items-center gap-2 p-3 bg-destructive/50/10 border border-destructive/20 rounded-lg text-[#F6465D] text-sm font-bold">
+                    <div className="flex items-center gap-2 p-3 bg-destructive/50/10 border border-destructive/20 rounded-lg text-destructive text-sm font-bold">
                       <AlertTriangle className="w-4 h-4" /> {error}
                     </div>
                   )}
@@ -202,9 +202,9 @@ export default function AnalysisPage() {
 
                 {/* Right: Goal + Stipend */}
                 <div className="lg:col-span-2 space-y-6">
-                  <div className="bg-[#1E2026] text-[#EAECEF] border border-[#3A3F45] rounded-xl p-6 shadow-xl">
+                  <div className="bg-card text-foreground border border-border rounded-xl p-6 shadow-xl">
                     <div className="flex items-center gap-2 text-[10px] font-bold text-secondary uppercase tracking-widest mb-4">
-                      <Target className="w-3 h-3 text-[#F0B90B]" /> Analysis Parameters
+                      <Target className="w-3 h-3 text-accent" /> Analysis Parameters
                     </div>
 
                     <div className="space-y-4">
@@ -214,7 +214,7 @@ export default function AnalysisPage() {
                           type="number"
                           value={stipend}
                           onChange={(e) => setStipend(e.target.value)}
-                          className="w-full p-3 bg-background/50 border border-[#3A3F45] rounded-lg text-[#EAECEF] font-mono focus:outline-none focus:border-accent transition-colors"
+                          className="w-full p-3 bg-background/50 border border-border rounded-lg text-foreground font-mono focus:outline-none focus:border-accent transition-colors"
                           placeholder="15000"
                         />
                       </div>
@@ -227,8 +227,8 @@ export default function AnalysisPage() {
                               onClick={() => setGoal(g.value)}
                               className={`py-2 px-3 rounded-lg text-xs font-bold transition-all border ${
                                 goal === g.value
-                                  ? "border-accent bg-accent/10 text-[#F0B90B]"
-                                  : "border-[#3A3F45] bg-background text-secondary hover:border-accent/30"
+                                  ? "border-accent bg-accent/10 text-accent"
+                                  : "border-border bg-background text-secondary hover:border-accent/30"
                               }`}
                             >
                               {g.label}
@@ -266,10 +266,10 @@ export default function AnalysisPage() {
                   transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <Brain className="w-8 h-8 text-[#F0B90B]" />
+                  <Brain className="w-8 h-8 text-accent" />
                 </div>
               </div>
-              <h2 className="text-2xl font-bold tracking-tight text-[#EAECEF] mb-2">Analyzing your spending...</h2>
+              <h2 className="text-2xl font-bold tracking-tight text-foreground mb-2">Analyzing your spending...</h2>
               <p className="text-sm font-medium text-secondary">AI is dissecting your spending patterns</p>
 
               <div className="mt-10 grid grid-cols-3 gap-6 text-center max-w-lg w-full">
@@ -286,7 +286,7 @@ export default function AnalysisPage() {
                     className="flex flex-col items-center gap-2"
                   >
                     <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
-                      <step.icon className="w-5 h-5 text-[#F0B90B]" />
+                      <step.icon className="w-5 h-5 text-accent" />
                     </div>
                     <span className="text-[10px] font-bold text-secondary uppercase tracking-widest">{step.label}</span>
                   </motion.div>
@@ -301,7 +301,7 @@ export default function AnalysisPage() {
               {/* Bento Grid Results */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 {/* Savings Score */}
-                <div className="bg-[#1E2026] text-[#EAECEF] border border-[#3A3F45] rounded-2xl p-8 flex flex-col items-center justify-center text-center shadow-xl">
+                <div className="bg-card text-foreground border border-border rounded-2xl p-8 flex flex-col items-center justify-center text-center shadow-xl">
                   <div className="relative w-28 h-28 mb-6">
                     <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
                       <circle cx="50" cy="50" r="45" fill="none" stroke="var(--border)" strokeWidth="6" />
@@ -315,7 +315,7 @@ export default function AnalysisPage() {
                       />
                     </svg>
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-3xl font-bold font-mono text-[#EAECEF]">{result.savings_score}</span>
+                      <span className="text-3xl font-bold font-mono text-foreground">{result.savings_score}</span>
                     </div>
                   </div>
                   <h3 className="text-xs font-bold text-secondary uppercase tracking-widest mb-1">Savings Score</h3>
@@ -323,32 +323,32 @@ export default function AnalysisPage() {
                 </div>
 
                 {/* Money Mirror */}
-                <div className="bg-[#1E2026] text-[#EAECEF] border border-[#3A3F45] rounded-2xl p-8 shadow-xl">
+                <div className="bg-card text-foreground border border-border rounded-2xl p-8 shadow-xl">
                   <h3 className="text-xs font-bold text-secondary uppercase tracking-widest mb-6 flex items-center gap-2">
-                    <BarChart3 className="w-3 h-3 text-[#F0B90B]" /> Money Mirror
+                    <BarChart3 className="w-3 h-3 text-accent" /> Money Mirror
                   </h3>
                   <div className="space-y-5">
                     <div>
-                      <span className="text-[10px] font-bold text-[#F6465D] uppercase tracking-widest">Potential Savings</span>
-                      <div className="text-3xl font-bold font-mono text-[#F6465D] tracking-tighter">₹{result.monthly_waste.toLocaleString()}</div>
+                      <span className="text-[10px] font-bold text-destructive uppercase tracking-widest">Potential Savings</span>
+                      <div className="text-3xl font-bold font-mono text-destructive tracking-tighter">₹{result.monthly_waste.toLocaleString()}</div>
                     </div>
                     <div className="h-px bg-border" />
                     <div>
-                      <span className="text-[10px] font-bold text-[#F6465D] uppercase tracking-widest">5-Year Projection</span>
-                      <div className="text-3xl font-bold font-mono text-[#F6465D] tracking-tighter">₹{result.raw_5_year_loss.toLocaleString()}</div>
+                      <span className="text-[10px] font-bold text-destructive uppercase tracking-widest">5-Year Projection</span>
+                      <div className="text-3xl font-bold font-mono text-destructive tracking-tighter">₹{result.raw_5_year_loss.toLocaleString()}</div>
                     </div>
                     <div className="h-px bg-border" />
                     <div>
-                      <span className="text-[10px] font-bold text-[#F0B90B] uppercase tracking-widest">If Invested</span>
-                      <div className="text-3xl font-bold font-mono text-[#F0B90B] tracking-tighter">₹{result.future_invested_value.toLocaleString()}</div>
+                      <span className="text-[10px] font-bold text-accent uppercase tracking-widest">If Invested</span>
+                      <div className="text-3xl font-bold font-mono text-accent tracking-tighter">₹{result.future_invested_value.toLocaleString()}</div>
                     </div>
                   </div>
                 </div>
 
                 {/* Spending Breakdown */}
-                <div className="bg-[#1E2026] text-[#EAECEF] border border-[#3A3F45] rounded-2xl p-8 shadow-xl">
+                <div className="bg-card text-foreground border border-border rounded-2xl p-8 shadow-xl">
                   <h3 className="text-xs font-bold text-secondary uppercase tracking-widest mb-6 flex items-center gap-2">
-                    <PieChart className="w-3 h-3 text-[#F0B90B]" /> Breakdown
+                    <PieChart className="w-3 h-3 text-accent" /> Breakdown
                   </h3>
                   <div className="space-y-4">
                     {Object.entries(result.spending_breakdown).map(([cat, amount], i) => {
@@ -358,10 +358,10 @@ export default function AnalysisPage() {
                       return (
                         <div key={cat}>
                           <div className="flex justify-between text-xs font-bold mb-1.5">
-                            <span className="text-[#EAECEF]">{cat}</span>
+                            <span className="text-foreground">{cat}</span>
                             <span className="text-secondary font-mono">₹{amount.toLocaleString()}</span>
                           </div>
-                          <div className="h-1.5 bg-background rounded-full overflow-hidden border border-[#3A3F45]">
+                          <div className="h-1.5 bg-background rounded-full overflow-hidden border border-border">
                             <motion.div
                               initial={{ width: 0 }}
                               animate={{ width: `${pct}%` }}
@@ -381,12 +381,12 @@ export default function AnalysisPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="bg-[#1E2026] text-[#EAECEF] border border-accent/20 rounded-2xl p-8 mb-8 shadow-xl"
+                className="bg-card text-foreground border border-accent/20 rounded-2xl p-8 mb-8 shadow-xl"
               >
-                <div className="flex items-center gap-2 text-[10px] font-bold text-[#F0B90B] uppercase tracking-widest mb-4">
+                <div className="flex items-center gap-2 text-[10px] font-bold text-accent uppercase tracking-widest mb-4">
                   <Brain className="w-3 h-3" /> Financial Coach
                 </div>
-                <p className="text-xl font-bold tracking-tight text-[#EAECEF] leading-relaxed">
+                <p className="text-xl font-bold tracking-tight text-foreground leading-relaxed">
                   &ldquo;{result.emotional_message}&rdquo;
                 </p>
                 <p className="text-[10px] text-muted mt-4 uppercase tracking-widest font-bold">
@@ -398,7 +398,7 @@ export default function AnalysisPage() {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button
                   onClick={() => { setStatus("idle"); setResult(null); setPayloadId(null); }}
-                  className="flex-1 py-4 border border-[#3A3F45] rounded-xl text-sm font-bold tracking-widest uppercase hover:bg-surface transition-all text-secondary"
+                  className="flex-1 py-4 border border-border rounded-xl text-sm font-bold tracking-widest uppercase hover:bg-surface transition-all text-secondary"
                 >
                   New Analysis
                 </Button>

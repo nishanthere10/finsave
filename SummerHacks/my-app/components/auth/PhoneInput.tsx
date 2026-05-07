@@ -24,7 +24,7 @@ export default function PhoneInput({ value, onChange, disabled }: PhoneInputProp
           onChange={(e) => onChange(e.target.value)}
           disabled={disabled}
           placeholder="+91 98765 43210"
-          className="appearance-none block w-full pl-12 pr-4 py-4 bg-[#000000] border border-[#1F1F1F] rounded-xl text-white font-bold placeholder-[#A1A1AA]/30 focus:outline-none focus:border-[#22C55E] sm:text-sm transition-colors disabled:opacity-50"
+          className="appearance-none block w-full pl-12 pr-4 py-4 bg-[#000000] border border-[#1F1F1F] rounded-xl text-foreground font-bold placeholder-[#A1A1AA]/30 focus:outline-none focus:border-[#22C55E] sm:text-sm transition-colors disabled:opacity-50"
         />
       </div>
     </div>
