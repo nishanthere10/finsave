@@ -42,7 +42,7 @@ export default function Header() {
   return (
     <header className="h-20 shrink-0 border-b border-[#1F1F1F] flex items-center justify-between px-6 lg:px-8 bg-[#000000] sticky top-0 z-50">
       <div className="flex items-center gap-4">
-        <h1 className="text-xl font-bold tracking-tight text-white font-sans">{getPageTitle()}</h1>
+        <h1 className="text-xl font-bold tracking-tight text-foreground font-sans">{getPageTitle()}</h1>
         {dataSource === "Setu AA" && (
            <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1 bg-[#22C55E]/10 border border-[#22C55E]/30 rounded-full">
             <span className="w-1.5 h-1.5 bg-[#22C55E] rounded-full animate-pulse" />
@@ -57,11 +57,11 @@ export default function Header() {
           <span className="text-sm font-medium font-mono text-[#A1A1AA]">{wallet}</span>
         </div>
 
-        <button className="w-10 h-10 rounded-lg bg-[#111111] border border-[#1F1F1F] flex items-center justify-center text-[#A1A1AA] hover:text-white transition-colors">
+        <button className="w-10 h-10 rounded-lg bg-[#111111] border border-[#1F1F1F] flex items-center justify-center text-[#A1A1AA] hover:text-foreground transition-colors">
           <Bell className="w-4 h-4" />
         </button>
 
-        <button className="w-10 h-10 rounded-lg bg-[#111111] border border-[#1F1F1F] flex items-center justify-center text-[#A1A1AA] hover:text-white transition-colors">
+        <button className="w-10 h-10 rounded-lg bg-[#111111] border border-[#1F1F1F] flex items-center justify-center text-[#A1A1AA] hover:text-foreground transition-colors">
           <User className="w-4 h-4" />
         </button>
       </div>

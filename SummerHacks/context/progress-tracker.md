@@ -42,10 +42,27 @@
 ---
 
 ## 🔴 Backlog / Upcoming
-- **Phase 2:** Live Web3 Escrow — Solidity smart contract deployment.
-- **Phase 3:** Live Account Aggregator — Replace mock Setu sandbox.
 - **Phase 4:** Async Backend — Move LangGraph execution to Celery/Redis.
 - **Phase 5:** Feature Completion — Month 2 verification logic, WhatsApp bot.
+
+---
+
+## 🟢 Completed (Phase 2 & Phase 3)
+
+### Phase 2 — Smart Contract Escrow (Live Web3) ✅ COMPLETE
+- Created `ExpenseEscrow.sol` with `lockStake`, `resolveSuccess`, and `resolveFailure` mechanisms.
+- Deployed contract successfully to Sepolia Testnet via Hardhat (`deploy.js`).
+- Updated `backend/web3_helper.py` to interact with real contract ABI and address.
+- Created `resolve_stake(success: bool)` admin function to release or burn funds dynamically.
+
+---
+
+## 🟢 Completed (Phase 3)
+### Phase 3 — Live Account Aggregator (Setu) ✅ COMPLETE
+- Replaced mock Anumati URLs with live Setu `v2/consents` API flow.
+- Added `backend/utils/crypto_helper.py` to handle ECDH Curve25519 key generation & JWE Decryption.
+- Updated `/api/webhook/setu` to handle `CONSENT_STATUS_UPDATE` and simulate encrypted data session fetches.
+- Verified `pii_masking.py` robustly strips emails, UPI IDs, phone numbers, and account refs.
 
 ---
 

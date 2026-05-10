@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -9,36 +10,37 @@
   /* Common Values */
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-  --radius: 0.625rem;
-  --accent: #22C55E;
+  --radius: 0.75rem; /* rounded-xl */
+  --accent: #3B82F6; /* SaaS Blue */
+  --destructive: #EF4444; /* Standard Red */
   
-  /* Light Theme (Default & Primary for Demo) */
-  --bg-base: #f6f7f9;
-  --bg-surface: #FFFFFF;
+  /* Light Theme (Override to be darker or default light) */
+  --bg-base: #FFFFFF;
+  --bg-surface: #F6F7F9;
   --bg-card: #FFFFFF;
   --text-primary: #000000;
   --text-secondary: #4b5563;
-  --text-muted: #6b7280;
+  --text-muted: #848E9C;
   --border-subtle: #e5e7eb;
   --border-active: #d1d5db;
   --glass-bg: rgba(255, 255, 255, 0.8);
   --glass-border: rgba(0, 0, 0, 0.05);
-  --accent: #16A34A;
 }
 
 :root.dark {
-  /* Dark Theme */
-  --bg-base: #000000;
-  --bg-surface: #111111;
-  --bg-card: #0A0A0A;
-  --text-primary: #FFFFFF;
-  --text-secondary: #A1A1AA;
-  --text-muted: #52525B;
-  --border-subtle: rgba(255, 255, 255, 0.05);
-  --border-active: rgba(255, 255, 255, 0.1);
-  --glass-bg: rgba(10, 10, 10, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.05);
-  --accent: #22C55E;
+  /* Dark Theme (Binance.US styling) */
+  --bg-base: #1E2026;
+  --bg-surface: #222126;
+  --bg-card: #2B3139;
+  --text-primary: #EAECEF;
+  --text-secondary: #B7BDC6;
+  --text-muted: #848E9C;
+  --border-subtle: rgba(255, 255, 255, 0.1);
+  --border-active: rgba(255, 255, 255, 0.2);
+  --glass-bg: rgba(30, 32, 38, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --accent: #3B82F6;
+  --destructive: #EF4444;
 }
 
 @theme inline {
@@ -46,14 +48,26 @@
   --color-foreground: var(--text-primary);
   --color-border: var(--border-subtle);
   --color-accent: var(--accent);
+  --color-destructive: var(--destructive);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
+
+  /* Extended semantic tokens */
+  --color-surface: var(--bg-surface);
+  --color-card: var(--bg-card);
+  --color-secondary: var(--text-secondary);
+  --color-muted: var(--text-muted);
+  --color-border-active: var(--border-active);
+  --color-success: #10B981;
+  --color-danger: #EF4444;
+  --color-glass: var(--glass-bg);
 }
 
 /* ── Premium Interactions ────────────────────────────────────────────── */
 .premium-card {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform, box-shadow, border-color;
+  border-radius: var(--radius);
 }
 
 .premium-card:hover {
@@ -62,7 +76,7 @@
 }
 
 :root.dark .premium-card:hover {
-  box-shadow: 0 20px 40px -12px rgba(34, 197, 94, 0.15);
+  box-shadow: 0 20px 40px -12px rgba(59, 130, 246, 0.15);
   background: var(--bg-surface);
 }
 
@@ -94,6 +108,7 @@ body {
   color: var(--text-primary);
   min-height: 100dvh;
 }
+
 
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
@@ -135,8 +150,8 @@ body {
 }
 
 /* Selection */
-.selection-emerald::selection {
-  background: rgba(34, 197, 94, 0.2);
+.selection-yellow::selection {
+  background: rgba(59, 130, 246, 0.2);
 }
 
 @layer base {

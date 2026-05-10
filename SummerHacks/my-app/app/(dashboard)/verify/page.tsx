@@ -1,4 +1,6 @@
 "use client";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 import { useState } from "react";
 import axios from "axios";
@@ -10,6 +12,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import CountUp from "react-countup";
+import { MetricCard } from "@/components/dashboard/MetricCard";
 
 interface VerifyResult {
   message: string;
@@ -117,7 +120,7 @@ export default function VerifyPage() {
                   </div>
                 ) : (
                   <>
-                    <div className="w-16 h-16 bg-background border border-border flex items-center justify-center rounded-2xl mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                    <div className="w-16 h-16 bg-background border border-border flex items-center justify-center rounded-2xl mb-6 shadow-xl group-hover:scale-110 transition-transform">
                       <UploadCloud className="w-8 h-8 text-secondary group-hover:text-accent transition-colors" />
                     </div>
                     <h3 className="text-xl font-bold text-foreground mb-2">Upload Month 2 Statement</h3>
@@ -134,22 +137,22 @@ export default function VerifyPage() {
                   value={rawText}
                   onChange={(e) => setRawText(e.target.value)}
                   rows={8}
-                  className="w-full p-4 bg-white border border-gray-200 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:border-black transition-colors text-sm font-mono resize-none shadow-sm h-full min-h-[250px]"
+                  className="w-full p-4 bg-card text-foreground border border-border rounded-xl text-foreground placeholder-gray-400 focus:outline-none focus:border-black transition-colors text-sm font-mono resize-none shadow-xl h-full min-h-[250px]"
                   placeholder={"Zomato - ₹350\nAmazon - ₹1200\nNetflix - ₹649\nSwiggy - ₹280\n..."}
                 />
               </div>
             </div>
 
-            <button
+            <Button
               onClick={handleSubmitVerification}
               disabled={(!file && !rawText)}
-              className="mt-8 w-full py-4 bg-accent text-white rounded-xl text-sm font-bold tracking-widest uppercase hover:bg-accent/90 transition-all flex items-center justify-center gap-2 disabled:opacity-20 disabled:cursor-not-allowed shadow-xl"
+              className="mt-8 w-full py-4 bg-accent text-foreground rounded-xl text-sm font-bold tracking-widest uppercase hover:bg-accent/90 transition-all flex items-center justify-center gap-2 disabled:opacity-20 disabled:cursor-not-allowed shadow-xl"
             >
               <Brain className="w-4 h-4" /> Run Verification Pipeline
-            </button>
+            </Button>
 
             {errorMsg && (
-              <div className="mt-8 flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-500 font-bold">
+              <div className="mt-8 flex items-center gap-3 p-4 bg-destructive/50/10 border border-destructive/20 rounded-xl text-destructive font-bold">
                 <AlertTriangle className="w-5 h-5 shrink-0" /> {errorMsg}
               </div>
             )}
@@ -196,23 +199,23 @@ export default function VerifyPage() {
 
             {/* Key Metrics Strip */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-              <MetricCard label="Reduction" value={`${result.reduction_achieved}%`} icon={<TrendingDown className="w-5 h-5 text-green-600" />} color="green" />
-              <MetricCard label="Month 1 Spend" value={`₹${result.month1_total.toLocaleString()}`} icon={<BarChart3 className="w-5 h-5 text-red-500" />} color="red" />
-              <MetricCard label="Month 2 Spend" value={`₹${result.month2_total.toLocaleString()}`} icon={<BarChart3 className="w-5 h-5 text-green-600" />} color="green" />
-              <MetricCard label="Savings Score" value={`${result.new_savings_score}/100`} icon={<Activity className="w-5 h-5 text-accent" />} color="accent" />
+              <MetricCard title="Reduction" value={`${result.reduction_achieved}%`} icon={<TrendingDown className="w-5 h-5 text-success" />} highlight="success" delay={0.1} />
+              <MetricCard title="Month 1 Spend" value={`₹${result.month1_total.toLocaleString()}`} icon={<BarChart3 className="w-5 h-5 text-danger" />} highlight="danger" delay={0.2} />
+              <MetricCard title="Month 2 Spend" value={`₹${result.month2_total.toLocaleString()}`} icon={<BarChart3 className="w-5 h-5 text-success" />} highlight="success" delay={0.3} />
+              <MetricCard title="Savings Score" value={`${result.new_savings_score}/100`} icon={<Activity className="w-5 h-5 text-accent" />} highlight="accent" delay={0.4} />
             </div>
 
             {/* Category Comparison */}
-            <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm mb-8">
-              <h3 className="text-sm font-bold text-black uppercase tracking-widest mb-4 flex items-center gap-2">
-                <BarChart3 className="w-4 h-4 text-gray-400" /> Category-wise Comparison
+            <div className="bg-card text-foreground border border-border rounded-xl p-6 shadow-xl mb-8">
+              <h3 className="text-sm font-bold text-foreground uppercase tracking-widest mb-4 flex items-center gap-2">
+                <BarChart3 className="w-4 h-4 text-muted" /> Category-wise Comparison
               </h3>
               <div className="space-y-3">
                 {Object.entries(result.category_comparison).map(([cat, data]) => (
                   <div key={cat} className="flex items-center gap-4">
-                    <div className="w-32 text-sm font-bold text-gray-700 truncate">{cat}</div>
+                    <div className="w-32 text-sm font-bold text-foreground/80 truncate">{cat}</div>
                     <div className="flex-1 flex items-center gap-2">
-                      <div className="flex-1 bg-gray-100 rounded-full h-2 relative overflow-hidden">
+                      <div className="flex-1 bg-white/10 rounded-full h-2 relative overflow-hidden">
                         <motion.div
                           className="absolute inset-y-0 left-0 bg-red-400/60 rounded-full"
                           initial={{ width: 0 }}
@@ -220,9 +223,9 @@ export default function VerifyPage() {
                           transition={{ delay: 0.3, duration: 0.8 }}
                         />
                       </div>
-                      <div className="flex-1 bg-gray-100 rounded-full h-2 relative overflow-hidden">
+                      <div className="flex-1 bg-white/10 rounded-full h-2 relative overflow-hidden">
                         <motion.div
-                          className="absolute inset-y-0 left-0 bg-green-500 rounded-full"
+                          className="absolute inset-y-0 left-0 bg-accent/50 rounded-full"
                           initial={{ width: 0 }}
                           animate={{ width: `${(data.month2 / result.month1_total) * 100}%` }}
                           transition={{ delay: 0.5, duration: 0.8 }}
@@ -230,33 +233,33 @@ export default function VerifyPage() {
                       </div>
                     </div>
                     <div className="w-24 text-right">
-                      <span className="text-xs font-mono text-gray-400">₹{data.month1}</span>
-                      <span className="text-xs text-gray-300 mx-1">→</span>
+                      <span className="text-xs font-mono text-muted">₹{data.month1}</span>
+                      <span className="text-xs text-foreground/20 mx-1">→</span>
                       <span className="text-xs font-mono text-green-600 font-bold">₹{data.month2}</span>
                     </div>
-                    <div className={`w-16 text-right text-xs font-bold font-mono ${data.change < 0 ? "text-green-600" : "text-red-500"}`}>
+                    <div className={`w-16 text-right text-xs font-bold font-mono ${data.change < 0 ? "text-green-600" : "text-destructive"}`}>
                       {data.change}%
                     </div>
                   </div>
                 ))}
               </div>
-              <div className="mt-4 pt-4 border-t border-gray-100 flex gap-4 text-[10px] font-bold uppercase tracking-widest text-gray-400">
+              <div className="mt-4 pt-4 border-t border-white/10 flex gap-4 text-[10px] font-bold uppercase tracking-widest text-muted">
                 <span className="flex items-center gap-1"><span className="w-2 h-2 bg-red-400/60 rounded-full" /> Month 1</span>
-                <span className="flex items-center gap-1"><span className="w-2 h-2 bg-green-500 rounded-full" /> Month 2</span>
+                <span className="flex items-center gap-1"><span className="w-2 h-2 bg-accent/50 rounded-full" /> Month 2</span>
               </div>
             </div>
 
             {/* AI Verdict + Insights */}
             <div className="grid md:grid-cols-2 gap-6 mb-8">
-              <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
-                <h3 className="text-sm font-bold text-black uppercase tracking-widest mb-4 flex items-center gap-2">
+              <div className="bg-card text-foreground border border-border rounded-xl p-6 shadow-xl">
+                <h3 className="text-sm font-bold text-foreground uppercase tracking-widest mb-4 flex items-center gap-2">
                   <Brain className="w-4 h-4 text-purple-500" /> AI Verdict
                 </h3>
-                <p className="text-sm text-gray-600 leading-relaxed font-medium">{result.ai_verdict}</p>
+                <p className="text-sm text-foreground/70 leading-relaxed font-medium">{result.ai_verdict}</p>
               </div>
 
-              <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
-                <h3 className="text-sm font-bold text-black uppercase tracking-widest mb-4 flex items-center gap-2">
+              <div className="bg-card text-foreground border border-border rounded-xl p-6 shadow-xl">
+                <h3 className="text-sm font-bold text-foreground uppercase tracking-widest mb-4 flex items-center gap-2">
                   <TrendingUp className="w-4 h-4 text-green-600" /> Behavioral Insights
                 </h3>
                 <div className="space-y-2">
@@ -268,8 +271,8 @@ export default function VerifyPage() {
                       transition={{ delay: 0.8 + i * 0.1 }}
                       className="flex items-start gap-2"
                     >
-                      <CheckCircle2 className="w-3.5 h-3.5 text-green-500 mt-0.5 shrink-0" />
-                      <span className="text-xs text-gray-600 font-medium">{insight}</span>
+                      <CheckCircle2 className="w-3.5 h-3.5 text-accent mt-0.5 shrink-0" />
+                      <span className="text-xs text-foreground/70 font-medium">{insight}</span>
                     </motion.div>
                   ))}
                 </div>
@@ -289,36 +292,36 @@ export default function VerifyPage() {
               </div>
 
               {result.blockchain_tx && (
-                <div className={`bg-green-500/10 border-green-500/20 border rounded-xl p-6 text-left w-full md:w-2/3`}>
+                <div className={`bg-accent/50/10 border-accent/20 border rounded-xl p-6 text-left w-full md:w-2/3`}>
                   <div className="text-[10px] font-bold text-green-700/70 uppercase tracking-widest mb-3">On-Chain Verification Receipt</div>
                   
                   {/* What was anchored — human readable */}
-                  <div className="bg-white/60 border border-green-200/40 rounded-lg p-4 mb-4 space-y-1.5">
-                    <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 flex items-center gap-1.5">
+                  <div className="bg-card text-foreground/60 border border-green-200/40 rounded-lg p-4 mb-4 space-y-1.5">
+                    <div className="text-[10px] font-bold text-muted uppercase tracking-widest mb-2 flex items-center gap-1.5">
                       <ShieldCheck className="w-3 h-3" /> Data Embedded In Transaction
                     </div>
                     <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
-                      <span className="text-gray-400 font-mono">type</span>
-                      <span className="text-gray-700 font-bold font-mono">escrow_unlock</span>
-                      <span className="text-gray-400 font-mono">status</span>
+                      <span className="text-muted font-mono">type</span>
+                      <span className="text-foreground/80 font-bold font-mono">escrow_unlock</span>
+                      <span className="text-muted font-mono">status</span>
                       <span className="text-green-600 font-bold font-mono">success</span>
-                      <span className="text-gray-400 font-mono">reduction</span>
+                      <span className="text-muted font-mono">reduction</span>
                       <span className="text-green-600 font-bold font-mono">{result.reduction_achieved}%</span>
-                      <span className="text-gray-400 font-mono">challenge</span>
-                      <span className="text-gray-700 font-bold font-mono truncate">onchain_challenge</span>
+                      <span className="text-muted font-mono">challenge</span>
+                      <span className="text-foreground/80 font-bold font-mono truncate">onchain_challenge</span>
                     </div>
-                    <p className="text-[10px] text-gray-400 mt-2 pt-2 border-t border-gray-100">
-                      ↑ This JSON was SHA-256 hashed and embedded in the tx <code className="text-gray-500">data</code> field. Click &quot;+ Show more&quot; on Etherscan to see the raw hex.
+                    <p className="text-[10px] text-muted mt-2 pt-2 border-t border-white/10">
+                      ↑ This JSON was SHA-256 hashed and embedded in the tx <code className="text-muted">data</code> field. Click &quot;+ Show more&quot; on Etherscan to see the raw hex.
                     </p>
                   </div>
 
-                  <div className="font-mono text-xs text-gray-600 break-all mb-3">{result.blockchain_tx}</div>
+                  <div className="font-mono text-xs text-foreground/70 break-all mb-3">{result.blockchain_tx}</div>
                   {result.blockchain_tx && (
                     <a
                       href={`https://sepolia.etherscan.io/tx/${result.blockchain_tx}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-500 text-white text-xs font-bold rounded-lg transition-colors shadow-sm"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-accent/50 text-foreground text-xs font-bold rounded-lg transition-colors shadow-xl"
                     >
                       <ExternalLink className="w-3.5 h-3.5" /> View on Etherscan
                       <ArrowUpRight className="w-3.5 h-3.5" />
@@ -329,12 +332,12 @@ export default function VerifyPage() {
             </div>
 
             <div className="text-center">
-              <button
+              <Button
                 onClick={() => router.push("/network")}
                 className="py-4 px-12 bg-foreground text-background rounded-xl text-sm font-bold tracking-widest uppercase hover:bg-foreground/80 transition-all shadow-xl inline-flex items-center gap-2"
               >
                 View Leaderboard Position <ArrowRight className="w-4 h-4" />
-              </button>
+              </Button>
             </div>
           </motion.div>
         )}
@@ -344,15 +347,4 @@ export default function VerifyPage() {
   );
 }
 
-function MetricCard({ label, value, icon, color }: { label: string; value: string; icon: React.ReactNode; color: string }) {
-  const borderColor = color === "green" ? "border-green-100" : color === "red" ? "border-red-100" : "border-gray-200";
-  return (
-    <div className={`bg-white border ${borderColor} rounded-xl p-5 shadow-sm`}>
-      <div className="flex items-center justify-between mb-2">
-        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{label}</span>
-        {icon}
-      </div>
-      <div className="text-2xl font-bold text-black tracking-tight">{value}</div>
-    </div>
-  );
-}
+

@@ -19,7 +19,7 @@ export default function TrajectoryPage() {
           subValue="Record: 41 Days"
         />
         <StatCard 
-          icon={<TrendingUp className="w-5 h-5 text-accent" />} 
+          icon={<TrendingUp className="w-5 h-5 text-accent" />}
           label="Savings Velocity" 
           value="+24%" 
           subValue="Compounding Active"
@@ -32,7 +32,7 @@ export default function TrajectoryPage() {
         />
       </div>
 
-      <div className="bg-surface border border-border rounded-2xl p-8 shadow-sm">
+      <div className="bg-surface border border-border rounded-2xl p-8 shadow-xl">
         <div className="flex justify-between items-center mb-8">
            <h2 className="text-xl font-bold text-foreground tracking-tight">Macro Mapping</h2>
            <div className="flex items-center gap-2 text-[10px] font-bold text-secondary uppercase tracking-widest bg-background border border-border px-3 py-1.5 rounded-lg">
@@ -44,20 +44,20 @@ export default function TrajectoryPage() {
         </div>
       </div>
 
-      <div className="bg-surface border border-border rounded-2xl p-8 shadow-sm">
+      <div className="bg-surface border border-border rounded-2xl p-8 shadow-xl">
          <h2 className="text-xl font-bold text-foreground mb-8 tracking-tight">Adherence Heatmap</h2>
          <div className="flex flex-wrap gap-2">
             {Array.from({length: 30}).map((_, i) => (
               <div 
                 key={i} 
-                className={`w-10 h-10 rounded-sm hover:scale-110 transition-transform ${i > 25 ? 'bg-background border border-border' : i % 5 === 0 ? 'bg-red-500' : 'bg-accent'}`} 
+                className={`w-10 h-10 rounded-sm hover:scale-110 transition-transform ${i > 25 ? 'bg-background border border-border' : i % 5 === 0 ? 'bg-destructive/50' : 'bg-accent'}`}
                 title={`Day ${i+1}`}
               />
             ))}
          </div>
          <div className="mt-8 pt-6 border-t border-border flex items-center gap-6">
             <LegendItem color="bg-accent" label="Protocol Maintained" />
-            <LegendItem color="bg-red-500" label="Detection Triggered" />
+            <LegendItem color="bg-destructive/50" label="Detection Triggered" />
             <LegendItem color="bg-background border border-border" label="Pending Verification" />
          </div>
       </div>

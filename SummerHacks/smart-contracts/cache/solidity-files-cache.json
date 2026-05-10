@@ -1,0 +1,41 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "C:\\Users\\kirti\\OneDrive\\Desktop\\FINAL-VERSION\\SummerHacks\\smart-contracts\\contracts\\ExpenseEscrow.sol": {
+      "lastModificationDate": 1778089505311,
+      "contentHash": "b3a043b456c8d09936f6a5e06c2aab17",
+      "sourceName": "contracts/ExpenseEscrow.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.24"
+      ],
+      "artifacts": [
+        "ExpenseEscrow"
+      ]
+    }
+  }
+}

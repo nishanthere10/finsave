@@ -1,4 +1,6 @@
 "use client";
+import { Button } from "@/components/ui/button";
+
 
 import { User, Shield } from "lucide-react";
 
@@ -38,13 +40,13 @@ export default function SettingsPage() {
             <Shield className="w-4 h-4" /> Data & Security
          </div>
          <div className="space-y-4">
-            <button className="w-full px-4 py-3 border border-border bg-background text-foreground text-sm font-bold uppercase tracking-wider rounded-lg hover:bg-surface transition-colors text-left flex justify-between items-center">
+                 <Button variant="outline" className="w-full px-4 py-3 border border-border bg-background text-foreground text-sm font-bold uppercase tracking-wider rounded-lg hover:bg-surface transition-colors text-left flex justify-between items-center">
                <span>Export Telemetry Data</span>
                <span className="text-secondary font-mono text-xs">JSON</span>
-            </button>
-            <button className="w-full px-4 py-3 border border-red-500/20 bg-red-500/5 text-red-500 text-sm font-bold uppercase tracking-wider rounded-lg hover:bg-red-500/10 transition-colors text-left">
+            </Button>
+                 <Button variant="outline" className="w-full px-4 py-3 border border-destructive/20 bg-destructive/50/5 text-destructive text-sm font-bold uppercase tracking-wider rounded-lg hover:bg-destructive/50/10 transition-colors text-left">
               Delete Account & Halt Protocols
-            </button>
+            </Button>
          </div>
       </div>
     </div>

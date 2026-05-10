@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { Bell, Search, ChevronRight } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
 import { UserButton } from "@clerk/nextjs";
+import { cn } from "@/lib/utils";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -39,23 +40,23 @@ export default function Navbar() {
   const segments = pathname.split("/").filter(Boolean);
 
   return (
-    <header className="h-14 bg-white/90 backdrop-blur-xl border-b border-gray-200/70 flex items-center justify-between px-6 shrink-0 z-30">
+    <header className="h-14 bg-background/80 backdrop-blur-xl border-b border-border flex items-center justify-between px-6 shrink-0 z-30">
       {/* Left: Breadcrumb */}
       <div className="flex items-center gap-1.5">
-        <Link href="/dashboard" className="text-xs text-gray-400 hover:text-gray-700 transition-colors font-medium">
+        <Link href="/dashboard" className="text-xs text-muted hover:text-foreground transition-colors font-medium">
           Home
         </Link>
         {segments.map((seg, i) => (
           <span key={i} className="flex items-center gap-1.5">
-            <ChevronRight className="w-3 h-3 text-gray-300 shrink-0" />
+            <ChevronRight className="w-3 h-3 text-muted shrink-0" />
             {i === segments.length - 1 ? (
-              <span className="text-xs text-gray-900 font-bold tracking-wide">
+              <span className="text-xs text-foreground font-bold tracking-wide">
                 {pageLabels[seg] || seg.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase())}
               </span>
             ) : (
               <Link
                 href={`/${segments.slice(0, i + 1).join("/")}`}
-                className="text-xs text-gray-400 hover:text-gray-600 transition-colors font-medium"
+                className="text-xs text-muted hover:text-foreground transition-colors font-medium"
               >
                 {pageLabels[seg] || seg.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase())}
               </Link>
@@ -69,42 +70,50 @@ export default function Navbar() {
         {/* Search Bar */}
         <div
           onClick={() => setSearchOpen(true)}
-          className={`flex items-center gap-2 rounded-lg border transition-all duration-300 cursor-pointer ${
+          className={cn(
+            "flex items-center gap-2 rounded-lg border transition-all duration-300 cursor-pointer",
             searchOpen
-              ? "w-60 px-3 py-1.5 border-gray-300 bg-white shadow-sm"
-              : "w-auto px-2.5 py-1.5 border-gray-200 bg-gray-50 hover:bg-gray-100"
-          }`}
+              ? "w-60 px-3 py-1.5 border-accent/50 bg-card shadow-[0_0_15px_rgba(240,185,11,0.1)]"
+              : "w-auto px-2.5 py-1.5 border-border bg-card/50 hover:bg-card hover:border-border"
+          )}
         >
-          <Search className="w-3.5 h-3.5 text-gray-400 shrink-0" />
+          <Search className={cn("w-3.5 h-3.5 shrink-0", searchOpen ? "text-accent" : "text-muted")} />
           {searchOpen ? (
             <input
               autoFocus
-              placeholder="Search pages..."
-              className="text-xs bg-transparent outline-none flex-1 text-gray-700 placeholder-gray-400"
+              placeholder="Search protocol..."
+              className="text-xs bg-transparent outline-none flex-1 text-foreground placeholder-muted font-mono"
               onBlur={() => setSearchOpen(false)}
             />
           ) : (
             <>
-              <span className="text-[10px] text-gray-400 font-medium hidden sm:inline">Search</span>
+              <span className="text-[10px] text-muted font-bold tracking-wider uppercase hidden sm:inline">Search</span>
               <div className="hidden sm:flex items-center gap-0.5 ml-1">
-                <kbd className="px-1 py-0.5 bg-gray-200/80 rounded text-[9px] text-gray-500 font-mono leading-none">⌘</kbd>
-                <kbd className="px-1 py-0.5 bg-gray-200/80 rounded text-[9px] text-gray-500 font-mono leading-none">K</kbd>
+                <kbd className="px-1 py-0.5 bg-background rounded text-[9px] text-muted font-mono leading-none border border-border">⌘</kbd>
+                <kbd className="px-1 py-0.5 bg-background rounded text-[9px] text-muted font-mono leading-none border border-border">K</kbd>
               </div>
             </>
           )}
         </div>
 
         {/* Notifications */}
-        <button className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors text-gray-400 hover:text-gray-700 relative">
-          <Bell className="w-4 h-4" />
-          <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-white" />
+        <button className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-foreground/5 transition-colors text-muted hover:text-foreground relative group">
+          <Bell className="w-4 h-4 group-hover:text-accent transition-colors" />
+          <span className="absolute top-1 right-1 w-2 h-2 bg-danger rounded-full border-2 border-background" />
         </button>
 
-        <div className="w-px h-6 bg-gray-200 mx-1" />
+        <div className="w-px h-6 bg-foreground/10 mx-1" />
 
         {/* User */}
         <div className="flex items-center gap-2.5 px-2 py-1">
-          <UserButton afterSignOutUrl="/" />
+          <UserButton 
+            appearance={{
+              elements: {
+                avatarBox: "w-8 h-8 rounded-lg border border-border",
+                userButtonPopoverCard: "bg-card border-border",
+              }
+            }}
+          />
         </div>
       </div>
     </header>
